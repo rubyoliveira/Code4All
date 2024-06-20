@@ -14,14 +14,14 @@ Scope: **The content will be centered on learning different coding languages and
 ## Product Specs
 ### User Stories
 #### Required:
-**User can login**
-**User can create an account**
-**User can view all the offered courses**
-**User can see an about of the course**
-**User can use the self paced course**
+- [ ] User can login
+- [ ] User can create an account
+- [ ] User can view all the offered courses
+- [ ] User can see an about of the course
+- [ ] User can use the self paced course
 #### Optional:
-**User can save progress in the course**
-**User can save the courses for later**
-**User can take a short quiz after each module**
-**User can gain a certificate after completing a course**
-**User passwords are encrypted in the database for security**
+- [ ] User can save progress in the course
+- [ ] User can save the courses for later
+- [ ] User can take a short quiz after each module
+- [ ] User can gain a certificate after completing a course
+- [ ] User passwords are encrypted in the database for security
