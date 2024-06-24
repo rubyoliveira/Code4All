@@ -1,14 +1,25 @@
 # Code4All
+
 Intern: **Ruby Oliveira**
+
 Intern Manager: **Krithika Chandramouli**
+
 Intern Director: **Sonia Uppal**
+
 Peer(s): **Yiting Jiang and Riley Gowanlock**
+
 ## Overview
+
 This application is aimed to give students an opportunity to learn the basics in CS for free!
+
 Category: **Education**
+
 Story: **An education app where students can sign up  and use free published courses that cover various topics in computer science**
+
 Market: **Students curious about CS**
+
 Habit: **To learn more about CS and how to start coding**
+
 Scope: **The content will be centered on learning different coding languages and have simple code walkthroughs to use in an IDE in text and images, but out of scope will be videos and complex projects** 
 
 ## Product Specs
