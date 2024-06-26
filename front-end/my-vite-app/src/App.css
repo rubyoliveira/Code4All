@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+  width: 100%;
+  display: fixed;
+  flex-wrap: wrap;
+}
+
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  text-align: right;
+  background: linear-gradient(to right, #273db4, rgb(5, 117, 230), #273db4 );
+  margin-top: 10px;
+  margin-left: -10px;
+  padding: 10px;
+}
+
+.footer-txt{
+  font-size: small;
+  color: white;
+  padding-right: 10px;
+}
