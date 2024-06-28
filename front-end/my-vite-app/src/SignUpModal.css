@@ -1,6 +1,6 @@
 .signup {
     align-items: center;
-    background: rgba(16, 12, 41, 0.738);
+    background: rgba(0, 0, 0, 0.738);
     height: 100%;
     justify-content: center;
     left: 0;
@@ -8,6 +8,7 @@
     top: 0;
     width: 100%;
     z-index: 1000;
+
 }
 
   .signup-content{
@@ -36,12 +37,12 @@
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
-    background-color: rgba(185, 177, 241, 0.639);
+    background-color: rgba(223, 223, 223, 0.639);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.417);
   }
 
   .create-account:hover{
-    background-color: rgba(120, 104, 237, 0.6);
+    background-color: rgba(149, 149, 149, 0.6);
     color: rgb(0, 0, 0);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.649);
     transform: scale(1.05);
