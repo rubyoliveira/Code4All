@@ -10,34 +10,38 @@ const PORT = 3000
 app.use(express.json());
 app.use(cors());
 
-app.post("/signup", async (req, res) => {
-    const {username, password} = req.body;
-
-    console.log(username)
-    console.log(password)
-
-    bcrypt.hash(password, saltRounds, async function(err, hashed) {
-        try {
-            // Store hash in your password DB.
-            await prisma.user.create({
-                data : {
+app.post("/create", async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const existingUser = await prisma.user.findUnique({
+            where: {
+                username: username
+            }
+        });
+        if (existingUser) {
+            return res.status(409).json({ message: "Username already exists" });
+        }
+        bcrypt.hash(password, saltRounds, async function(err, hashed) {
+            if (err) {
+                return res.status(500).json({ error: "Error hashing password" });
+            }
+            const newUser = await prisma.user.create({
+                data: {
                     username,
                     hashedPassword: hashed
                 }
             });
-            console.log(hashed)
-            res.status(200).json({});
-        } catch (e) {
-            res.status(500).json({"error": e.message});
-        }
-    });
-})
-
+            res.status(200).json({ message: "User created successfully", userId: newUser.id });
+        });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 
 app.post("/login", async (req, res) => {
-    const {username, password} = req.body;
+    const {user, password} = req.body;
     const userRecord = await prisma.user.findUnique({
-        where : { username }
+        where : { user }
     });
 
     bcrypt.compare(password, userRecord.hashedPassword, function(err, result) {
