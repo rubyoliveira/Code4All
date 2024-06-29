@@ -1,65 +1,69 @@
-import { useState, useEffect } from 'react'
-import './SignUpModal.css'
+import { useState, useContext } from 'react';
+import './SignUpModal.css';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext.js';
 
-
-const SignUpModal = ({closeModal}) => {
+const SignUpModal = ({ closeModal }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [result, setResult] = useState("");
 
-    const handleChangeUsername = (e) => {
-        setUsername(e.target.value)
-    }
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value)
-    }
+    const { updateUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
-    const handleSignUp = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                password,
-            })
-        })
-            .then(response => {
-                console.log(response)
-                if (response.ok) {
-                  setResult("create success!");
-                }
-                else {
-                  setResult("failed to create!");
-                }
-              })
-              .catch(error => {
-                setResult("failed to create!");
-              });
-              closeModal();
-    }
+      try {
+        // Make the signup API request
+        const response = await fetch(`http://localhost:3000/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+          credentials: 'include'
+        });
 
-  return(
- <>
-   <div className = "signup">
-        <form onSubmit={handleSignUp}>
-            <div className= "signup-content" >
-                <button className = "close-modal" onClick = {closeModal}>&#10006;</button>
-                <h2>Make an Account</h2>
-                <input type="text" value = {username} placeholder="Enter Username" onChange = {handleChangeUsername}></input>
-                <input type="text" value = {password} placeholder="Enter Password" onChange = {handleChangePassword}></input>
-                <button type= "submit" className = "create-account">Create Account</button>
+        if (response.ok) {
+          const data = await response.json();
+          const loggedInUser = data.user;
+
+          console.log('Signup successful');
+
+          // Reset form fields
+          setUsername('');
+          setPassword('');
+
+          // Update the user context
+          updateUser(loggedInUser);
+
+          // Navigate to the home page after successful login
+          navigate('/courses');
+        } else {
+          // Handle signup failure case
+          alert('Signup failed');
+        }
+      } catch (error) {
+        // Handle any network or API request errors
+        alert('Signup failed: ' + error);
+      }
+    };
+
+    return (
+      <>
+        <div className="signup">
+          <form onSubmit={handleSubmit}>
+            <div className="signup-content">
+              <button className="close-modal" onClick={closeModal}>&#10006;</button>
+              <h2>Make an Account</h2>
+              <input type="text" value={username} placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} required />
+              <input type="password" value={password} placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} required />
+              <button type="submit" className="create-account">Create Account</button>
             </div>
-        </form>
-        <div>
-        { result && <p>{result}</p>}
-      </div>
-   </div>
- </>
-  );
+          </form>
+        </div>
+      </>
+    );
 }
 
-export default SignUpModal
+export default SignUpModal;

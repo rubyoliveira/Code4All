@@ -9,10 +9,14 @@ import SignUpModal from './SignUpModal.jsx'
 
 function App() {
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
+    try {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch (error) {
+      console.error('Failed to parse user from localStorage:', error);
+      return null;
+    }
   });
-
   const updateUser = (newUser) => {
     setUser(newUser);
   }

@@ -17,3 +17,10 @@ model user {
   username String @id
   hashedPassword String
 }
+
+model courses {
+  title String @id
+  description String
+  difficulty String
+  image String
+}

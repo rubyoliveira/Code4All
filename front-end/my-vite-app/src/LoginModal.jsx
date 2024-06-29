@@ -1,45 +1,43 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext.js';
 import './LoginModal.css'
 
 
 const LoginModal = ({closeModal}) => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [result, setResult] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { updateUser } = useContext(UserContext);
 
-    const handleChangeUsername = (e) => {
-        setUsername(e.target.value)
-    }
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value)
-    }
+  const navigate = useNavigate();
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
+    try {
+      const response = await fetch(`http://localhost:3000/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+        credentials: 'include'
+      });
 
-    const handleLogin = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username,
-              password,
-            }),
-          })
-          .then(response => {
-            if (response.ok) {
-              setResult("login success!");
-            }
-            else {
-              setResult("failed to login!");
-            }
-          })
-          .catch(error => {
-            setResult("failed to login!");
-          });
+      if (response.ok) {
+        const data = await response.json();
+        const loggedInUser = data.user;
+
+        updateUser(loggedInUser);
+        navigate('/courses');
+      } else {
+        const errorData = await response.json(); // Assuming the server sends a JSON response with error details
+        alert(`Login failed: ${errorData.message}`);
       }
+    } catch (error) {
+      alert(`Login failed: ${error.message}`);
+    }
+  };
 
 
   return(
@@ -50,14 +48,11 @@ const LoginModal = ({closeModal}) => {
                 <button className = "close-modal" onClick = {closeModal}>&#10006;</button>
                 <h2>Log In</h2>
                 <label htmlFor = "username">Username:</label>
-                <input onChange= {handleChangeUsername} value = {username} type = "text" placeholder = "username"></input>
-                <input placeholder = "password" onChange={handleChangePassword} value={password}></input>
+                <input onChange= {(e) => setUsername(e.target.value)} value = {username} type = "text" placeholder = "username" required></input>
+                <input type = "password" placeholder = "password" onChange={(e) => setPassword(e.target.value)} value={password} required></input>
                 <button type= "submit" className = "log in">Log in</button>
             </div>
         </form>
-        <div>
-            { result && <p>{result}</p>}
-        </div>
    </div>
  </>
   );
