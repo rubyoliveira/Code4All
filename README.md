@@ -25,8 +25,8 @@ Scope: **The content will be centered on learning different coding languages and
 ## Product Specs
 ### User Stories
 #### Required:
-- [ ] User can login
-- [ ] User can create an account
+- [x] User can login
+- [x] User can create an account
 - [ ] User can view all the offered courses
 - [ ] User can see an about of the course
 - [ ] User can use the self paced course
