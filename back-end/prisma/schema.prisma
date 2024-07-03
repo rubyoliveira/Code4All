@@ -23,4 +23,20 @@ model courses {
   description String
   difficulty String
   image String
+  modules modules[]
+}
+
+model modules {
+  title String @id
+  courseId String
+  course courses @relation(fields: [courseId], references: [title])
+  topics topics[]
+}
+
+model topics {
+  title String @id
+  description String
+  video String
+  moduleId String
+  module modules @relation(fields: [moduleId], references: [title])
 }
