@@ -4,3 +4,31 @@
     align-items: center;
     margin-top: 20px;
 }
+
+.photo-search{
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+}
+
+.photo-results{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+.video-search{
+    margin: 20px;
+    width: 250px;
+}
+
+.video-results{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 15%;
+    margin-left: 15%;
+    justify-content: center;
+}

@@ -49,13 +49,12 @@ function Topics() {
         <>
             <Header />
             <div className="topic">
-                <Link to='/courses'><button className="home-button">Go Home</button></Link>
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <button key={module.id} onClick={() => fetchTopics(module.id)}>
+                            <h4 key={module.title} onClick={() => fetchTopics(module.title)}>
                                 {module.title}
-                            </button>
+                            </h4>
                         ))
                     ) : (
                         <p>No modules available</p>

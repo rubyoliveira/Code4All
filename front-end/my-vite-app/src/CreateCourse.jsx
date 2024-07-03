@@ -14,6 +14,11 @@ function CreateCourse() {
     const [videoURL, setVideoURL] = useState('')
     const [topicDescription, setTopicDescription] = useState('')
     const [modules, setModules] = useState([])
+    const [searchPhoto, setSearchPhoto] = useState([])
+    const [photo, setPhoto] = useState('')
+    const [searchVideo, setSearchVideo]= useState([])
+    const [video, setVideo] = useState('')
+    const PHOTO_API_URL = "https://api.unsplash.com/search/photos"
 
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
@@ -50,19 +55,7 @@ function CreateCourse() {
             description: description,
             difficulty: selectedOption,
             image: image,
-            modules: modules,
-            modules: [
-                {
-                    title: moduleTitle,
-                    topics: [
-                        {
-                            title: topicTitle,
-                            description: topicDescription,
-                            video: videoURL,
-                        }
-                    ]
-                }
-            ]
+            modules: modules
         };
 
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/create`, {
@@ -85,6 +78,55 @@ function CreateCourse() {
         });
     };
 
+    const fetchVideo = () => {
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${import.meta.env.VITE_YOUTUBE_API_KEY}&q=${video}&type=video&part=snippet&maxResults=9&videoEmbeddable=true`;
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const urls = data.items.map(item => item.snippet.thumbnails.default.url);
+                setSearchVideo(urls);
+            })
+            .catch(error => {
+                console.error('Error fetching videos:', error);
+            });
+    };
+
+    const handleSearchVideo = (e) => {
+        e.preventDefault();
+        setVideo(e.target.value)
+    }
+    const goSearchVideo = (e) => {
+        e.preventDefault();
+        fetchVideo();
+    }
+
+    const fetchPhoto = () => {
+        const url = `https://api.unsplash.com/search/photos?query=${photo}&page=1&per_page=6&client_id=${import.meta.env.VITE_PHOTO_API_KEY}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const urls = data.results.map(photo => photo.urls.small);
+                setSearchPhoto(urls);
+            })
+            .catch(error => {
+                console.error('Error fetching photos:', error);
+            });
+    };
+
+    const handleSearchPhoto = (e) => {
+        e.preventDefault();
+        setPhoto(e.target.value)
+      }
+      const goSearchPhoto = (e) => {
+        e.preventDefault();
+        fetchPhoto();
+    }
+
   return (
     <>
       <Header/>
@@ -96,7 +138,13 @@ function CreateCourse() {
                     <p>Title:</p>
                     <input className = "create-input" placeholder='title..' onChange = {(event) => setCourseTitle(event.target.value)}></input>
                     <p>Cover Image URL:</p>
-                    <input className = "create-input" placeholder='search for image..' onChange = {(event) => setImage(event.target.value)}></input>
+                    <input className = "create-input" placeholder='search for image..'  onChange = {handleSearchPhoto}></input>
+                    <button onClick = {e => goSearchPhoto(e)}>Search Photos</button>
+                    <div className = "photo-results">
+                        {searchPhoto.map((url, index) => (
+                            <img key={index} className="photo-search" alt="GIF" src={url} />
+                        ))}
+                    </div>
                     <div className = "dropdown">
                         <p>Difficulty Level:</p>
                         <select className="sort" value={selectedOption} onChange={handleSelectChange} >
@@ -121,7 +169,13 @@ function CreateCourse() {
                         <div>
                             <input placeholder='Topic title..' onChange={(e) => setTopicTitle(e.target.value)} />
                             <input placeholder='Topic description..' onChange={(e) => setTopicDescription(e.target.value)} />
-                            <input placeholder='Video URL..' onChange={(e) => setVideoURL(e.target.value)} />
+                            <input className = "create-input" placeholder='search for video..'  onChange = {handleSearchVideo}></input>
+                            <button onClick = {e => goSearchVideo(e)}>Search YouTube</button>
+                            <div className = "video-results">
+                                {searchVideo.map((url, index) => (
+                                    <img key={index} className="video-search" alt="GIF" src={url} />
+                                ))}
+                            </div>
                             <button type="button" onClick={() => addTopicToModule(index)}>Add Topic</button>
                         </div>
                     </div>
