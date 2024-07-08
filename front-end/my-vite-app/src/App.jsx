@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Home from './Home.jsx'
 import CoursePage from './CoursePage.jsx'
-import LoginModal from './LoginModal.jsx'
-import SignUpModal from './SignUpModal.jsx'
+import Topics from './Topics.jsx'
+import CreateCourse from './CreateCourse.jsx'
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -33,6 +33,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<CoursePage />} />
+            <Route path="/courses/create" element={<CreateCourse />} />
+            <Route path="/courses/:courseId" element = {<Topics/>}/>
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

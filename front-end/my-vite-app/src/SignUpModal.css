@@ -1,6 +1,5 @@
 .signup {
     align-items: center;
-    background: rgba(0, 0, 0, 0.738);
     height: 100%;
     justify-content: center;
     left: 0;
@@ -8,13 +7,22 @@
     top: 0;
     width: 100%;
     z-index: 1000;
-
+    background: linear-gradient(to right,#6b11cb6f,#2574fc98);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    font-weight: bold;
 }
 
   .signup-content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     border-radius: 8px;
-    background-color: rgb(209, 209, 209);
-    box-shadow: 0 4px 8px #0000001a;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.688);
+    -webkit-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    -moz-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    box-shadow: 3px 3.5px 16px 6.5px #4646465e;
     left: 50%;
     max-width: 400px;
     padding: 20px;
@@ -22,8 +30,6 @@
     top: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    z-index: 1000;
-    z-index: 1001;
   }
 
   .create-account{
@@ -89,4 +95,19 @@
 	to {
 		opacity:1;
 	}
+}
+
+.pass-user{
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.417);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.input-signup{
+  margin: 20px;
 }

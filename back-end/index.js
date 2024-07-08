@@ -62,6 +62,74 @@ app.get('/courses', async (req, res) => {
     res.json(courses);
 });
 
+app.get('/courses/:courseId', async (req, res) => {
+    const {courseId} = req.params;
+    const modules = await prisma.modules.findMany({
+        where: { courseId: courseId }
+    });
+    res.json(modules);
+});
+
+
+app.get('/courses/:courseId/:moduleId', async (req, res) => {
+    const {moduleId} = req.params;
+    const topics = await prisma.topics.findMany({
+        where: { moduleId: moduleId }
+    });
+    res.json(topics);
+});
+
+app.post('/courses/create', async (req, res) => {
+    const { title, description, difficulty, image, modules } = req.body;
+
+    if (!title || !description || !difficulty || !image || !modules || modules.length === 0) {
+        return res.status(400).send('Missing required fields.');
+    }
+
+    try {
+        const existingCourse = await prisma.courses.findUnique({
+            where: {
+                title: title
+            }
+        });
+        if (existingCourse) {
+            return res.status(409).json({ message: 'A course with this title already exists.' });
+        }
+        const newCourse = await prisma.courses.create({
+            data: {
+                title,
+                description,
+                difficulty,
+                image,
+                modules: {
+                    create: modules.map(module => ({
+                        title: module.title,
+                        topics: {
+                            create: module.topics.map(topic => ({
+                                title: topic.title,
+                                description: topic.description,
+                                video: topic.video // Assuming 'video' is the correct field
+                            }))
+                        }
+                    }))
+                }
+            },
+            include: {
+                modules: {
+                    include: {
+                        topics: true
+                    }
+                }
+            }
+        });
+
+        res.json(newCourse);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error creating course');
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

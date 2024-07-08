@@ -1,0 +1,19 @@
+.topic-video{
+    width: 50vh;
+    height: 30vh;
+    border: none;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+.topic{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.topic-text{
+    padding-right: 90px;
+}

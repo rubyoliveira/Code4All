@@ -56,8 +56,12 @@ const SignUpModal = ({ closeModal }) => {
             <div className="signup-content">
               <button className="close-modal" onClick={closeModal}>&#10006;</button>
               <h2>Make an Account</h2>
-              <input type="text" value={username} placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} required />
-              <input type="password" value={password} placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} required />
+              <div className = "input-signup">
+                <input className = "pass-user" type="text" value={username} placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} required />
+              </div>
+              <div className = "input-signup">
+                <input className = "pass-user" type="password" value={password} placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} required />
+              </div>
               <button type="submit" className="create-account">Create Account</button>
             </div>
           </form>
