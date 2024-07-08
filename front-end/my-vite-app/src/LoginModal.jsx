@@ -47,10 +47,13 @@ const LoginModal = ({closeModal}) => {
             <div className= "modal-content" >
                 <button className = "close-modal" onClick = {closeModal}>&#10006;</button>
                 <h2>Log In</h2>
-                <label htmlFor = "username">Username:</label>
-                <input onChange= {(e) => setUsername(e.target.value)} value = {username} type = "text" placeholder = "username" required></input>
-                <input type = "password" placeholder = "password" onChange={(e) => setPassword(e.target.value)} value={password} required></input>
-                <button type= "submit" className = "log in">Log in</button>
+                <div className = "input-login">
+                  <input className = "user-login" onChange= {(e) => setUsername(e.target.value)} value = {username} type = "text" placeholder = "username" required></input>
+                </div>
+                <div className = "input-login">
+                  <input className = "user-login" type = "password" placeholder = "password" onChange={(e) => setPassword(e.target.value)} value={password} required></input>
+                </div>
+                <button type= "submit" className = "login-button">Log in</button>
             </div>
         </form>
    </div>

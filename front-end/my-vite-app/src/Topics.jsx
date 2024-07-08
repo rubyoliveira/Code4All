@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
+import "./Topics.css"
 
 function Topics() {
     const { courseId } = useParams();
@@ -48,13 +49,16 @@ function Topics() {
     return (
         <>
             <Header />
-            <div className="topic">
+            <div className="course-module">
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <h4 key={module.title} onClick={() => fetchTopics(module.title)}>
+                            <div className = "modules" key={module.title}>
+                            <button className= "topic-button" onClick={() => fetchTopics(module.title)}><img src= "https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg"></img></button>
+                            <h3>
                                 {module.title}
-                            </h4>
+                            </h3>
+                            </div>
                         ))
                     ) : (
                         <p>No modules available</p>
@@ -67,6 +71,7 @@ function Topics() {
                                 key={topic.title}
                                 title={topic.title}
                                 description={topic.description}
+                                videoURL = {topic.video}
                             />
                         ))
                     ) : (

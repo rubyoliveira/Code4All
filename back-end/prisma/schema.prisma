@@ -28,7 +28,7 @@ model courses {
 
 model modules {
   title String @id
-  courseId String
+  courseId String 
   course courses @relation(fields: [courseId], references: [title])
   topics topics[]
 }

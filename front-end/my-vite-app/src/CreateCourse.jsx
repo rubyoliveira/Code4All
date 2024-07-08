@@ -5,20 +5,24 @@ import "./CreateCourse.css"
 
 
 function CreateCourse() {
+    //course info
     const [selectedOption, setSelectedOption] = useState('');
     const [courseTitle, setCourseTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [image, setImage] = useState('')
     const [moduleTitle, setModuleTitle] = useState('')
     const [topicTitle, setTopicTitle] = useState('')
-    const [videoURL, setVideoURL] = useState('')
     const [topicDescription, setTopicDescription] = useState('')
     const [modules, setModules] = useState([])
-    const [searchPhoto, setSearchPhoto] = useState([])
-    const [photo, setPhoto] = useState('')
+    //video
     const [searchVideo, setSearchVideo]= useState([])
     const [video, setVideo] = useState('')
-    const PHOTO_API_URL = "https://api.unsplash.com/search/photos"
+    const [videoURL, setVideoURL] = useState('')
+    //photo
+    const [photoURL, setPhotoURL] = useState('')
+    const [photo, setPhoto] = useState('')
+    const [searchPhoto, setSearchPhoto] = useState([])
+    const [image, setImage] = useState('')
+
 
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
@@ -32,6 +36,7 @@ function CreateCourse() {
         setModules([...modules, newModule]);
         setModuleTitle('');
     };
+
     const addTopicToModule = (moduleIndex) => {
         const newTopic = {
             title: topicTitle,
@@ -48,7 +53,7 @@ function CreateCourse() {
 
 
     const handleCreateCourse = (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
         const courseData = {
             title: courseTitle,
@@ -81,15 +86,9 @@ function CreateCourse() {
     const fetchVideo = () => {
         const url = `https://www.googleapis.com/youtube/v3/search?key=${import.meta.env.VITE_YOUTUBE_API_KEY}&q=${video}&type=video&part=snippet&maxResults=9&videoEmbeddable=true`;
         fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                const urls = data.items.map(item => item.snippet.thumbnails.default.url);
-                setSearchVideo(urls);
+                setSearchVideo(data.items); // Store the entire video objects
             })
             .catch(error => {
                 console.error('Error fetching videos:', error);
@@ -105,6 +104,13 @@ function CreateCourse() {
         fetchVideo();
     }
 
+    const selectVideo = (e, selectedVideoId) => {
+        e.preventDefault();
+        setVideoURL(`http://www.youtube.com/embed/${selectedVideoId}`)
+        setVideo(`http://www.youtube.com/embed/${selectedVideoId}`)
+        setSearchVideo([]);
+    }
+
     const fetchPhoto = () => {
         const url = `https://api.unsplash.com/search/photos?query=${photo}&page=1&per_page=6&client_id=${import.meta.env.VITE_PHOTO_API_KEY}`;
         fetch(url)
@@ -118,6 +124,7 @@ function CreateCourse() {
             });
     };
 
+
     const handleSearchPhoto = (e) => {
         e.preventDefault();
         setPhoto(e.target.value)
@@ -125,6 +132,13 @@ function CreateCourse() {
       const goSearchPhoto = (e) => {
         e.preventDefault();
         fetchPhoto();
+    }
+
+    const selectPhoto = (e, selectedURL) => {
+        e.preventDefault();
+        setPhotoURL(selectedURL)
+        setImage(selectedURL)
+        setSearchPhoto([]);
     }
 
   return (
@@ -135,27 +149,40 @@ function CreateCourse() {
                 <h2>Create a New Course</h2>
                 <div className = "create-course">
                     <h4>Course</h4>
-                    <p>Title:</p>
-                    <input className = "create-input" placeholder='title..' onChange = {(event) => setCourseTitle(event.target.value)}></input>
-                    <p>Cover Image URL:</p>
-                    <input className = "create-input" placeholder='search for image..'  onChange = {handleSearchPhoto}></input>
+                    <div className = "create-div">
+                        <span className = "create-span">Course Title</span>
+                        <input className = "create-input" placeholder='title..' onChange = {(event) => setCourseTitle(event.target.value)}></input>
+                    </div>
+                    <div className = "create-div">
+                        <span className = "create-span">Cover Image Search</span>
+                        <input className = "create-input" placeholder='search for image..' onChange = {handleSearchPhoto}></input>
+                    </div>
                     <button onClick = {e => goSearchPhoto(e)}>Search Photos</button>
                     <div className = "photo-results">
                         {searchPhoto.map((url, index) => (
-                            <img key={index} className="photo-search" alt="GIF" src={url} />
+                            <img key={index} className="photo-search" alt="photo" src={url} onClick = {(e) => selectPhoto(e, url)} />
                         ))}
                     </div>
-                    <div className = "dropdown">
-                        <p>Difficulty Level:</p>
-                        <select className="sort" value={selectedOption} onChange={handleSelectChange} >
-                            <option value = "">select a difficulty</option>
-                            <option value ="Beginner" >Beginner</option>
-                            <option value ="Intermediate" >Intermediate</option>
-                            <option value ="Expert" >Expert</option>
-                        </select>
+                    <div className="pickedUrl">
+                        <h4>Selected Photo URL: </h4>
+                        <p>{photoURL}</p>
+                        <img type="hidden" src={photoURL} alt="Selected Photo" />
                     </div>
-                    <p>Description:</p>
-                    <input className = "create-input" placeholder='write a desciption..'onChange = {(event) => setDescription(event.target.value)}></input>
+                    <div className = "create-div">
+                        <span className = "create-span">Course Difficulty</span>
+                        <div className = "dropdown">
+                            <select className="create-dropdown" value={selectedOption} onChange={handleSelectChange} >
+                                <option value = "">select a difficulty</option>
+                                <option value ="Beginner" >Beginner</option>
+                                <option value ="Intermediate" >Intermediate</option>
+                                <option value ="Expert" >Expert</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className = "create-div">
+                        <span className = "create-span">Course Description</span>
+                        <textarea className = "description-input" placeholder='write a desciption..'onChange = {(event) => setDescription(event.target.value)}></textarea>
+                    </div>
                 </div>
                 {modules.map((module, index) => (
                     <div key={index} className="create-modules">
@@ -167,24 +194,47 @@ function CreateCourse() {
                             </div>
                         ))}
                         <div>
-                            <input placeholder='Topic title..' onChange={(e) => setTopicTitle(e.target.value)} />
-                            <input placeholder='Topic description..' onChange={(e) => setTopicDescription(e.target.value)} />
-                            <input className = "create-input" placeholder='search for video..'  onChange = {handleSearchVideo}></input>
+                            <div className = "create-div">
+                                <span className = "create-span">Topic Title</span>
+                                <input className = "create-input" placeholder='Topic title..' onChange={(e) => setTopicTitle(e.target.value)} />
+                            </div>
+                            <div className = "create-div">
+                                <span className = "create-span">Topic Description</span>
+                                <textarea className = "description-input" placeholder='Topic description..' onChange={(e) => setTopicDescription(e.target.value)}></textarea>
+                            </div>
+                            <div className = "create-div">
+                                <span className = "create-span">Search for Video</span>
+                                <input className = "create-input"  placeholder='search for video..'  onChange = {handleSearchVideo}></input>
+                            </div>
                             <button onClick = {e => goSearchVideo(e)}>Search YouTube</button>
-                            <div className = "video-results">
-                                {searchVideo.map((url, index) => (
-                                    <img key={index} className="video-search" alt="GIF" src={url} />
+                            <div className="video-results">
+                                {searchVideo.map((video, index) => (
+                                    <img
+                                        key={index}
+                                        className="video-search"
+                                        alt="Video Thumbnail"
+                                        src={video.snippet.thumbnails.default.url}
+                                        onClick={(e) => selectVideo(e, video.id.videoId)}
+                                    />
                                 ))}
+                            </div>
+                            <div>
+                                <h4>Selected Video URL: </h4>
+                                <p>{videoURL}</p>
+                                <iframe title="Selected Video" src={videoURL} alt="Selected Video"></iframe>
                             </div>
                             <button type="button" onClick={() => addTopicToModule(index)}>Add Topic</button>
                         </div>
                     </div>
                 ))}
-                <div>
-                    <input placeholder='Module title..' onChange={(e) => setModuleTitle(e.target.value)} />
-                    <button type="button" onClick={addModule}>Add Module</button>
+                <div className = "create-div">
+                    <span className = "create-span">Module Title</span>
+                    <input className = "create-input" placeholder='Module title..' onChange={(e) => setModuleTitle(e.target.value)} />
                 </div>
+                <button type="button" onClick={addModule}>Add Module</button>
+            <div>
                 <button type="submit" className="create-course">Create Course</button>
+            </div>
             </div>
         </form>
       <Footer/>

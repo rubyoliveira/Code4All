@@ -87,6 +87,14 @@ app.post('/courses/create', async (req, res) => {
     }
 
     try {
+        const existingCourse = await prisma.courses.findUnique({
+            where: {
+                title: title
+            }
+        });
+        if (existingCourse) {
+            return res.status(409).json({ message: 'A course with this title already exists.' });
+        }
         const newCourse = await prisma.courses.create({
             data: {
                 title,
