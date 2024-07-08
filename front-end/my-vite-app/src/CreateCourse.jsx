@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import Footer from "./Footer.jsx"
 import Header from "./Header.jsx"
 import "./CreateCourse.css"
+import CodeBot from "./CodeBot.jsx"
+import CreateModules from "./CreateModules.jsx"
+
 
 
 function CreateCourse() {
@@ -9,48 +12,18 @@ function CreateCourse() {
     const [selectedOption, setSelectedOption] = useState('');
     const [courseTitle, setCourseTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [moduleTitle, setModuleTitle] = useState('')
-    const [topicTitle, setTopicTitle] = useState('')
-    const [topicDescription, setTopicDescription] = useState('')
     const [modules, setModules] = useState([])
-    //video
-    const [searchVideo, setSearchVideo]= useState([])
-    const [video, setVideo] = useState('')
-    const [videoURL, setVideoURL] = useState('')
+
     //photo
     const [photoURL, setPhotoURL] = useState('')
     const [photo, setPhoto] = useState('')
     const [searchPhoto, setSearchPhoto] = useState([])
     const [image, setImage] = useState('')
 
-
+    //post method and associated functions of making the course
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
     };
-
-    const addModule = () => {
-        const newModule = {
-            title: moduleTitle,
-            topics: []
-        };
-        setModules([...modules, newModule]);
-        setModuleTitle('');
-    };
-
-    const addTopicToModule = (moduleIndex) => {
-        const newTopic = {
-            title: topicTitle,
-            description: topicDescription,
-            video: videoURL
-        };
-        const updatedModules = [...modules];
-        updatedModules[moduleIndex].topics.push(newTopic);
-        setModules(updatedModules);
-        setTopicTitle('');
-        setTopicDescription('');
-        setVideoURL('');
-    };
-
 
     const handleCreateCourse = (event) => {
         event.preventDefault()
@@ -79,37 +52,8 @@ function CreateCourse() {
         })
         .catch(error => {
             console.error('Error creating course:', error);
-            // Optionally, inform the user that an error occurred
         });
     };
-
-    const fetchVideo = () => {
-        const url = `https://www.googleapis.com/youtube/v3/search?key=${import.meta.env.VITE_YOUTUBE_API_KEY}&q=${video}&type=video&part=snippet&maxResults=9&videoEmbeddable=true`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                setSearchVideo(data.items); // Store the entire video objects
-            })
-            .catch(error => {
-                console.error('Error fetching videos:', error);
-            });
-    };
-
-    const handleSearchVideo = (e) => {
-        e.preventDefault();
-        setVideo(e.target.value)
-    }
-    const goSearchVideo = (e) => {
-        e.preventDefault();
-        fetchVideo();
-    }
-
-    const selectVideo = (e, selectedVideoId) => {
-        e.preventDefault();
-        setVideoURL(`http://www.youtube.com/embed/${selectedVideoId}`)
-        setVideo(`http://www.youtube.com/embed/${selectedVideoId}`)
-        setSearchVideo([]);
-    }
 
     const fetchPhoto = () => {
         const url = `https://api.unsplash.com/search/photos?query=${photo}&page=1&per_page=6&client_id=${import.meta.env.VITE_PHOTO_API_KEY}`;
@@ -181,57 +125,10 @@ function CreateCourse() {
                     </div>
                     <div className = "create-div">
                         <span className = "create-span">Course Description</span>
-                        <textarea className = "description-input" placeholder='write a desciption..'onChange = {(event) => setDescription(event.target.value)}></textarea>
+                        <CodeBot setDescription = {setDescription}></CodeBot>
                     </div>
                 </div>
-                {modules.map((module, index) => (
-                    <div key={index} className="create-modules">
-                        <h4>Module {index + 1}</h4>
-                        <p>Title: {module.title}</p>
-                        {module.topics.map((topic, topicIndex) => (
-                            <div key={topicIndex}>
-                                <p>Topic {topicIndex + 1}: {topic.title}</p>
-                            </div>
-                        ))}
-                        <div>
-                            <div className = "create-div">
-                                <span className = "create-span">Topic Title</span>
-                                <input className = "create-input" placeholder='Topic title..' onChange={(e) => setTopicTitle(e.target.value)} />
-                            </div>
-                            <div className = "create-div">
-                                <span className = "create-span">Topic Description</span>
-                                <textarea className = "description-input" placeholder='Topic description..' onChange={(e) => setTopicDescription(e.target.value)}></textarea>
-                            </div>
-                            <div className = "create-div">
-                                <span className = "create-span">Search for Video</span>
-                                <input className = "create-input"  placeholder='search for video..'  onChange = {handleSearchVideo}></input>
-                            </div>
-                            <button onClick = {e => goSearchVideo(e)}>Search YouTube</button>
-                            <div className="video-results">
-                                {searchVideo.map((video, index) => (
-                                    <img
-                                        key={index}
-                                        className="video-search"
-                                        alt="Video Thumbnail"
-                                        src={video.snippet.thumbnails.default.url}
-                                        onClick={(e) => selectVideo(e, video.id.videoId)}
-                                    />
-                                ))}
-                            </div>
-                            <div>
-                                <h4>Selected Video URL: </h4>
-                                <p>{videoURL}</p>
-                                <iframe title="Selected Video" src={videoURL} alt="Selected Video"></iframe>
-                            </div>
-                            <button type="button" onClick={() => addTopicToModule(index)}>Add Topic</button>
-                        </div>
-                    </div>
-                ))}
-                <div className = "create-div">
-                    <span className = "create-span">Module Title</span>
-                    <input className = "create-input" placeholder='Module title..' onChange={(e) => setModuleTitle(e.target.value)} />
-                </div>
-                <button type="button" onClick={addModule}>Add Module</button>
+                <CreateModules modules = {modules} setModules ={setModules}></CreateModules>
             <div>
                 <button type="submit" className="create-course">Create Course</button>
             </div>
