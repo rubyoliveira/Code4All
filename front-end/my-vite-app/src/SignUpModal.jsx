@@ -6,46 +6,42 @@ import { UserContext } from './UserContext.js';
 const SignUpModal = ({ closeModal }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const navigate = useNavigate();
 
     const { updateUser } = useContext(UserContext);
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
       e.preventDefault();
 
       try {
-        // Make the signup API request
         const response = await fetch(`http://localhost:3000/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify({ username, password, email, name }),
           credentials: 'include'
         });
 
         if (response.ok) {
           const data = await response.json();
           const loggedInUser = data.user;
-
-          console.log('Signup successful');
-
-          // Reset form fields
+          setEmail('')
+          setName('')
           setUsername('');
           setPassword('');
-
-          // Update the user context
           updateUser(loggedInUser);
-
-          // Navigate to the home page after successful login
           navigate('/courses');
+        } else if (response.status === 409) {
+          const errorData = await response.json();
+          alert(`Signup failed: ${errorData.message}`);
         } else {
-          // Handle signup failure case
-          alert('Signup failed');
+          alert('Signup failed: Unexpected error');
         }
       } catch (error) {
-        // Handle any network or API request errors
-        alert('Signup failed: ' + error);
+        alert('Signup failed: ' + error.message);
       }
     };
 
@@ -56,6 +52,12 @@ const SignUpModal = ({ closeModal }) => {
             <div className="signup-content">
               <button className="close-modal" onClick={closeModal}>&#10006;</button>
               <h2>Make an Account</h2>
+              <div className = "input-signup">
+                <input className = "pass-user" type="text" value={email} placeholder="Enter Email" onChange={(e) => setEmail(e.target.value)} required />
+              </div>
+              <div className = "input-signup">
+                <input className = "pass-user" type="text" value={name} placeholder="Enter Name" onChange={(e) => setName(e.target.value)} required />
+              </div>
               <div className = "input-signup">
                 <input className = "pass-user" type="text" value={username} placeholder="Enter Username" onChange={(e) => setUsername(e.target.value)} required />
               </div>

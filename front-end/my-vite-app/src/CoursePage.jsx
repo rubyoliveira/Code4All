@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import Footer from "./Footer.jsx"
 import Header from "./Header.jsx"
 import "./CoursePage.css"
+import { Navigate} from 'react-router-dom';
 import CourseCards from "./CourseCards"
 
 
-function CoursePage() {
+function CoursePage({username}) {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -27,10 +28,13 @@ function CoursePage() {
         console.error('Error fetching cards:', error);
       });
   };
+  if (username == null || username == "") {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>
-      <Header/>
+      <Header username = {username}/>
       <div className = "coursepage">
         <div className="banner">
           <h2>Courses</h2>
@@ -44,6 +48,7 @@ function CoursePage() {
                 img = {card.image}
                 description = {card.description}
                 level = {card.difficulty}
+                likes = {card.likes}
               />
             ))}
           </div>

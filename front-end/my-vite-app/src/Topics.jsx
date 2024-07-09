@@ -53,8 +53,8 @@ function Topics() {
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <div className = "modules" key={module.title}>
-                            <button className= "topic-button" onClick={() => fetchTopics(module.title)}><img src= "https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg"></img></button>
+                            <div className = "modules" key={module.id}>
+                            <button className= "topic-button" onClick={() => fetchTopics(module.id)}><img src= "https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg"></img></button>
                             <h3>
                                 {module.title}
                             </h3>
@@ -68,7 +68,7 @@ function Topics() {
                     {Array.isArray(topics) ? (
                         topics.map((topic) => (
                             <TopicCards
-                                key={topic.title}
+                                key={topic.id}
                                 title={topic.title}
                                 description={topic.description}
                                 videoURL = {topic.video}

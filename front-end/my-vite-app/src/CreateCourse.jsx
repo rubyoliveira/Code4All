@@ -45,6 +45,13 @@ function CreateCourse() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            setCourseTitle('')
+            setDescription('')
+            setSelectedOption('')
+            setModules([])
+            setImage('')
+            setPhotoURL('')
+            setPhoto('')
             return response.json();
         })
         .then(data => {
