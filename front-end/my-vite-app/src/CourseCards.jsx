@@ -4,7 +4,7 @@ import Header from "./Header.jsx"
 import { Link } from 'react-router-dom';
 
 
-function CourseCards({title, description, level, img, likes}) {
+function CourseCards({title, description, level, img, likes, username}) {
     const [vote, setVote] = useState(likes);
 
     const handleUpvote = () => {
@@ -25,6 +25,28 @@ function CourseCards({title, description, level, img, likes}) {
         });
     };
 
+    const handleSave = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${title}/save`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to save');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Course saved successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error saving:', error);
+        });
+    };
+
   return (
     <>
         <div className = "course">
@@ -35,7 +57,7 @@ function CourseCards({title, description, level, img, likes}) {
             <p>{description}</p>
             <p>Level: {level}</p>
             <div className = "course-buttons">
-                <button className = "save-later">Save for Later</button>
+                <button className = "save-later" onClick = {handleSave}>Save for Later</button>
                 <button className = "likes" onClick = {handleUpvote}>Like Count: {vote}</button>
             </div>
         </div>

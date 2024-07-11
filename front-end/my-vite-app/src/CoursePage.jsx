@@ -28,8 +28,9 @@ function CoursePage({username}) {
         console.error('Error fetching cards:', error);
       });
   };
+
   if (username == null || username == "") {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" />;
   }
 
   return (
@@ -49,6 +50,7 @@ function CoursePage({username}) {
                 description = {card.description}
                 level = {card.difficulty}
                 likes = {card.likes}
+                username = {username}
               />
             ))}
           </div>

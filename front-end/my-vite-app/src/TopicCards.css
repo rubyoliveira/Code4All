@@ -1,6 +1,6 @@
 .topic-video{
-    width: 50vh;
-    height: 30vh;
+    width: 50%;
+    height: 25vh;
     border: none;
     border-radius: 8px;
     margin: 20px;
@@ -16,5 +16,5 @@
 
 .topic-text{
     padding-right: 90px;
-    width: 70vh;
+    width: 50%;
 }

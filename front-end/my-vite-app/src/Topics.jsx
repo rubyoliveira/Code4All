@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import "./Topics.css"
 
-function Topics() {
+function Topics({username}) {
     const { courseId } = useParams();
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
@@ -46,9 +46,13 @@ function Topics() {
             });
     };
 
+    if (username == null || username == "") {
+        return <Navigate to="/" />;
+      }
+
     return (
         <>
-            <Header />
+            <Header username = {username} />
             <div className="course-module">
                 <div className="sidebar">
                     {Array.isArray(modules) ? (

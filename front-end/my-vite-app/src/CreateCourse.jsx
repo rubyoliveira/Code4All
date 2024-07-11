@@ -4,10 +4,11 @@ import Header from "./Header.jsx"
 import "./CreateCourse.css"
 import CodeBot from "./CodeBot.jsx"
 import CreateModules from "./CreateModules.jsx"
+import { Navigate} from 'react-router-dom';
 
 
 
-function CreateCourse() {
+function CreateCourse({username}) {
     //course info
     const [selectedOption, setSelectedOption] = useState('');
     const [courseTitle, setCourseTitle] = useState('')
@@ -33,6 +34,7 @@ function CreateCourse() {
             description: description,
             difficulty: selectedOption,
             image: image,
+            author: username,
             modules: modules
         };
 
@@ -92,9 +94,13 @@ function CreateCourse() {
         setSearchPhoto([]);
     }
 
+    if (username == null || username == "") {
+        return <Navigate to="/" />;
+      }
+
   return (
     <>
-      <Header/>
+      <Header username = {username} />
       <form onSubmit = {handleCreateCourse}>
             <div className= "create-page" >
                 <h2>Create a New Course</h2>
