@@ -13,11 +13,11 @@ function Profile({handleSignOut}) {
     const [userData, setUserData] = useState('');
     const [clickedCreate, setClickCreate] = useState(false)
     const [clickedSaved, setClickSaved] = useState(false)
-    const [dogPhoto, setDogPhoto] = useState('')
 
-    if (username == null) {
+    if (username == "undefined") {
         return <Navigate to="/" />;
     }
+
 
         const fetchProfile = () => {
             fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}`, {
@@ -85,7 +85,6 @@ function Profile({handleSignOut}) {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                setDogPhoto(data.message)
                 handleDogPic(data.message)
             })
             .catch(error => {

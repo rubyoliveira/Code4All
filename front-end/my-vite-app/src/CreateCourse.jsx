@@ -95,9 +95,9 @@ function CreateCourse({username}) {
         setSearchPhoto([]);
     }
 
-    if (username == null || username == "") {
+    if (username == "undefined") {
         return <Navigate to="/" />;
-      }
+    }
 
   return (
     <>
