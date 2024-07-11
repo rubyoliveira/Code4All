@@ -87,6 +87,24 @@ app.get('/profile/:username/created-courses', async (req, res) => {
     res.json(created)
 });
 
+app.patch('/profile/:username/picture', async (req, res) => {
+    const { username } = req.params;
+    const { photo } = req.body;
+    try {
+        const dogPic = await prisma.user.update({
+            where: { username: username },
+            data: {
+                image: photo
+            }
+        });
+        res.json(dogPic);
+    } catch (error) {
+        console.error("Error updating picture:", error);
+        res.status(500).send("Failed to picture");
+    }
+});
+
+
 
 app.get('/courses', async (req, res) => {
     const courses = await prisma.courses.findMany();

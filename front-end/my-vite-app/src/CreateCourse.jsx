@@ -35,7 +35,7 @@ function CreateCourse({username}) {
             difficulty: selectedOption,
             image: image,
             author: username,
-            userId,
+            userId: [],
             modules: modules
         };
 
