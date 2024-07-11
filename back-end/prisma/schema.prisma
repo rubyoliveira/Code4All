@@ -16,27 +16,33 @@ datasource db {
 model user {
   username String @id
   hashedPassword String
+  email String
+  name String
+  image String @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
 }
 
 model courses {
   title String @id
   description String
   difficulty String
+  likes Int @default(0)
   image String
   modules modules[]
 }
 
 model modules {
-  title String @id
-  courseId String 
+  id          Int    @id @default(autoincrement())
+  title String
+  courseId String
   course courses @relation(fields: [courseId], references: [title])
   topics topics[]
 }
 
 model topics {
-  title String @id
+  id          Int    @id @default(autoincrement())
+  title String
   description String
   video String
-  moduleId String
-  module modules @relation(fields: [moduleId], references: [title])
+  moduleId Int
+  module modules @relation(fields: [moduleId], references: [id])
 }

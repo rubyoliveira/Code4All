@@ -18,8 +18,9 @@ function CodeBot({ setDescription }) {
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
-        setResponse(text);
-        setDescription(text);  // Update the parent component's state
+        const cleanedText = formatText(text);
+        setResponse(cleanedText);
+        setDescription(cleanedText);  // Update the parent component's state
         setLoading(false);
     }
 
@@ -29,6 +30,12 @@ function CodeBot({ setDescription }) {
 
     const handleClick = () => {
         aiRun();
+    }
+
+    function formatText(text) {
+        let formattedText = text.replace(/\*/g, '');
+        formattedText = formattedText.replace(/\`/g, '');
+        return formattedText;
     }
 
     return (

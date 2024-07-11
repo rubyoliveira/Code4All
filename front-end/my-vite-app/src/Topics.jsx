@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import "./Topics.css"
 
-function Topics() {
+function Topics({username}) {
     const { courseId } = useParams();
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
@@ -46,15 +46,19 @@ function Topics() {
             });
     };
 
+    if (username == null || username == "") {
+        return <Navigate to="/" />;
+      }
+
     return (
         <>
-            <Header />
+            <Header username = {username} />
             <div className="course-module">
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <div className = "modules" key={module.title}>
-                            <button className= "topic-button" onClick={() => fetchTopics(module.title)}><img src= "https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg"></img></button>
+                            <div className = "modules" key={module.id}>
+                            <button className= "topic-button" onClick={() => fetchTopics(module.id)}><img src= "https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg"></img></button>
                             <h3>
                                 {module.title}
                             </h3>
@@ -68,7 +72,7 @@ function Topics() {
                     {Array.isArray(topics) ? (
                         topics.map((topic) => (
                             <TopicCards
-                                key={topic.title}
+                                key={topic.id}
                                 title={topic.title}
                                 description={topic.description}
                                 videoURL = {topic.video}
