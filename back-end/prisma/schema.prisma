@@ -29,7 +29,7 @@ model courses {
   likes Int @default(0)
   image String
   author String @default("anonymous")
-  userId String @default("anonymous")
+  userId String[] @default([])
   user user @relation(fields: [author], references: [username])
   modules modules[]
 }

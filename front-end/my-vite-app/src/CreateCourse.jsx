@@ -35,7 +35,7 @@ function CreateCourse({username}) {
             difficulty: selectedOption,
             image: image,
             author: username,
-            userId: "n/a",
+            userId,
             modules: modules
         };
 
@@ -58,7 +58,7 @@ function CreateCourse({username}) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            alert("Course created successfully", data);
         })
         .catch(error => {
             console.error('Error creating course:', error);

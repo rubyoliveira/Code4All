@@ -90,7 +90,7 @@ function Profile({handleSignOut}) {
                     <div className = "courses">
                         {userCourses.map(card => (
                             <div className = "profile-cards" key = {card.title}>
-                                <img src = {card.image}/>
+                                <img className = "pcards-img" src = {card.image}/>
                                 <p>{card.title}</p>
                                 <p>{card.description}</p>
                             </div>
@@ -100,7 +100,7 @@ function Profile({handleSignOut}) {
                     <div className = "courses">
                         {saved.map(card => (
                             <div className = "profile-cards" key = {card.title}>
-                                <img src = {card.image}/>
+                                <img className = "pcards-img" src = {card.image}/>
                                 <p>{card.title}</p>
                                 <p>{card.description}</p>
                             </div>

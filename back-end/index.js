@@ -73,7 +73,7 @@ app.get('/profile/:username', async (req, res) => {
 app.get('/profile/:username/saved-courses', async (req, res) => {
     const { username } = req.params;
     const saved = await prisma.courses.findMany({
-        where: { userId: username }
+        where: { userId: {has: username}}
     });
     res.json(saved)
 });
@@ -97,19 +97,32 @@ app.get('/courses', async (req, res) => {
 app.patch('/courses/:courseId/save', async (req, res) => {
     const { courseId } = req.params;
     const { username } = req.body;
+
     try {
-        const course = await prisma.courses.update({
+        const course = await prisma.courses.findUnique({
             where: { title: courseId },
-            data: {
-                userId: username
-            },
         });
-        res.json(course);
+
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+
+        if (!course.userId.includes(username)) {
+            const updatedCourse = await prisma.courses.update({
+                where: { title: courseId },
+                data: {
+                    userId: [...course.userId, username],
+                },
+            });
+            res.json(updatedCourse);
+        } else {
+            res.status(400).send('User already saved this course');
+        }
     } catch (error) {
         console.error('Error saving course:', error);
         res.status(500).send('Error saving course');
     }
-  });
+});
 
 app.get('/courses/:courseId', async (req, res) => {
     const {courseId} = req.params;
