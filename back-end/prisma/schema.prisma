@@ -19,6 +19,7 @@ model user {
   email String
   name String
   image String @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  course courses[]
 }
 
 model courses {
@@ -27,6 +28,9 @@ model courses {
   difficulty String
   likes Int @default(0)
   image String
+  author String @default("anonymous")
+  userId String @default("anonymous")
+  user user @relation(fields: [author], references: [username])
   modules modules[]
 }
 

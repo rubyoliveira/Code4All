@@ -70,11 +70,46 @@ app.get('/profile/:username', async (req, res) => {
     }
 });
 
+app.get('/profile/:username/saved-courses', async (req, res) => {
+    const { username } = req.params;
+    const saved = await prisma.courses.findMany({
+        where: { userId: username }
+    });
+    res.json(saved)
+});
+
+
+app.get('/profile/:username/created-courses', async (req, res) => {
+    const { username } = req.params;
+    const created = await prisma.courses.findMany({
+        where: { author: username }
+    });
+    res.json(created)
+});
+
+
 app.get('/courses', async (req, res) => {
     const courses = await prisma.courses.findMany();
     res.json(courses);
 
 });
+
+app.patch('/courses/:courseId/save', async (req, res) => {
+    const { courseId } = req.params;
+    const { username } = req.body;
+    try {
+        const course = await prisma.courses.update({
+            where: { title: courseId },
+            data: {
+                userId: username
+            },
+        });
+        res.json(course);
+    } catch (error) {
+        console.error('Error saving course:', error);
+        res.status(500).send('Error saving course');
+    }
+  });
 
 app.get('/courses/:courseId', async (req, res) => {
     const {courseId} = req.params;
@@ -112,27 +147,29 @@ app.get('/courses/:courseId/:moduleId', async (req, res) => {
 });
 
 app.post('/courses/create', async (req, res) => {
-    const { title, description, difficulty, image, modules } = req.body;
+    const { title, description, difficulty, image, author, userId, modules } = req.body;
 
-    if (!title || !description || !difficulty || !image || !modules || modules.length === 0) {
+    if (!title || !description || !difficulty || !image || !author || !userId || !modules || modules.length === 0) {
         return res.status(400).send('Missing required fields.');
     }
 
     try {
         const existingCourse = await prisma.courses.findUnique({
-            where: {
-                title: title
-            }
+            where: { title }
         });
+
         if (existingCourse) {
             return res.status(409).json({ message: 'A course with this title already exists.' });
         }
+
         const newCourse = await prisma.courses.create({
             data: {
                 title,
                 description,
                 difficulty,
                 image,
+                author,
+                userId,
                 modules: {
                     create: modules.map(module => ({
                         title: module.title,
@@ -140,7 +177,7 @@ app.post('/courses/create', async (req, res) => {
                             create: module.topics.map(topic => ({
                                 title: topic.title,
                                 description: topic.description,
-                                video: topic.video // Assuming 'video' is the correct field
+                                video: topic.video
                             }))
                         }
                     }))
@@ -157,8 +194,8 @@ app.post('/courses/create', async (req, res) => {
 
         res.json(newCourse);
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Error creating course');
+        console.error('Error creating course:', error);
+        res.status(500).send('Error creating course: ' + error.message);
     }
 });
 
