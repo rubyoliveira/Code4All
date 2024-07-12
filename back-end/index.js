@@ -29,6 +29,7 @@ app.post("/create", async (req, res) => {
                 username,
                 hashedPassword: hashed,
                 email,
+                complete,
                 name
             }
         });
@@ -103,6 +104,23 @@ app.patch('/profile/:username/picture', async (req, res) => {
         res.status(500).send("Failed to picture");
     }
 });
+
+// app.patch('/courses/:username/completed', async (req, res) => {
+//     const { username } = req.params;
+//     const { completed } = req.body;
+//     try {
+//         const updateComplete = await prisma.user.update({
+//             where: { username: username },
+//             data: {
+//                 complete: completed
+//             }
+//         });
+//         res.json(updateComplete);
+//     } catch (error) {
+//         console.error("Error updating picture:", error);
+//         res.status(500).send("Failed to picture");
+//     }
+// });
 
 
 
