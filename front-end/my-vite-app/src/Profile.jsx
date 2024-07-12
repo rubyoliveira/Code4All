@@ -135,12 +135,26 @@ function Profile({handleSignOut}) {
                         <button onClick = {fetchSavedCourses}>Saved For Later</button>
                         {clickedCreate && <div className = "courses">
                             {userCourses.map(card => (
-                               <ProfileCards key = {card.title} title ={card.title} description = {card.description} image = {card.image} fetchProfile = {fetchProfile} />
+                               <ProfileCards
+                                key = {card.title}
+                                title ={card.title}
+                                description = {card.description}
+                                image = {card.image}
+                                fetchProfile = {fetchProfile}
+                                author = {card.author}
+                                user = {userData.username}/>
                             ))}
                         </div> }
                         {clickedSaved && <div className = "courses">
                             {saved.map(card => (
-                                <ProfileCards key = {card.title} title ={card.title} description = {card.description} image = {card.image} fetchProfile = {fetchProfile} />
+                                <ProfileCards
+                                key = {card.title}
+                                title ={card.title}
+                                description = {card.description}
+                                image = {card.image}
+                                fetchProfile = {fetchProfile}
+                                author = {card.author}
+                                user = {userData.username}/>
                             ))}
                         </div>}
                     </div>
