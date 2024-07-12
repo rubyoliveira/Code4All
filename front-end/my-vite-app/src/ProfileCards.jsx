@@ -32,7 +32,9 @@ function ProfileCards({title, image, description, fetchProfile}) {
     return (
         <>
         <div className = "profile-cards">
-            <img className = "pcards-img" src = {image}/>
+            <Link to = {`/courses/${title}`}>
+                <img className ="pcards-img" src = {image}></img>
+            </Link>
             <p>{title}</p>
             <p>{description}</p>
             <button onClick = {deleteBoard}>delete</button>
