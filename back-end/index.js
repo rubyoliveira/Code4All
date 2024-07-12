@@ -230,6 +230,33 @@ app.post('/courses/create', async (req, res) => {
     }
 });
 
+app.delete('/courses/:id/delete', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await prisma.$transaction(async (prisma) => {
+            const modules = await prisma.modules.findMany({
+                where: { courseId: id }
+            });
+            for (const module of modules) {
+                await prisma.topics.deleteMany({
+                    where: { moduleId: parseInt(module.id) }
+                });
+            }
+            await prisma.modules.deleteMany({
+                where: { courseId: id }
+            });
+            return await prisma.courses.delete({
+                where: { title: id }
+            });
+        });
+        res.json(result);
+    } catch (error) {
+        console.error("Error deleting card and its threads:", error);
+        res.status(500).json({ message: "Error deleting card and its threads" });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

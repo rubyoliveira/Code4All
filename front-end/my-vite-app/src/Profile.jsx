@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, Navigate } from 'react-router-dom';
 import CourseCards from "./CourseCards.jsx"
+import ProfileCards from "./ProfileCards.jsx"
 
 import Header from "./Header.jsx"
 import './Profile.css'
@@ -118,7 +119,6 @@ function Profile({handleSignOut}) {
 
 
 
-
     return (
         <>
         <Header/>
@@ -135,20 +135,12 @@ function Profile({handleSignOut}) {
                         <button onClick = {fetchSavedCourses}>Saved For Later</button>
                         {clickedCreate && <div className = "courses">
                             {userCourses.map(card => (
-                                <div className = "profile-cards" key = {card.title}>
-                                    <img className = "pcards-img" src = {card.image}/>
-                                    <p>{card.title}</p>
-                                    <p>{card.description}</p>
-                                </div>
+                               <ProfileCards key = {card.title} title ={card.title} description = {card.description} image = {card.image} fetchProfile = {fetchProfile} />
                             ))}
                         </div> }
                         {clickedSaved && <div className = "courses">
                             {saved.map(card => (
-                                <div className = "profile-cards" key = {card.title}>
-                                    <img className = "pcards-img" src = {card.image}/>
-                                    <p>{card.title}</p>
-                                    <p>{card.description}</p>
-                                </div>
+                                <ProfileCards key = {card.title} title ={card.title} description = {card.description} image = {card.image} fetchProfile = {fetchProfile} />
                             ))}
                         </div>}
                     </div>
