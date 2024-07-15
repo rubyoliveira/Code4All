@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import ReactMarkdown from 'react-markdown';
 
 function CodeBot({ setDescription }) {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
@@ -7,9 +8,6 @@ function CodeBot({ setDescription }) {
     const [aiResponse, setResponse] = useState('');
     const [loading, setLoading] = useState(false);
 
-    /**
-     * Generative AI Call to fetch text insights
-     */
     async function aiRun() {
         setLoading(true);
         setResponse('');
@@ -18,10 +16,10 @@ function CodeBot({ setDescription }) {
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
-        const cleanedText = formatText(text);
-        setResponse(cleanedText);
-        setDescription(cleanedText);  // Update the parent component's state
+        setResponse(text);
+        setDescription(text);
         setLoading(false);
+        console.log(response)
     }
 
     const handleChangeSearch = (e) => {
@@ -30,12 +28,6 @@ function CodeBot({ setDescription }) {
 
     const handleClick = () => {
         aiRun();
-    }
-
-    function formatText(text) {
-        let formattedText = text.replace(/\*/g, '');
-        formattedText = formattedText.replace(/\`/g, '');
-        return formattedText;
     }
 
     return (
@@ -54,7 +46,7 @@ function CodeBot({ setDescription }) {
                 <p style={{ margin: '30px 0' }}>Loading...</p>
             ) : (
                 <div style={{ margin: '30px 0' }}>
-                    <p>{aiResponse}</p>
+                    <ReactMarkdown>{aiResponse}</ReactMarkdown>
                 </div>
             )}
         </div>

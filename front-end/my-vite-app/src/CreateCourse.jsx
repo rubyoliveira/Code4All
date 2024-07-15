@@ -28,7 +28,7 @@ function CreateCourse({username}) {
 
     const handleCreateCourse = (event) => {
         event.preventDefault()
-
+        console.log(username)
         const courseData = {
             title: courseTitle,
             description: description,
@@ -94,7 +94,7 @@ function CreateCourse({username}) {
         setSearchPhoto([]);
     }
 
-    if (username == null || username == "") {
+    if (username == null || username == "undefined") {
         return <Navigate to="/" />;
       }
 

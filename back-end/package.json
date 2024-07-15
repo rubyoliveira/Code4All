@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@prisma/client": "^5.16.1",
+    "@prisma/client": "^5.16.2",
     "@sequelize/postgres": "^7.0.0-alpha.41",
     "bcrypt": "^5.1.1",
     "connect-redis": "^6.0.0",
@@ -11,7 +11,9 @@
     "morgan": "^1.10.0",
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
-    "prisma": "^5.16.1",
     "redis": "^4.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.16.2"
   }
 }
