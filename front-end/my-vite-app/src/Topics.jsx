@@ -3,16 +3,16 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
+import Modules from "./Modules.jsx"
 import "./Topics.css"
 
 function Topics({username}) {
     const { courseId } = useParams();
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
-    const [buttonStyle, setButtonStyle] = useState('light')
 
     useEffect(() => {
-        fetchModules();
+        fetchModules()
     }, [courseId]);
 
     const fetchModules = () => {
@@ -50,12 +50,6 @@ function Topics({username}) {
     if (username === "undefined") {
         return <Navigate to="/" />;
     }
-
-    const buttonClick = (moduleId) => {
-        setButtonStyle("dark");
-        fetchTopics(moduleId);
-    }
-
     return (
         <>
             <Header username={username} />
@@ -63,12 +57,7 @@ function Topics({username}) {
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <div className="modules" key={module.id}>
-                                <button className={buttonStyle} onClick={() => buttonClick(module.id)}>
-                                    <img src="https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg" alt="Module Icon" />
-                                </button>
-                                <h3>{module.title}</h3>
-                            </div>
+                            <Modules key = {module.id} id = {module.id} title = {module.title} username = {username} fetchTopics = {fetchTopics}/>
                         ))
                     ) : (
                         <p>No modules available</p>

@@ -107,12 +107,11 @@ app.patch('/profile/:username/picture', async (req, res) => {
 
 app.patch('/courses/:username/completed', async (req, res) => {
     const { username } = req.params;
-    const { completed } = req.body;
     try {
         const updateComplete = await prisma.user.update({
             where: { username: username },
             data: {
-                complete: completed
+                complete: "dark"
             }
         });
         res.json(updateComplete);
