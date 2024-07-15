@@ -15,7 +15,7 @@ app.use(cors({
 
 
 app.post("/create", async (req, res) => {
-    const { username, password, email, name } = req.body;
+    const { username, password, email, name, complete } = req.body;
     try {
         const existingUser = await prisma.user.findUnique({
             where: { username }
@@ -105,22 +105,22 @@ app.patch('/profile/:username/picture', async (req, res) => {
     }
 });
 
-// app.patch('/courses/:username/completed', async (req, res) => {
-//     const { username } = req.params;
-//     const { completed } = req.body;
-//     try {
-//         const updateComplete = await prisma.user.update({
-//             where: { username: username },
-//             data: {
-//                 complete: completed
-//             }
-//         });
-//         res.json(updateComplete);
-//     } catch (error) {
-//         console.error("Error updating picture:", error);
-//         res.status(500).send("Failed to picture");
-//     }
-// });
+app.patch('/courses/:username/completed', async (req, res) => {
+    const { username } = req.params;
+    const { completed } = req.body;
+    try {
+        const updateComplete = await prisma.user.update({
+            where: { username: username },
+            data: {
+                complete: completed
+            }
+        });
+        res.json(updateComplete);
+    } catch (error) {
+        console.error("Error updating picture:", error);
+        res.status(500).send("Failed to picture");
+    }
+});
 
 
 
