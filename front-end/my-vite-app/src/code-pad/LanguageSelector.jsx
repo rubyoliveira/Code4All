@@ -1,15 +1,29 @@
-
+import { LANGUAGES} from "../constants"
+const languages = Object.entries(LANGUAGES);
 
 const LanguageSelector = () => {
     return(
        <div>
-            <Text>Language: </Text>
+            <p>Language: </p>
             <div className = "dropdown">
                 <select className="create-dropdown">
-                    <option value = "">JavaScript</option>
-                    <option value ="Beginner" >Beginner</option>
-                    <option value ="Intermediate" >Intermediate</option>
-                    <option value ="Expert" >Expert</option>
+                    {languages.map(([lang, version]) => (
+                        <option
+                            key={lang}
+                            color={lang === language ? ACTIVE_COLOR : ""}
+                            bg={lang === language ? "gray.900" : "transparent"}
+                            _hover={{
+                                color: ACTIVE_COLOR,
+                                bg: "gray.900",
+                            }}
+                            onClick={() => onSelect(lang)}>
+                            {lang}
+                            &nbsp;
+                            <p as="span" color="gray.600" fontSize="sm">
+                                ({version})
+                            </p>
+                        </option>
+                ))}
                 </select>
             </div>
        </div>
