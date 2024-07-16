@@ -1,4 +1,5 @@
 import { LANGUAGES} from "../constants"
+import {useState, useRef} from "react";
 const languages = Object.entries(LANGUAGES);
 
 const LanguageSelector = ({language, onSelect}) => {
@@ -10,12 +11,6 @@ const LanguageSelector = ({language, onSelect}) => {
                     {languages.map(([lang, version]) => (
                         <option
                             key={lang}
-                            color={lang === language ? ACTIVE_COLOR : ""}
-                            bg={lang === language ? "gray.900" : "transparent"}
-                            _hover={{
-                                color: ACTIVE_COLOR,
-                                bg: "gray.900",
-                            }}
                             onClick={() => onSelect(lang)}>
                             {lang}
                             &nbsp;

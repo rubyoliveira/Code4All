@@ -1,5 +1,5 @@
 import {Editor} from "@monaco-editor/react";
-import {useState} from "react";
+import {useState, useRef} from "react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { STARTER_CODE } from "../constants";

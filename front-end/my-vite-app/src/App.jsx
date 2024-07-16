@@ -44,17 +44,20 @@ function App() {
 
 
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/courses" element={<CoursePage username={user?.username} />} />
-          <Route path="/courses/create" element={<CreateCourse username={user?.username}  />} />
-          <Route path="/courses/:courseId" element={<Topics username={user?.username}  />} />
-          <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
-        </Routes>
-      </BrowserRouter>
-    </UserContext.Provider>
+    <div>
+      <CodeEditor />
+    </div>
+    // <UserContext.Provider value={{ user, updateUser }}>
+    //   <BrowserRouter>
+    //     <Routes>
+    //       <Route path="/" element={<Home />} />
+    //       <Route path="/courses" element={<CoursePage username={user?.username} />} />
+    //       <Route path="/courses/create" element={<CreateCourse username={user?.username}  />} />
+    //       <Route path="/courses/:courseId" element={<Topics username={user?.username}  />} />
+    //       <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
+    //     </Routes>
+    //   </BrowserRouter>
+    // </UserContext.Provider>
   );
 }
 
