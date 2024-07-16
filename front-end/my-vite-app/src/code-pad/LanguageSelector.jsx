@@ -1,7 +1,7 @@
 import { LANGUAGES} from "../constants"
 const languages = Object.entries(LANGUAGES);
 
-const LanguageSelector = () => {
+const LanguageSelector = ({language, onSelect}) => {
     return(
        <div>
             <p>Language: </p>

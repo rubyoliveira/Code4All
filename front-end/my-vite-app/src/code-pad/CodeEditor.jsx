@@ -22,7 +22,7 @@ const CodeEditor = () => {
             <Editor
                 height="75vh"
                 theme = "vs-dark"
-                defaultLanguage="javascript"
+                language = {language}
                 defaultValue="// some comment"
                 onMount = {onMount}
                 value = {value}
