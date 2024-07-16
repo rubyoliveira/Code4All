@@ -7,6 +7,7 @@ import CoursePage from './CoursePage.jsx';
 import Topics from './Topics.jsx';
 import CreateCourse from './CreateCourse.jsx';
 import Profile from "./Profile.jsx";
+import CodeEditor from "./code-pad/CodeEditor"
 
 function App() {
   const [user, setUser] = useState(() => {
