@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
+import Modules from "./Modules.jsx"
 import "./Topics.css"
 
 function Topics({username}) {
@@ -11,7 +12,7 @@ function Topics({username}) {
     const [modules, setModules] = useState([]);
 
     useEffect(() => {
-        fetchModules();
+        fetchModules()
     }, [courseId]);
 
     const fetchModules = () => {
@@ -46,23 +47,17 @@ function Topics({username}) {
             });
     };
 
-    if (username == null || username == "") {
+    if (username === "undefined") {
         return <Navigate to="/" />;
-      }
-
+    }
     return (
         <>
-            <Header username = {username} />
+            <Header username={username} />
             <div className="course-module">
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <div className = "modules" key={module.id}>
-                            <button className= "topic-button" onClick={() => fetchTopics(module.id)}><img src= "https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg"></img></button>
-                            <h3>
-                                {module.title}
-                            </h3>
-                            </div>
+                            <Modules key = {module.id} id = {module.id} title = {module.title} username = {username} fetchTopics = {fetchTopics}/>
                         ))
                     ) : (
                         <p>No modules available</p>
@@ -75,7 +70,7 @@ function Topics({username}) {
                                 key={topic.id}
                                 title={topic.title}
                                 description={topic.description}
-                                videoURL = {topic.video}
+                                videoURL={topic.video}
                             />
                         ))
                     ) : (

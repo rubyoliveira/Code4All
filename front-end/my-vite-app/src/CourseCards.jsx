@@ -40,7 +40,7 @@ function CourseCards({title, description, level, img, likes, username}) {
             return response.json();
         })
         .then(data => {
-            console.log('Course saved successfully:', data);
+            alert('Course saved successfully:', data);
         })
         .catch(error => {
             console.error('Error saving:', error);

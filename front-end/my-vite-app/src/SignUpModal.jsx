@@ -8,20 +8,21 @@ const SignUpModal = ({ closeModal }) => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
+    const complete = "light";
     const navigate = useNavigate();
 
     const { updateUser } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-
+      console.log(complete);
       try {
-        const response = await fetch(`http://localhost:3000/create`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username, password, email, name }),
+          body: JSON.stringify({ username, password, email, name, complete}),
           credentials: 'include'
         });
 

@@ -19,6 +19,7 @@
     flex-direction: row;
     align-content: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
 .modules{
@@ -29,7 +30,7 @@
     flex-direction: row;
 }
 
-.topic-button{
+.light{
     display: flex;
     width: 50px;
     height: 50px;
@@ -44,6 +45,20 @@
     -webkit-box-shadow: inset 1px -9px 15.5px -3px #dddddd;
     -moz-box-shadow: inset 1px -9px 15.5px -3px #dddddd;
     box-shadow: inset 1px -9px 15.5px -3px #dddddd;
+}
+
+.dark{
+    display: flex;
+    width: 50px;
+    height: 50px;
+    min-height: 50px;
+    min-width: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    margin-right: 20px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.324);
 }
 
 .topic-button:hover{

@@ -15,7 +15,7 @@ app.use(cors({
 
 
 app.post("/create", async (req, res) => {
-    const { username, password, email, name } = req.body;
+    const { username, password, email, name, complete } = req.body;
     try {
         const existingUser = await prisma.user.findUnique({
             where: { username }
@@ -29,6 +29,7 @@ app.post("/create", async (req, res) => {
                 username,
                 hashedPassword: hashed,
                 email,
+                complete,
                 name
             }
         });
@@ -73,7 +74,7 @@ app.get('/profile/:username', async (req, res) => {
 app.get('/profile/:username/saved-courses', async (req, res) => {
     const { username } = req.params;
     const saved = await prisma.courses.findMany({
-        where: { userId: username }
+        where: { userId: {has: username}}
     });
     res.json(saved)
 });
@@ -87,6 +88,40 @@ app.get('/profile/:username/created-courses', async (req, res) => {
     res.json(created)
 });
 
+app.patch('/profile/:username/picture', async (req, res) => {
+    const { username } = req.params;
+    const { photo } = req.body;
+    try {
+        const dogPic = await prisma.user.update({
+            where: { username: username },
+            data: {
+                image: photo
+            }
+        });
+        res.json(dogPic);
+    } catch (error) {
+        console.error("Error updating picture:", error);
+        res.status(500).send("Failed to picture");
+    }
+});
+
+app.patch('/courses/:username/completed', async (req, res) => {
+    const { username } = req.params;
+    try {
+        const updateComplete = await prisma.user.update({
+            where: { username: username },
+            data: {
+                complete: "dark"
+            }
+        });
+        res.json(updateComplete);
+    } catch (error) {
+        console.error("Error updating picture:", error);
+        res.status(500).send("Failed to picture");
+    }
+});
+
+
 
 app.get('/courses', async (req, res) => {
     const courses = await prisma.courses.findMany();
@@ -97,19 +132,32 @@ app.get('/courses', async (req, res) => {
 app.patch('/courses/:courseId/save', async (req, res) => {
     const { courseId } = req.params;
     const { username } = req.body;
+
     try {
-        const course = await prisma.courses.update({
+        const course = await prisma.courses.findUnique({
             where: { title: courseId },
-            data: {
-                userId: username
-            },
         });
-        res.json(course);
+
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+
+        if (!course.userId.includes(username)) {
+            const updatedCourse = await prisma.courses.update({
+                where: { title: courseId },
+                data: {
+                    userId: [...course.userId, username],
+                },
+            });
+            res.json(updatedCourse);
+        } else {
+            res.status(400).send('User already saved this course');
+        }
     } catch (error) {
         console.error('Error saving course:', error);
         res.status(500).send('Error saving course');
     }
-  });
+});
 
 app.get('/courses/:courseId', async (req, res) => {
     const {courseId} = req.params;
@@ -196,6 +244,33 @@ app.post('/courses/create', async (req, res) => {
     } catch (error) {
         console.error('Error creating course:', error);
         res.status(500).send('Error creating course: ' + error.message);
+    }
+});
+
+app.delete('/courses/:id/delete', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await prisma.$transaction(async (prisma) => {
+            const modules = await prisma.modules.findMany({
+                where: { courseId: id }
+            });
+            for (const module of modules) {
+                await prisma.topics.deleteMany({
+                    where: { moduleId: parseInt(module.id) }
+                });
+            }
+            await prisma.modules.deleteMany({
+                where: { courseId: id }
+            });
+            return await prisma.courses.delete({
+                where: { title: id }
+            });
+        });
+        res.json(result);
+    } catch (error) {
+        console.error("Error deleting card and its threads:", error);
+        res.status(500).json({ message: "Error deleting card and its threads" });
     }
 });
 

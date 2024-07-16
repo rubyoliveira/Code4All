@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@prisma/client": "^5.16.1",
+    "@prisma/client": "^5.16.2",
     "@sequelize/postgres": "^7.0.0-alpha.41",
     "bcrypt": "^5.1.1",
     "connect-redis": "^6.0.0",
