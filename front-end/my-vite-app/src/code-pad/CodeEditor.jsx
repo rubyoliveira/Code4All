@@ -1,6 +1,8 @@
 import {Editor} from "@monaco-editor/react";
 import {useState} from "react";
 import LanguageSelector from "./LanguageSelector";
+import Output from "./Output";
+import { STARTER_CODE } from "../constants";
 
 const CodeEditor = () => {
     const editorRef = useRef()
@@ -14,6 +16,7 @@ const CodeEditor = () => {
 
     const onSelect = (language) => {
         setLanguage(language)
+        setValue(STARTER_CODE[language])
     }
 
     return(
@@ -28,6 +31,7 @@ const CodeEditor = () => {
                 value = {value}
                 onChange = {(value) => setValue(value)}
             />
+            <Output editorRef = {editorRef} language = {language}/>
         </div>
     )
 }

@@ -6,7 +6,7 @@ const LanguageSelector = ({language, onSelect}) => {
        <div>
             <p>Language: </p>
             <div className = "dropdown">
-                <select className="create-dropdown">
+                <select className="create-dropdown" isLazy >
                     {languages.map(([lang, version]) => (
                         <option
                             key={lang}
