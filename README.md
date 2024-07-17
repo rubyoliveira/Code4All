@@ -47,7 +47,7 @@ I am going to be linking a course page to its information within a database that
 For wireframes and data models go here: [document](https://docs.google.com/document/d/1ywcPyNcS8KWvNCQ4_xO7haq1eXU1e7XIXHo-tRQTjJI/edit?usp=sharing)
 
 ### Technical Challenge #1 - Code Sandbox
-- [ ] User can play with a code sandbox embed and pick languages to code in to further advance their skills
+- [x] User can play with a code sandbox embed and pick languages to code in to further advance their skills
 
 
 ### Technical Challenge #2 - Chat Bot
