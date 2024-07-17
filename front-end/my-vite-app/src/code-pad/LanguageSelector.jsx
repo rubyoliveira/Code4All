@@ -7,17 +7,11 @@ const LanguageSelector = ({language, onSelect}) => {
        <div>
             <p>Language: </p>
             <div className = "dropdown">
-                <select className="create-dropdown" isLazy >
-                    {languages.map(([lang, version]) => (
-                        <option
-                            key={lang}
-                            onClick={() => onSelect(lang)}>
-                            {lang}
-                            &nbsp;
-                            <p as="span" color="gray.600" fontSize="sm">
-                                ({version})
-                            </p>
-                        </option>
+                <select className="create-dropdown" >
+                {languages.map(([lang, version]) => (
+                    <option key={lang} value={lang} onClick={() => onSelect(lang)}>
+                    {`${lang} (${version})`}
+                    </option>
                 ))}
                 </select>
             </div>
