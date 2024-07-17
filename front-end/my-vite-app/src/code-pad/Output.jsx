@@ -1,4 +1,5 @@
 import { executeCode } from "../constants";
+import axios from 'axios';
 import {useState, useRef} from "react";
 
 const Output = ({ language, editorRef }) => {
