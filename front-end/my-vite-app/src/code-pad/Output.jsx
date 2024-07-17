@@ -2,7 +2,7 @@ import { executeCode } from "../constants";
 import axios from 'axios';
 import {useState, useRef} from "react";
 
-const Output = ({ language, editorRef }) => {
+const Output = ({ language, editorRef, version }) => {
     const [output, setOutput] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -12,7 +12,7 @@ const Output = ({ language, editorRef }) => {
         if (!sourceCode) return;
         try {
             setIsLoading(true);
-            const response = await executeCode(language, sourceCode);
+            const response = await executeCode(language, sourceCode, version);
             setOutput(response.run.output.split("\n"));
             setIsError(response.run.stderr ? true : false);
         } catch (error) {

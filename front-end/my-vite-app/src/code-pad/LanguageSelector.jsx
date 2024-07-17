@@ -1,8 +1,7 @@
-import { LANGUAGES} from "../constants"
-import {useState, useRef} from "react";
-const languages = Object.entries(LANGUAGES);
+import {useState, useRef, useEffect} from "react";
 
-const LanguageSelector = ({language, onSelect}) => {
+const LanguageSelector = ({language, onSelect, languages}) => {
+
     return (
         <div>
           <p>Language: </p>
@@ -12,9 +11,9 @@ const LanguageSelector = ({language, onSelect}) => {
               value={language}
               onChange={(e) => onSelect(e.target.value)}
             >
-              {languages.map(([lang, version]) => (
-                <option key={lang} value={lang}>
-                  {`${lang} (${version})`}
+              {languages.map((lang) => (
+                <option key={lang.id} value={lang.language}>
+                  {`${lang.language} (${lang.version})`}
                 </option>
               ))}
             </select>
