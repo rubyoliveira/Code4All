@@ -6,7 +6,7 @@ import { STARTER_CODE } from "../constants";
 
 const CodeEditor = () => {
     const editorRef = useRef()
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(STARTER_CODE['javascript'])
     const [language, setLanguage] = useState('javascript')
 
     const onMount = (editor) => {

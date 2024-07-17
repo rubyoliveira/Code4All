@@ -7,21 +7,20 @@ const Output = ({ language, editorRef }) => {
     const [isError, setIsError] = useState(false);
 
     const run = async () => {
-      const sourceCode = editorRef.current.getValue();
-      if (!sourceCode) return;
-      try {
-        setIsLoading(true);
-        await executeCode(language, sourceCode);
-        setOutput(result.output.split("\n"));
-        setIsError(!!result.stderr);
-      } catch (error) {
-        console.error(error);
-        alert(error.message || "Unable to run code");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+        const sourceCode = editorRef.current.getValue();
+        if (!sourceCode) return;
+        try {
+            setIsLoading(true);
+            const response = await executeCode(language, sourceCode);
+            setOutput(response.run.output.split("\n"));
+            setIsError(response.run.stderr ? true : false);
+        } catch (error) {
+            console.error(error);
+            alert(error.message || "Unable to run code");
+        } finally {
+            setIsLoading(false);
+        }
+    }
     return (
       <div>
         <button disabled={isLoading} onClick={run}>
