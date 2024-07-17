@@ -38,8 +38,9 @@ const CodeEditor = () => {
     }
 
     const onSelect = (language) => {
+        const selectedLangObj = languages.find(lang => lang.language === language)
         setLanguage(language)
-        setVersion(language.version)
+        setVersion(selectedLangObj.version)
         setValue(STARTER_CODE[language])
     }
 
