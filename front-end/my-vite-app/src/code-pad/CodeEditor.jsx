@@ -3,8 +3,9 @@ import {useState, useRef, useEffect} from "react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { STARTER_CODE } from "../constants";
+import Header from "../Header.jsx"
 
-const CodeEditor = () => {
+const CodeEditor = ({username}) => {
     const editorRef = useRef()
     const [value, setValue] = useState(STARTER_CODE['javascript'])
     const [language, setLanguage] = useState('javascript')
@@ -31,7 +32,6 @@ const CodeEditor = () => {
             });
     }
 
-
     const onMount = (editor) => {
         editorRef.current = editor
         editor.focus();
@@ -44,8 +44,13 @@ const CodeEditor = () => {
         setValue(STARTER_CODE[language])
     }
 
+    if (username == "undefined") {
+        return <Navigate to="/" />;
+      }
+
     return(
         <div>
+            <Header username = {username}/>
             <LanguageSelector language={language} onSelect={onSelect} languages = {languages} />
             <Editor
                 height="75vh"

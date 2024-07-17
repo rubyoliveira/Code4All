@@ -44,20 +44,18 @@ function App() {
 
 
   return (
-    <div>
-      <CodeEditor/>
-    </div>
-    // <UserContext.Provider value={{ user, updateUser }}>
-    //   <BrowserRouter>
-    //     <Routes>
-    //       <Route path="/" element={<Home />} />
-    //       <Route path="/courses" element={<CoursePage username={user?.username} />} />
-    //       <Route path="/courses/create" element={<CreateCourse username={user?.username}  />} />
-    //       <Route path="/courses/:courseId" element={<Topics username={user?.username}  />} />
-    //       <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
-    //     </Routes>
-    //   </BrowserRouter>
-    // </UserContext.Provider>
+    <UserContext.Provider value={{ user, updateUser }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/courses" element={<CoursePage username={user?.username} />} />
+          <Route path="/courses/create" element={<CreateCourse username={user?.username}  />} />
+          <Route path="/courses/:courseId" element={<Topics username={user?.username}  />} />
+          <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
+          <Route path= "/code-pad" element = {<CodeEditor username = {user?.username} />}/>
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
