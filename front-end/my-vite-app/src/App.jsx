@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div>
-      <CodeEditor />
+      <CodeEditor/>
     </div>
     // <UserContext.Provider value={{ user, updateUser }}>
     //   <BrowserRouter>

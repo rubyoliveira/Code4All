@@ -71,6 +71,11 @@ app.get('/profile/:username', async (req, res) => {
     }
 });
 
+app.get('/code-pad', async (req, res) => {
+    const coding = await prisma.ide.findMany();
+    res.json(coding);
+})
+
 app.get('/profile/:username/saved-courses', async (req, res) => {
     const { username } = req.params;
     const saved = await prisma.courses.findMany({
