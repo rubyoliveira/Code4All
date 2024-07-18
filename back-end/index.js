@@ -9,8 +9,8 @@ const PORT = 3000;
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Specify the exact origin of your frontend
-    credentials: true // Enable credentials to allow sending cookies from the frontend
+    origin: 'http://localhost:5173',
+    credentials: true
 }));
 
 
@@ -70,6 +70,11 @@ app.get('/profile/:username', async (req, res) => {
         res.status(404).send('User not found');
     }
 });
+
+app.get('/code-pad', async (req, res) => {
+    const coding = await prisma.ide.findMany();
+    res.json(coding);
+})
 
 app.get('/profile/:username/saved-courses', async (req, res) => {
     const { username } = req.params;

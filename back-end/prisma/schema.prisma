@@ -51,3 +51,10 @@ model topics {
   moduleId Int
   module modules @relation(fields: [moduleId], references: [id])
 }
+
+model ide {
+  id Int @id @default(autoincrement())
+  language String
+  version String
+  starterCode String
+}
