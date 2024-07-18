@@ -1,12 +1,12 @@
 import {Editor} from "@monaco-editor/react";
 import {useState, useRef, useEffect} from "react";
-import ReactMarkdown from 'react-markdown';
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
-import { STARTER_CODE } from "../constants";
+import { STARTER_CODE, THEME } from "../constants";
 import Header from "../Header.jsx"
 import Copilot from "./Copilot"
 import "./CodePad.css"
+
 
 const CodeEditor = ({username}) => {
     const editorRef = useRef()
@@ -36,6 +36,10 @@ const CodeEditor = ({username}) => {
             });
     }
 
+    const handleEditorWillMount = (monaco) => {
+        monaco.editor.defineTheme('myCustomTheme', THEME);
+    };
+
     const onMount = (editor) => {
         editorRef.current = editor
         editor.focus();
@@ -62,9 +66,11 @@ const CodeEditor = ({username}) => {
                 <div className = "ide">
                     <LanguageSelector language={language} onSelect={onSelect} languages = {languages} />
                     <Editor
-                        theme = "vs-dark"
+                        height = "70vh"
+                        theme = "myCustomTheme"
                         language = {language}
                         defaultValue="// some comment"
+                        beforeMount={handleEditorWillMount}
                         onMount = {onMount}
                         value = {value}
                         onChange = {(value) => setValue(value)}

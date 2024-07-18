@@ -9,10 +9,11 @@
 
 .ide{
     width: 70%;
-    height: 60vh;
 }
 
   .code-copilot{
     width: 25%;
+    height: 100%;
     padding: 10px;
+    color: white;
   }
