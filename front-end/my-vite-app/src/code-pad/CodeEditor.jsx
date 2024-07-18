@@ -1,9 +1,12 @@
 import {Editor} from "@monaco-editor/react";
 import {useState, useRef, useEffect} from "react";
+import ReactMarkdown from 'react-markdown';
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { STARTER_CODE } from "../constants";
 import Header from "../Header.jsx"
+import Copilot from "./Copilot"
+import "./CodePad.css"
 
 const CodeEditor = ({username}) => {
     const editorRef = useRef()
@@ -11,6 +14,7 @@ const CodeEditor = ({username}) => {
     const [language, setLanguage] = useState('javascript')
     const [version, setVersion] = useState('18.15.0')
     const [languages, setLanguages] = useState([])
+    const [chat, setChat] = useState('')
 
     useEffect(() => {
         fetchLanguages();
@@ -51,17 +55,23 @@ const CodeEditor = ({username}) => {
     return(
         <div>
             <Header username = {username}/>
-            <LanguageSelector language={language} onSelect={onSelect} languages = {languages} />
-            <Editor
-                height="75vh"
-                theme = "vs-dark"
-                language = {language}
-                defaultValue="// some comment"
-                onMount = {onMount}
-                value = {value}
-                onChange = {(value) => setValue(value)}
-            />
-            <Output editorRef = {editorRef} language = {language} version = {version}/>
+            <div className = "code-pad">
+                <div className = "code-copilot">
+                    <Copilot setDescription={setChat}/>
+                </div>
+                <div className = "ide">
+                    <LanguageSelector language={language} onSelect={onSelect} languages = {languages} />
+                    <Editor
+                        theme = "vs-dark"
+                        language = {language}
+                        defaultValue="// some comment"
+                        onMount = {onMount}
+                        value = {value}
+                        onChange = {(value) => setValue(value)}
+                    />
+                    <Output editorRef = {editorRef} language = {language} version = {version}/>
+                </div>
+            </div>
         </div>
     )
 }

@@ -1,0 +1,18 @@
+.code-pad{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ide{
+    width: 70%;
+    height: 60vh;
+}
+
+  .code-copilot{
+    width: 25%;
+    padding: 10px;
+  }
