@@ -1,6 +1,7 @@
 import { executeCode } from "../constants";
 import axios from 'axios';
 import {useState, useRef} from "react";
+import "./CodePad.css"
 
 const Output = ({ language, editorRef, version }) => {
     const [output, setOutput] = useState(null);
@@ -24,7 +25,7 @@ const Output = ({ language, editorRef, version }) => {
     }
     return (
       <div>
-        <button disabled={isLoading} onClick={run}>
+        <button disabled={isLoading} onClick={run} className = "run-code">
           {isLoading ? 'Loading...' : 'Run Code'}
         </button>
         <div style={{ margin: '30px 0' }} color={isError ? "red" : "black"}>

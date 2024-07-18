@@ -61,7 +61,7 @@ const CodeEditor = ({username}) => {
             <Header username = {username}/>
             <div className = "code-pad">
                 <div className = "code-copilot">
-                    <Copilot setDescription={setChat}/>
+                    <Copilot setDescription={setChat} username = {username}/>
                 </div>
                 <div className = "ide">
                     <LanguageSelector language={language} onSelect={onSelect} languages = {languages} />

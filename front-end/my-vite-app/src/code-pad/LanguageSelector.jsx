@@ -1,11 +1,12 @@
 import {useState, useRef, useEffect} from "react";
+import "./CodePad.css"
 
 const LanguageSelector = ({language, onSelect, languages}) => {
 
     return (
         <div>
-          <p>Language: </p>
           <div className="dropdown">
+          <p>Language: </p>
             <select
               className="create-dropdown"
               value={language}

@@ -1,7 +1,7 @@
 .code-pad{
     display: flex;
     width: 100%;
-    align-items: center;
+    /* align-items: center; */
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
@@ -9,11 +9,103 @@
 
 .ide{
     width: 70%;
+    background-color: #011627;
+    color: white;
+    padding: 10px;
+}
+
+.dropdown{
+    display: flex;
+}
+
+.create-dropdown{
+    background-color: #011627;
+    color: white;
+}
+
+.run-code{
+    background-color: #c792ea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.run-code:hover{
+    background-color: #c792ea;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.255);
+    transform: scale(1.1);
 }
 
   .code-copilot{
     width: 25%;
     height: 100%;
     padding: 10px;
-    color: white;
+  }
+
+  .greet h3{
+    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background-size: 1800% 1800%;
+    text-align: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+
+  }
+
+  @-webkit-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-moz-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-o-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+
+  .copilot-bottom{
+    position: absolute;
+    bottom: 0;
+    width: 26%;
+    margin-bottom: 30px;
+  }
+
+  .copilot-search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    background: linear-gradient(124deg, #ff22005b, #e81d1d5b, #e8b71d5b, #e3e81d5b, #1de8405b, #1ddde85b, #2b1de85b, #dd00f35b, #dd00f35b);
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+  }
+
+  .copilot-input{
+    padding: 8px;
+    border: none;
+    width: 90%;
+    border-radius: 8px;
+    background: transparent;
+  }
+
+  .copilot-run{
+    background: transparent;
+    border: none;
   }
