@@ -1,4 +1,4 @@
-import { executeCode } from "../constants";
+import { executeCode } from "./CompilerAPI";
 import axios from 'axios';
 import {useState, useRef} from "react";
 import "./CodePad.css"
