@@ -6,10 +6,11 @@ import "./CodePad.css"
 function Copilot({ setDescription, username }) {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
     const [search, setSearch] = useState('');
-    const [prompt, setPrompt] = useState('')
+    const [prompt, setPrompt] = useState('');
     const [aiResponse, setResponse] = useState('');
     const [loading, setLoading] = useState(false);
-    const [showGreet, setShowGreet] = useState(true)
+    const [showGreet, setShowGreet] = useState(true);
+    const [history, setHistory] = useState([]); // State to keep track of chat history
 
     async function aiRun() {
         setShowGreet(false);
@@ -18,15 +19,18 @@ function Copilot({ setDescription, username }) {
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
         const chat = model.startChat({
             history: [],
-        })
+        });
         const prompt = search;
-        const result = await chat.sendMessage(prompt)
+        const result = await chat.sendMessage(prompt);
         const response = await result.response;
         const text = response.text();
-        setPrompt(prompt)
+        setPrompt(prompt);
         setResponse(text);
         setDescription(text);
         setLoading(false);
+
+        // Update history with the new prompt and response
+        setHistory(prevHistory => [...prevHistory, { prompt, response: text }]);
     }
 
     const handleChangeSearch = (e) => {
@@ -40,33 +44,40 @@ function Copilot({ setDescription, username }) {
 
     return (
         <div>
-            {showGreet && <div className = "greet">
+            {showGreet && <div className="greet">
                 <h3>Hello, {username}!</h3>
             </div>}
-            <div className = "chat-log">
-                <div className = "prompt">
-                   <p>{prompt}</p>
-                </div>
+            <div className="chat-log">
+                {history.map((item, index) => (
+                    <div key={index} className="chat-message">
+                        <div className="prompt">
+                            <p>{item.prompt}</p>
+                        </div>
+                        <div className="response">
+                            <ReactMarkdown>{item.response}</ReactMarkdown>
+                        </div>
+                    </div>
+                ))}
                 <div>
-                {loading ? (
-                    <p style={{ margin: '30px 0' }}>Loading...</p>
-                ) : (
-                <div style={{ margin: '30px 0' }}>
-                    <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                    {loading ? (
+                        <p style={{ margin: '30px 0' }}>Loading...</p>
+                    ) : (
+                        <div style={{ margin: '30px 0' }}>
+                            <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                        </div>
+                    )}
                 </div>
-                )}
             </div>
-        </div>
-            <div className = "copilot-bottom">
-                <div style={{ display: 'flex' }} className = "copilot-search">
+            <div className="copilot-bottom">
+                <div style={{ display: 'flex' }} className="copilot-search">
                     <input
                         placeholder='Create Description of Course'
                         value={search}
-                        className = "copilot-input"
+                        className="copilot-input"
                         onChange={handleChangeSearch}
                     />
-                    <button type="button" style={{ marginLeft: '20px' }} onClick={handleClick} className = "copilot-run">
-                    🔎
+                    <button type="button" style={{ marginLeft: '20px' }} onClick={handleClick} className="copilot-run">
+                        🔎
                     </button>
                 </div>
             </div>
