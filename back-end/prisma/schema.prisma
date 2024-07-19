@@ -58,3 +58,12 @@ model ide {
   version String
   starterCode String
 }
+
+model interactiveIDE {
+  idHash String @id
+  language String
+  version String
+  code String
+  users String[]
+  creator String
+}
