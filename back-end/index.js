@@ -120,41 +120,29 @@ app.patch('/profile/:username/picture', async (req, res) => {
 
 app.patch('/modules/:moduleId/completed', async (req, res) => {
     const { moduleId } = req.params;
-    const {username, courseId} = req.body
+    const { username } = req.body;
+
     try {
         const module = await prisma.modules.findUnique({
-            where: {id: parseInt(moduleId)}
+            where: { id: parseInt(moduleId) }
         });
-        if(!module){
-            return res.status(404).send("Module not found")
+        if (!module) {
+            return res.status(404).send("Module not found");
         }
-        if(!module.completedBy.includes(username)){
+        if (!module.completedBy.includes(username)) {
             const updatedModule = await prisma.modules.update({
-                where: {id: parseInt(moduleId)},
+                where: { id: parseInt(moduleId) },
                 data: {
-                    completedBy: [...module.completedBy, username],
-                },
+                    completedBy: { set: [...module.completedBy, username] }
+                }
             });
-            const courseModules = await prisma.modules.findMany({
-                where: {courseId: courseId}
-            });
-
-            const allModulesCompleted = courseModules.every(m => m.completedBy.includes(username));
-
-            if (allModulesCompleted) {
-                await prisma.courses.update({
-                    where: {title: courseId},
-                    data: {
-                        completedBy: [...module.courses.completedBy, username],
-                        userId: module.courses.userId.filter(id => id != username)
-                    }
-                })
-            };
             res.json(updatedModule);
+        } else {
+            res.status(400).send("User has already completed this module");
         }
     } catch (error) {
-        console.error("Error updating picture:", error);
-        res.status(500).send("Failed to picture");
+        console.error("Error updating module completion:", error);
+        res.status(500).send("Failed to update module completion");
     }
 });
 
@@ -191,6 +179,24 @@ app.patch('/courses/:courseId/save', async (req, res) => {
     } catch (error) {
         console.error('Error saving course:', error);
         res.status(500).send('Error saving course');
+    }
+});
+
+app.post('/modules/:moduleId/completion', async (req, res) => {
+    const { moduleId } = req.params;
+    const { username } = req.body;
+
+    try {
+        const module = await prisma.modules.findUnique({
+            where: { id: parseInt(moduleId) }
+        });
+        if (!module) {
+            return res.status(404).send("Module not found");
+        }
+        res.json(module);
+    } catch (error) {
+        console.error("Error fetching module:", error);
+        res.status(500).send("Failed to fetch module");
     }
 });
 

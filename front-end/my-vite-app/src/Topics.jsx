@@ -10,6 +10,7 @@ function Topics({username}) {
     const { courseId } = useParams();
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
+    const [courseCompleted, setCourseCompleted] = useState(false)
 
     useEffect(() => {
         fetchModules()
@@ -46,6 +47,15 @@ function Topics({username}) {
                 console.error('Error fetching topics:', error);
             });
     };
+
+    // const checkCourseCompletion = async () => {
+    //     const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/completed-courses`)
+    //     const data = await response.json();
+    //     const completedCourses = data.completedCourses.map(course => course.title);
+    //     if(completedCourses.includes(courseId)){
+    //         setCourseCompleted(true);
+    //     }
+    // }
 
     if (username === "undefined") {
         return <Navigate to="/" />;
