@@ -93,6 +93,14 @@ app.get('/profile/:username/created-courses', async (req, res) => {
     res.json(created)
 });
 
+app.get('/profile/:username/completed-courses', async (req, res) => {
+    const { username } = req.params;
+    const complete = await prisma.courses.findMany({
+        where: { completedBy: {has: username}}
+    });
+    res.json(complete)
+});
+
 app.patch('/profile/:username/picture', async (req, res) => {
     const { username } = req.params;
     const { photo } = req.body;
@@ -110,23 +118,45 @@ app.patch('/profile/:username/picture', async (req, res) => {
     }
 });
 
-app.patch('/courses/:username/completed', async (req, res) => {
-    const { username } = req.params;
+app.patch('/modules/:moduleId/completed', async (req, res) => {
+    const { moduleId } = req.params;
+    const {username, courseId} = req.body
     try {
-        const updateComplete = await prisma.user.update({
-            where: { username: username },
-            data: {
-                complete: "dark"
-            }
+        const module = await prisma.modules.findUnique({
+            where: {id: parseInt(moduleId)}
         });
-        res.json(updateComplete);
+        if(!module){
+            return res.status(404).send("Module not found")
+        }
+        if(!module.completedBy.includes(username)){
+            const updatedModule = await prisma.modules.update({
+                where: {id: parseInt(moduleId)},
+                data: {
+                    completedBy: [...module.completedBy, username],
+                },
+            });
+            const courseModules = await prisma.modules.findMany({
+                where: {courseId: courseId}
+            });
+
+            const allModulesCompleted = courseModules.every(m => m.completedBy.includes(username));
+
+            if (allModulesCompleted) {
+                await prisma.courses.update({
+                    where: {title: courseId},
+                    data: {
+                        completedBy: [...module.courses.completedBy, username],
+                        userId: module.courses.userId.filter(id => id != username)
+                    }
+                })
+            };
+            res.json(updatedModule);
+        }
     } catch (error) {
         console.error("Error updating picture:", error);
         res.status(500).send("Failed to picture");
     }
 });
-
-
 
 app.get('/courses', async (req, res) => {
     const courses = await prisma.courses.findMany();

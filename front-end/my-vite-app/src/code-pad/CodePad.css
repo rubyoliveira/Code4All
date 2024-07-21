@@ -14,13 +14,14 @@
     padding: 10px;
 }
 
-.dropdown{
+.dropdown-languages{
     display: flex;
 }
 
-.create-dropdown{
+.language-dropdown{
     background-color: #011627;
     color: white;
+    border: none;
 }
 
 .run-code{

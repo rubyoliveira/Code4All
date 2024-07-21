@@ -5,10 +5,10 @@ const LanguageSelector = ({language, onSelect, languages}) => {
 
     return (
         <div>
-          <div className="dropdown">
+          <div className="dropdown-languages">
           <p>Language: </p>
             <select
-              className="create-dropdown"
+              className="language-dropdown"
               value={language}
               onChange={(e) => onSelect(e.target.value)}
             >
