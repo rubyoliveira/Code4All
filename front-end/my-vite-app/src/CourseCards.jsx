@@ -1,15 +1,19 @@
-import { useState } from 'react'
-import Footer from "./Footer.jsx"
-import Header from "./Header.jsx"
-import StarRating from "./StarRating.jsx"
+import { useState, useEffect } from 'react';
+import Footer from "./Footer.jsx";
+import Header from "./Header.jsx";
+import StarRating from "./StarRating.jsx";
 import { Link } from 'react-router-dom';
 
-
-function CourseCards({title, description, level, img, likes, username, fetchCards}) {
+function CourseCards({title, description, level, img, likes, username}) {
     const [vote, setVote] = useState(likes);
-    const [openRating, setOpenRating]= useState(false);
+    const [openRating, setOpenRating] = useState(false);
+    const [averageRating, setAverageRating] = useState(0);
 
-    const displayRating= () => setOpenRating(true);
+    useEffect(() => {
+        fetchAverageRating(title);
+      }, [title]);
+
+    const displayRating = () => setOpenRating(true);
     const handleCloseRating = () => setOpenRating(false);
 
     const handleUpvote = () => {
@@ -52,24 +56,40 @@ function CourseCards({title, description, level, img, likes, username, fetchCard
         });
     };
 
-  return (
-    <>
-        <div className = "course">
-        <Link to = {`/courses/${title}`}>
-            <img className ="course-img" src = {img}></img>
-        </Link>
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <p>Level: {level}</p>
-            <div className = "course-buttons">
-                <button className = "save-later" onClick = {handleSave}>Save for Later</button>
-                <button className = "save-later" onClick = {handleUpvote}>Like Count: {vote}</button>
-                {!openRating && <button className = "save-later" onClick = {displayRating}>Leave a Difficulty Rating</button>}
+    const fetchAverageRating = async (courseId) => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${courseId}/average-rating`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch average rating: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            setAverageRating(data.averageRating);
+        } catch (error) {
+            console.error('Error fetching average rating:', error);
+        }
+    }
+
+    return (
+        <>
+            <div className="course">
+                <Link to={`/courses/${title}`}>
+                    <img className="course-img" src={img} alt="Course"></img>
+                </Link>
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <div>
+                <p><strong>Level:</strong>  {level}</p>
+                <p><strong>Average Difficulty:</strong> {averageRating.toFixed(1)}&#11088;</p>
+                </div>
+                <div className="course-buttons">
+                    <button className="save-later" onClick={handleUpvote}>{vote}&#128151;</button>
+                    <button className="save-later" onClick={handleSave}>Save for Later</button>
+                    {!openRating && <button className="save-later" onClick={displayRating}>Leave a Difficulty Rating</button>}
+                </div>
+                {openRating && <StarRating closeModal={handleCloseRating} courseId={title} fetchCourseData={() => fetchAverageRating(title)}/>}
             </div>
-            {openRating && <StarRating closeModal = {handleCloseRating} courseId = {title} fetchCourseData = {fetchCards}/>}
-        </div>
-    </>
-  )
+        </>
+    )
 }
 
-export default CourseCards
+export default CourseCards;

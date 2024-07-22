@@ -6,6 +6,7 @@ function StarRating({courseId, fetchCourseData, closeModal }) {
     const handleRating = (rate) => {
         setRating(rate);
         submitRating(rate);
+        closeModal();
     }
 
     const submitRating = async (rate) => {

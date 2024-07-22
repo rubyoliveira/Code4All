@@ -52,7 +52,6 @@ function CoursePage({username}) {
                 level = {card.difficulty}
                 likes = {card.likes}
                 username = {username}
-                fetchCards = {fetchCards}
               />
             ))}
           </div>
