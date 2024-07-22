@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import Footer from "./Footer.jsx"
 import Header from "./Header.jsx"
+import StarRating from "./StarRating.jsx"
 import { Link } from 'react-router-dom';
 
 
-function CourseCards({title, description, level, img, likes, username}) {
+function CourseCards({title, description, level, img, likes, username, fetchCards}) {
     const [vote, setVote] = useState(likes);
+    const [openRating, setOpenRating]= useState(false);
+
+    const displayRating= () => setOpenRating(true);
+    const handleCloseRating = () => setOpenRating(false);
 
     const handleUpvote = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${title}`, {
@@ -58,8 +63,10 @@ function CourseCards({title, description, level, img, likes, username}) {
             <p>Level: {level}</p>
             <div className = "course-buttons">
                 <button className = "save-later" onClick = {handleSave}>Save for Later</button>
-                <button className = "likes" onClick = {handleUpvote}>Like Count: {vote}</button>
+                <button className = "save-later" onClick = {handleUpvote}>Like Count: {vote}</button>
+                {!openRating && <button className = "save-later" onClick = {displayRating}>Leave a Difficulty Rating</button>}
             </div>
+            {openRating && <StarRating closeModal = {handleCloseRating} courseId = {title} fetchCourseData = {fetchCards}/>}
         </div>
     </>
   )

@@ -199,7 +199,7 @@ app.post('/courses/:courseId/rate', async (req, res) => {
         const course = await prisma.courses.update({
             where: {title: courseId},
             data: {
-                ratings: {
+                rating: {
                     push: rating
                 }
             },
@@ -216,13 +216,13 @@ app.get('/courses/:courseId/average-rating', async (req, res) => {
     try{
         const course = await prisma.courses.findUnique({
             where: {title: courseId},
-            select: {ratings: true},
+            select: {rating: true},
         });
         if(!course){
             return res.status(404).send("Course not found");
         }
 
-        const averageRating = course.ratings.reduce((a,b) => a+b, 0)/course.ratings.length;
+        const averageRating = course.rating.reduce((a,b) => a+b, 0)/course.ratings.length;
         res.json({averageRating})
     } catch(error){
         console.error("Error calculating average rating:", error)
