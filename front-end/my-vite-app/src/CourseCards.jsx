@@ -79,7 +79,7 @@ function CourseCards({title, description, level, img, likes, username}) {
                 <p>{description}</p>
                 <div>
                 <p><strong>Level:</strong>  {level}</p>
-                <p><strong>Average Difficulty:</strong> {averageRating.toFixed(1)}&#11088;</p>
+                <p><strong>Average Difficulty:</strong>  {averageRating ? averageRating.toFixed(1) : 'N/A'}&#11088;</p>
                 </div>
                 <div className="course-buttons">
                     <button className="save-later" onClick={handleUpvote}>{vote}&#128151;</button>
