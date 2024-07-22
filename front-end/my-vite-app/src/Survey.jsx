@@ -9,11 +9,33 @@ const Survey = ({closeModal}) => {
     const [level, setLevel] = useState('')
     const [rating, setRating] = useState('')
     const [languages, setLanguages] = useState('')
+    const [courses, setCourses] = useState([])
 
     const nextStep = () => setStep(step+1)
     const prevStep = () => setStep(step-1)
 
-    const recomendations = (courses, level, rating, languages) => {
+    const submitSurvey = (level, rating, languages) => {
+        fetchCards();
+        recommendations(courses, level, rating, languages);
+    }
+
+    const fetchCards = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            setCourses(data);
+          })
+          .catch(error => {
+            console.error('Error fetching cards:', error);
+          });
+      };
+
+    const recommendations = (courses, level, rating, languages) => {
         
     }
 
@@ -72,7 +94,7 @@ const Survey = ({closeModal}) => {
                 <button onClick = {() => setLanguages('C')}>C</button>
                 <div className = "page-buttons">
                     <button onClick = {prevStep}>Prev</button>
-                    <button>Submit</button>
+                    <button onClick = {submitSurvey}>Submit</button>
                 </div>
             </div>}
             </div>
