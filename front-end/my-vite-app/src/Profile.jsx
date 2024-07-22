@@ -14,6 +14,8 @@ function Profile({handleSignOut}) {
     const [userData, setUserData] = useState('');
     const [clickedCreate, setClickCreate] = useState(false)
     const [clickedSaved, setClickSaved] = useState(false)
+    const [clickedComplete, setClickComplete] = useState(false)
+    const [completedCourses, setCompletedCourses] = useState([])
 
     if (username == "undefined") {
         return <Navigate to="/" />;
@@ -44,6 +46,7 @@ function Profile({handleSignOut}) {
     const fetchSavedCourses = () => {
         setClickSaved(true)
         setClickCreate(false)
+        setClickComplete(false)
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/saved-courses`, {
             credentials: 'include'
         })
@@ -64,6 +67,7 @@ function Profile({handleSignOut}) {
     const fetchUserCourses = () => {
         setClickCreate(true)
         setClickSaved(false)
+        setClickComplete(false)
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/created-courses`, {
             credentials: 'include'
         })
@@ -75,6 +79,27 @@ function Profile({handleSignOut}) {
         })
         .then(data => {
             setUserCourses(data);
+        })
+        .catch(error => {
+            console.error('Error fetching courses:', error);
+        });
+    };
+
+    const fetchCompletedCourses = () => {
+        setClickCreate(false)
+        setClickSaved(false)
+        setClickComplete(true)
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/completed-courses`, {
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setCompletedCourses(data);
         })
         .catch(error => {
             console.error('Error fetching courses:', error);
@@ -133,6 +158,7 @@ function Profile({handleSignOut}) {
                     <div>
                         <button onClick = {fetchUserCourses}>Your Courses</button>
                         <button onClick = {fetchSavedCourses}>Saved For Later</button>
+                        <button onClick = {fetchCompletedCourses}>Completed Courses</button>
                         {clickedCreate && <div className = "courses">
                             {userCourses.map(card => (
                                <ProfileCards
@@ -147,6 +173,18 @@ function Profile({handleSignOut}) {
                         </div> }
                         {clickedSaved && <div className = "courses">
                             {saved.map(card => (
+                                <ProfileCards
+                                key = {card.title}
+                                title ={card.title}
+                                description = {card.description}
+                                image = {card.image}
+                                fetchProfile = {fetchProfile}
+                                author = {card.author}
+                                user = {userData.username}/>
+                            ))}
+                        </div>}
+                        {clickedComplete && <div className = "courses">
+                            {completedCourses.map(card => (
                                 <ProfileCards
                                 key = {card.title}
                                 title ={card.title}

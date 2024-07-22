@@ -139,7 +139,7 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
             const updatedModule = await prisma.modules.update({
                 where: { id: parseInt(moduleId) },
                 data: {
-                    completedBy: { set: [...module.completedBy, username] }
+                    completedBy: [...module.completedBy, username]
                 }
             });
             const allModulesCompleted = module.course.modules.every(m =>
@@ -150,7 +150,7 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                     await prisma.courses.update({
                         where: { title: module.courseId },
                         data: {
-                            completedBy: { set: [...module.course.completedBy, username] }
+                            completedBy: [...module.course.completedBy, username]
                         }
                     });
                 }
