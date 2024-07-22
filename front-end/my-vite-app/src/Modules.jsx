@@ -23,17 +23,27 @@ function Modules({title, id, fetchTopics, username}) {
         }
     };
 
-   const handleModuleClick = async () => {
-    await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/modules/${id}/completed`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type' : 'application/json',
-        },
-        body: JSON.stringify({username, courseId: id}),
-    })
-    setButtonStyle('dark');
-    fetchTopics(id);
-   }
+    const handleModuleClick = async () => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/modules/${id}/completed`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, courseId: id }), // Ensure courseId is used if necessary
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            await response.json();
+            setButtonStyle('dark');
+            fetchTopics(id);
+        } catch (error) {
+            console.error("Failed to mark module as completed:", error);
+        }
+    };
 
   return (
     <>
