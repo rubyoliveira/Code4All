@@ -1,0 +1,41 @@
+.signup {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: linear-gradient(to right,#6b11cb6f,#2574fc98);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    font-weight: bold;
+}
+
+  .content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.688);
+    -webkit-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    -moz-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    left: 50%;
+    max-width: 70vh;
+    height: 50vh;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+
+  .content button{
+    width: 20vh;
+    height: 5vh;
+    border: none;
+    margin: 10px;
+  }
