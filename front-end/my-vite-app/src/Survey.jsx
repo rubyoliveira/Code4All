@@ -3,7 +3,7 @@ import './Survey.css';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext.js';
 
-const Survey = ({closeModal}) => {
+const Survey = ({setSurvey}) => {
     const [step, setStep] = useState(1);
     const [interest, setInterest] = useState('');
     const [level, setLevel] = useState('');
@@ -12,6 +12,10 @@ const Survey = ({closeModal}) => {
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
     const [className, setClassName] = useState('light-button')
+
+    const closeModal = () => {
+        setSurvey(false)
+    }
 
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);

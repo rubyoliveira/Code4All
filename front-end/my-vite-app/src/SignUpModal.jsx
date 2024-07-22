@@ -2,12 +2,14 @@ import { useState, useContext } from 'react';
 import './SignUpModal.css';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext.js';
+import Survey from "./Survey.jsx"
 
 const SignUpModal = ({ closeModal }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
+    const [survey, setSurvey] = useState(false)
     const complete = "light";
     const navigate = useNavigate();
 
@@ -33,8 +35,8 @@ const SignUpModal = ({ closeModal }) => {
           setName('')
           setUsername('');
           setPassword('');
+          setSurvey(true);
           updateUser(loggedInUser);
-          navigate('/courses');
         } else if (response.status === 409) {
           const errorData = await response.json();
           alert(`Signup failed: ${errorData.message}`);
@@ -68,6 +70,7 @@ const SignUpModal = ({ closeModal }) => {
               <button type="submit" className="create-account">Create Account</button>
             </div>
           </form>
+          {survey && <Survey setSurvey = {setSurvey}></Survey>}
         </div>
       </>
     );

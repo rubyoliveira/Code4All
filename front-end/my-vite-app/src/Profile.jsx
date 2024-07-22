@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { Link, Navigate } from 'react-router-dom';
 import CourseCards from "./CourseCards.jsx"
 import ProfileCards from "./ProfileCards.jsx"
-import Survey from "./Survey.jsx"
 
 import Header from "./Header.jsx"
 import './Profile.css'
@@ -17,12 +16,6 @@ function Profile({handleSignOut}) {
     const [clickedSaved, setClickSaved] = useState(false)
     const [clickedComplete, setClickComplete] = useState(false)
     const [completedCourses, setCompletedCourses] = useState([])
-    const [survey, setSurvey] = useState(false)
-
-    const closeModal = () => {
-        setSurvey(false)
-    }
-
 
 
     if (username == "undefined") {
@@ -161,8 +154,6 @@ function Profile({handleSignOut}) {
                     <button onClick = {fetchDogs}>Fetch Dog Profile Picture</button>
                     <h3>Hi, {userData.name}!</h3>
                     <p>{userData.username}</p>
-                    <button onClick = {() => setSurvey(true)}>Survey</button>
-                    {survey && <Survey closeModal = {closeModal}></Survey>}
                     <p>{userData.email}</p>
                     <p>{userData.modules}</p>
                     <div>
