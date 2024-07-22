@@ -3,7 +3,6 @@ import {useState, useRef, useEffect} from "react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { STARTER_CODE, THEME } from "../constants";
-import Header from "../Header.jsx"
 import Copilot from "./Copilot"
 import "./CodePad.css"
 
@@ -58,7 +57,6 @@ const CodeEditor = ({username}) => {
 
     return(
         <div>
-            <Header username = {username}/>
             <div className = "code-pad">
                 <div className = "code-copilot">
                     <Copilot setDescription={setChat} username = {username}/>
@@ -66,7 +64,7 @@ const CodeEditor = ({username}) => {
                 <div className = "ide">
                     <LanguageSelector language={language} onSelect={onSelect} languages = {languages} />
                     <Editor
-                        height = "70vh"
+                        height = "80vh"
                         theme = "myCustomTheme"
                         language = {language}
                         defaultValue="// some comment"
