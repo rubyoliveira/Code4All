@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './Survey.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import { UserContext } from './UserContext.js';
 
-const Survey = ({setSurvey}) => {
+const Survey = ({username}) => {
+    console.log("User set in localStorage", username);
     const [step, setStep] = useState(1);
     const [interest, setInterest] = useState('');
     const [level, setLevel] = useState('');
@@ -12,10 +13,6 @@ const Survey = ({setSurvey}) => {
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
     const [className, setClassName] = useState('light-button')
-
-    const closeModal = () => {
-        setSurvey(false)
-    }
 
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
@@ -88,7 +85,6 @@ const Survey = ({setSurvey}) => {
       <>
         <div className="signup">
             <div className = "content">
-            <p className="close-modal" onClick={closeModal}>&#10006;</p>
             { step === 1 && <div>
                 <h3>What Brings You to Code4All</h3>
                 <div className = "container">
@@ -154,6 +150,7 @@ const Survey = ({setSurvey}) => {
                             <p>Title: {card.title}</p>
                         </div>
                     ))}
+                    <Link to = "/"><button>Go To Home Page</button></Link>
             </div>}
             </div>
         </div>

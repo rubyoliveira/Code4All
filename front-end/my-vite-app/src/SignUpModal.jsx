@@ -9,7 +9,6 @@ const SignUpModal = ({ closeModal }) => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
-    const [survey, setSurvey] = useState(false)
     const complete = "light";
     const navigate = useNavigate();
 
@@ -17,7 +16,6 @@ const SignUpModal = ({ closeModal }) => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log(complete);
       try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`, {
           method: 'POST',
@@ -27,16 +25,12 @@ const SignUpModal = ({ closeModal }) => {
           body: JSON.stringify({ username, password, email, name, complete}),
           credentials: 'include'
         });
-
         if (response.ok) {
           const data = await response.json();
           const loggedInUser = data.user;
-          setEmail('')
-          setName('')
-          setUsername('');
-          setPassword('');
-          setSurvey(true);
+          localStorage.setItem('user', JSON.stringify(data.user));
           updateUser(loggedInUser);
+          navigate('/survey');
         } else if (response.status === 409) {
           const errorData = await response.json();
           alert(`Signup failed: ${errorData.message}`);
@@ -70,7 +64,6 @@ const SignUpModal = ({ closeModal }) => {
               <button type="submit" className="create-account">Create Account</button>
             </div>
           </form>
-          {survey && <Survey setSurvey = {setSurvey}></Survey>}
         </div>
       </>
     );

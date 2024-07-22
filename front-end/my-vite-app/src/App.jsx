@@ -8,6 +8,7 @@ import Topics from './Topics.jsx';
 import CreateCourse from './CreateCourse.jsx';
 import Profile from "./Profile.jsx";
 import CodeEditor from "./code-pad/CodeEditor"
+import Survey from "./Survey.jsx"
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -53,6 +54,7 @@ function App() {
           <Route path="/courses/:courseId" element={<Topics username={user?.username}  />} />
           <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
           <Route path= "/code-pad" element = {<CodeEditor username = {user?.username} />}/>
+          <Route path = "/survey" element = {<Survey username = {user?.username}/>}/>
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
