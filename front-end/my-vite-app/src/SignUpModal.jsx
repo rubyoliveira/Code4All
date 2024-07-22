@@ -27,8 +27,9 @@ const SignUpModal = ({ closeModal }) => {
         });
         if (response.ok) {
           const data = await response.json();
-          const loggedInUser = data.user;
-          localStorage.setItem('user', JSON.stringify(data.user));
+          console.log("Received data from server:", data); 
+          const loggedInUser = { username: data.username };
+          localStorage.setItem('user', JSON.stringify(loggedInUser));
           updateUser(loggedInUser);
           navigate('/survey');
         } else if (response.status === 409) {

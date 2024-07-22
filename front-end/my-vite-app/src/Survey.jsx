@@ -12,17 +12,14 @@ const Survey = ({username}) => {
     const [languages, setLanguages] = useState([]);
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
-    const [className, setClassName] = useState('light-button')
 
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
+
     const submitSurvey = (level, rating, languages) => {
         fetchCards();
         recommendations(courses, level, rating, languages);
         nextStep();
-        console.log(level)
-        console.log("recommended", recommendedCourses)
-        console.log(rating)
     };
     const fetchCards = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses`)
@@ -55,29 +52,43 @@ const Survey = ({username}) => {
                 return null;
             }
         };
-
         const ratings = await Promise.all(courses.map(course => fetchAverageRating(course.title)));
-
         const coursesWithRatings = courses.map((course, index) => ({
             ...course,
             avgRating: ratings[index]
         }));
-
         const filteredCourses = coursesWithRatings.filter(course => {
             return course.difficulty === level && course.avgRating >= rating;
 
         });
-
-        console.log("Filtered Courses:", filteredCourses);
-
         const sortedCourses = filteredCourses.sort((a, b) => b.avgRating - a.avgRating);
-        console.log("Sorted Courses:", sortedCourses);
-
         setRecommendedCourses(sortedCourses.slice(0, 3));
     };
 
+    const handleRecommendations = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/recommendations`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to save');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Course saved successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error saving:', error);
+        });
+    };
+
+
     const handleLanguageSelection = (language) => {
-        setClassName('dark-button')
         setLanguages(prevLanguages => [...prevLanguages, language]);
     };
 
@@ -150,7 +161,7 @@ const Survey = ({username}) => {
                             <p>Title: {card.title}</p>
                         </div>
                     ))}
-                    <Link to = "/"><button>Go To Home Page</button></Link>
+                    <Link to = "/courses"><button>Go To Home Page</button></Link>
             </div>}
             </div>
         </div>
