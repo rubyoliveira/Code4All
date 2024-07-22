@@ -101,6 +101,54 @@ app.get('/profile/:username/completed-courses', async (req, res) => {
     res.json(complete)
 });
 
+app.get('/profile/:username/recommendations', async (req, res) => {
+    const { username } = req.params;
+    try {
+        const user = await prisma.user.findUnique({
+            where: { username: username },
+            select: { recommendations: true }
+        });
+        if (user) {
+            res.json(user.recommendations);
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        res.status(500).send('Server error');
+    }
+});
+
+app.patch('/profile/:username/add-recommendation', async (req, res) => {
+    const { username } = req.params;
+    const { newRecommendations } = req.body;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { username: username },
+            select: { recommendations: true }
+        });
+
+        if (user) {
+            const updatedRecommendations = user.recommendations.concat(newRecommendations).slice(-3);
+
+            const updatedUser = await prisma.user.update({
+                where: { username: username },
+                data: {
+                    recommendations: updatedRecommendations,
+                },
+                select: { recommendations: true }
+            });
+
+            res.json(updatedUser.recommendations);
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
 app.patch('/profile/:username/picture', async (req, res) => {
     const { username } = req.params;
     const { photo } = req.body;
