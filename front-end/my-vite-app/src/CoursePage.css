@@ -75,14 +75,20 @@
     justify-content: center;
 }
 
-.star-rating button{
-    background: none;
-    border: none;
+.star-rating .star-content{
+    display: flex;
+    justify-content: center;
+}
+
+.star-rating .star-content .star {
+    font-size: 1rem;
     cursor: pointer;
-    font-size: 2rem;
+    border: none;
+    background-color: transparent;
     color: grey;
 }
 
-.star-rating button:hover {
+
+.star-rating .star-content .star:hover{
     color: gold;
 }

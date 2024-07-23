@@ -9,6 +9,7 @@ const Survey = ({username}) => {
     const [interest, setInterest] = useState('');
     const [level, setLevel] = useState('');
     const [rating, setRating] = useState('');
+    const [hoverRating, setHoverRating] = useState(0)
     const [languages, setLanguages] = useState([]);
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
@@ -125,13 +126,15 @@ const Survey = ({username}) => {
                 <div className = "star-rating">
                     <div className = "star-content">
                         {[1,2,3,4,5].map(star =>(
-                            <button
+                            <p
                                 key={star}
-                                className = {star <= rating ? 'on' : 'off'}
+                                className ={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`}
                                 onClick = {() => setRating(star)}
+                                onMouseEnter = {()=> setHoverRating(star)}
+                                onMouseLeave = {() => setHoverRating(0)}
                             >
-                                *
-                            </button>
+                                ★
+                            </p>
                         ))}
                     </div>
                 </div>
@@ -163,6 +166,11 @@ const Survey = ({username}) => {
                     ))}
                     <Link to = "/courses"><button onClick = {() => handleRecommendations(recommendedCourses)}>Go To Home Page</button></Link>
             </div>}
+            <div className = "progress-bar">
+                {[1,2,3,4,5].map(dot => (
+                    <div key = {dot} className = {`dot ${step >= dot ? 'active' : ''}`}></div>
+                ))}
+            </div>
             </div>
         </div>
       </>

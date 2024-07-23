@@ -98,4 +98,48 @@
     color: white;
   }
 
+  .progress-bar{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
 
+  .dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin: 0 5px;
+    background-color: lightgrey;
+  }
+
+  .dot.active{
+    background: linear-gradient(124deg, #ff2200c7, #e81d1dc7, #e8b71dc7, #e3e81dc7, #1de840c7, #1ddde8c7, #2b1de8c7, #dd00f3c7, #dd00f3c7);
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+  }
+
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+}
+
+.star-rating .star-content{
+    display: flex;
+    justify-content: center;
+}
+
+.star-rating .star-content .star {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: grey;
+}
+
+.star-rating .star-content .star.filled,
+.star-rating .star-content .star.hover{
+    color: gold;
+}
