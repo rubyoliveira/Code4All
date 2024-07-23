@@ -18,3 +18,8 @@
     padding-right: 90px;
     width: 50%;
 }
+
+.recommednations-topic{
+    display: flex;
+    flex-direction: row;
+}
