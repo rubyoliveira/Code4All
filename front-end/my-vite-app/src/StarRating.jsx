@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-function StarRating({courseId, fetchCourseData, closeModal }) {
+function StarRating({courseId, fetchCards, closeModal }) {
     const [rating, setRating] = useState(0)
     const [hoverRating, setHoverRating] = useState(0)
 
@@ -17,9 +17,9 @@ function StarRating({courseId, fetchCourseData, closeModal }) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ rating: rate }),
+                body: JSON.stringify({ rating: rate}),
             });
-            fetchCourseData();
+            fetchCards();
         } catch (error){
             console.error('Error submitting rating:', error)
         }
@@ -32,7 +32,7 @@ function StarRating({courseId, fetchCourseData, closeModal }) {
                     <button
                     key={star}
                     className ={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`}
-                    onClick = {() => setRating(star)}
+                    onClick = {() => handleRating(star)}
                     onMouseEnter = {()=> setHoverRating(star)}
                     onMouseLeave = {() => setHoverRating(0)}
                     >
