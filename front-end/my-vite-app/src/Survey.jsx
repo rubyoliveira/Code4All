@@ -17,12 +17,16 @@ const Survey = ({username}) => {
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
 
-    const submitSurvey = (level, rating) => {
-        fetchCards()
-            .then(data => setCourses(data))
-            .catch(error => console.error('Error fetching cards:', error))
-            setRecommendedCourses(recommendations(courses, level, rating))
-        nextStep();
+    const submitSurvey = async (level, rating) => {
+        try {
+            const data = await fetchCards();
+            setCourses(data);
+            const recommendedCourses = await recommendations(data, level, rating);
+            setRecommendedCourses(recommendedCourses);
+            nextStep();
+        } catch (error) {
+            console.error('Error fetching cards:', error);
+        }
     };
 
     const handleRecommendations = (recommendations) => {

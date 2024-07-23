@@ -1,15 +1,15 @@
-export const fetchCards = () => {
-     try {
-        const response = fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses`)
+export const fetchCards = async () => {
+    try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses`);
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
-      } catch(error) {
+        return await response.json();
+    } catch (error) {
         console.error('Error fetching cards:', error);
         throw error;
-      }
-  };
+    }
+};
 
 export const recommendations = async (courses, level, rating) => {
     const fetchAverageRating = async (courseId) => {
