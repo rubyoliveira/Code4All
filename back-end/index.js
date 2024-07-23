@@ -121,31 +121,29 @@ app.get('/profile/:username/recommendations', async (req, res) => {
 app.patch('/profile/:username/add-recommendation', async (req, res) => {
     const { username } = req.params;
     const { newRecommendations } = req.body;
-
     try {
         const user = await prisma.user.findUnique({
             where: { username: username },
             select: { recommendations: true }
         });
 
-        if (user) {
-            const updatedRecommendations = user.recommendations.concat(newRecommendations).slice(-3);
-
-            const updatedUser = await prisma.user.update({
-                where: { username: username },
-                data: {
-                    recommendations: updatedRecommendations,
-                },
-                select: { recommendations: true }
-            });
-
-            res.json(updatedUser.recommendations);
-        } else {
-            res.status(404).send('User not found');
+        if (!user) {
+            return res.status(404).send('User not found');
         }
+
+        const updatedRecommendations = user.recommendations.concat(newRecommendations).slice(-3);
+
+        const updatedUser = await prisma.user.update({
+            where: { username: username },
+            data: {
+                recommendations: updatedRecommendations,
+            },
+            select: { recommendations: true }
+        });
+        res.json(updatedUser.recommendations);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error');
+        res.status(500).send('Server error: ' + error.message);
     }
 });
 

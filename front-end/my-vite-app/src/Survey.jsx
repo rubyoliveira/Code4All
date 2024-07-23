@@ -61,29 +61,29 @@ const Survey = ({username}) => {
             return course.difficulty === level && course.avgRating >= rating;
 
         });
-        const sortedCourses = filteredCourses.sort((a, b) => b.avgRating - a.avgRating);
+        const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
         setRecommendedCourses(sortedCourses.slice(0, 3));
     };
 
-    const handleRecommendations = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/recommendations`, {
+    const handleRecommendations = (recommendations) => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/add-recommendation`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ }),
+            body: JSON.stringify({ newRecommendations: recommendations }),
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to save');
+                throw new Error('Failed to save recommendations');
             }
             return response.json();
         })
         .then(data => {
-            alert('Course saved successfully:', data);
+            alert('Recommendations saved successfully:', data);
         })
         .catch(error => {
-            console.error('Error saving:', error);
+            console.error('Error saving recommendations:', error);
         });
     };
 
@@ -161,7 +161,7 @@ const Survey = ({username}) => {
                             <p>Title: {card.title}</p>
                         </div>
                     ))}
-                    <Link to = "/courses"><button>Go To Home Page</button></Link>
+                    <Link to = "/courses"><button onClick = {() => handleRecommendations(recommendedCourses)}>Go To Home Page</button></Link>
             </div>}
             </div>
         </div>
