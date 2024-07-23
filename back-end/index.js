@@ -164,6 +164,17 @@ app.patch('/profile/:username/picture', async (req, res) => {
     }
 });
 
+const recommendations = async (courses, level, rating) => {
+    //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
+    const filteredCourses = courses.filter(course => {
+        return course.difficulty === level && course.avgRating >= rating;
+    });
+    //sorting the courses to find the closest ratings to the users rating
+    const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
+    //returning only the top 3 choices that are similar to the users input
+    return (sortedCourses.slice(0, 3));
+};
+
 app.patch('/modules/:moduleId/completed', async (req, res) => {
     const { moduleId } = req.params;
     const { username } = req.body;
@@ -202,6 +213,7 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
             }
         });
         // Check if all modules in the course are completed by the user
+        let recommendationResults = [];
         const allModulesCompleted = updatedModule.course.modules.every(m =>
             m.completedBy.includes(username)
         );
@@ -213,8 +225,10 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                 }
             });
 
+            const courses = await prisma.courses.findMany();
+            recommendationResults = await recommendations(courses, updatedModule.course.difficulty, updatedModule.course.avgRating);
         }
-        res.json({ message: "Module completion updated", updatedModule });
+        res.json({ message: "Module completion updated", updatedModule, recommendations: recommendationResults });
     } catch (error) {
         console.error("Error updating module completion:", error);
         res.status(500).send("Failed to update module completion");
@@ -334,6 +348,8 @@ app.patch('/courses/:courseId/save', async (req, res) => {
         res.status(500).send('Error saving course');
     }
 });
+
+
 
 app.post('/modules/:moduleId/completion', async (req, res) => {
     const { moduleId } = req.params;

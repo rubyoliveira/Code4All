@@ -38,7 +38,7 @@ export { handleRecommendations };
 
 export const recommendations = async (courses, level, rating) => {
     //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
-    const filteredCourses = coursesWithRatings.filter(course => {
+    const filteredCourses = courses.filter(course => {
         return course.difficulty === level && course.avgRating >= rating;
     });
     //sorting the courses to find the closest ratings to the users rating

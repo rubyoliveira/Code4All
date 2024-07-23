@@ -4,6 +4,7 @@ import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Modules from "./Modules.jsx"
+
 import "./Topics.css"
 
 function Topics({username}) {
@@ -11,6 +12,8 @@ function Topics({username}) {
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
     const [courseCompleted, setCourseCompleted] = useState(false)
+    const [recommendations, setRecommendations] = useState([])
+
 
     useEffect(() => {
         fetchModules()
@@ -48,6 +51,16 @@ function Topics({username}) {
             });
     };
 
+    // const checkCourseCompletion = async () => {
+    //     try{
+    //         const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/modules/${courseId}/completed-by/${username}`);
+    //         const data = await response.json();
+    //         setCourseCompleted(data.completed)
+    //     } catch (error){
+    //         console.error("Error checking course completion", error)
+    //     }
+    // }
+
     if (username === "undefined") {
         return <Navigate to="/" />;
     }
@@ -58,7 +71,7 @@ function Topics({username}) {
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
                         modules.map((module) => (
-                            <Modules key = {module.id} id = {module.id} title = {module.title} username = {username} fetchTopics = {fetchTopics}/>
+                            <Modules key = {module.id} id = {module.id} title = {module.title} username = {username} fetchTopics = {fetchTopics} setRecommendations = {setRecommendations}/>
                         ))
                     ) : (
                         <p>No modules available</p>
@@ -72,6 +85,7 @@ function Topics({username}) {
                                 title={topic.title}
                                 description={topic.description}
                                 videoURL={topic.video}
+                                recommendations = {recommendations}
                             />
                         ))
                     ) : (

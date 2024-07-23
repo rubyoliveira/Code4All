@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import './TopicCards.css'
 import ReactMarkdown from 'react-markdown';
+import ProfileCards from "./ProfileCards.jsx"
 
 
 
-function TopicCards({title, description, videoURL}) {
+function TopicCards({title, description, videoURL, recommendations}) {
 
   return (
     <>
@@ -14,6 +15,19 @@ function TopicCards({title, description, videoURL}) {
                 <ReactMarkdown>{description}</ReactMarkdown>
             </div>
             <iframe className = "topic-video" title="topic-video" src={videoURL} alt="Selected Video"></iframe>
+        </div>
+        <div className = "recommednations-topic">
+                {recommendations.length > 0 && (
+                    <div className= "recommendations">
+                        {recommendations.map (rec => (
+                            <ProfileCards
+                                key = {rec.title}
+                                title = {rec.title}
+                                image = {rec.image}
+                            ></ProfileCards>
+                        ))}
+                    </div>
+                )}
         </div>
     </>
   )
