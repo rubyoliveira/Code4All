@@ -14,7 +14,6 @@ function Topics({username}) {
     const [courseCompleted, setCourseCompleted] = useState(false)
     const [recommendations, setRecommendations] = useState([])
 
-
     useEffect(() => {
         fetchModules()
     }, [courseId]);

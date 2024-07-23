@@ -19,7 +19,7 @@
     width: 50%;
 }
 
-.recommednations-topic{
+.recommendations{
     display: flex;
     flex-direction: row;
 }
