@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { recommendations, fetchCards } from "./recommendation";
+import { recommendations, fetchCards, handleRecommendations} from "./recommendation";
 import './Survey.css';
 import { useNavigate, Link} from 'react-router-dom';
 import { UserContext } from './UserContext.js';
@@ -17,6 +17,10 @@ const Survey = ({username}) => {
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
 
+    const saveRecommendations = () => {
+        handleRecommendations(username, recommendedCourses);
+    };
+
     const submitSurvey = async (level, rating) => {
         try {
             const data = await fetchCards();
@@ -28,29 +32,6 @@ const Survey = ({username}) => {
             console.error('Error fetching cards:', error);
         }
     };
-
-    const handleRecommendations = (recommendations) => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/add-recommendation`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ newRecommendations: recommendations }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to save recommendations');
-            }
-            return response.json();
-        })
-        .then(data => {
-            alert('Recommendations saved successfully:', data);
-        })
-        .catch(error => {
-            console.error('Error saving recommendations:', error);
-        });
-    };
-
 
     const handleLanguageSelection = (language) => {
         setLanguages(prevLanguages => [...prevLanguages, language]);
@@ -123,7 +104,7 @@ const Survey = ({username}) => {
                     {step != 1 && step != 5 && <button onClick = {prevStep}>Prev</button>}
                     {step != 4 && step != 5 && <button onClick = {nextStep}>Next</button>}
                     {step === 4 && <button onClick = {() => submitSurvey(level, rating, languages)}>Submit</button>}
-                    {step === 5 &&<Link to = "/courses"><button onClick = {() => handleRecommendations(recommendedCourses)}>Go To Home Page</button></Link>}
+                    {step === 5 &&<Link to = "/courses"><button onClick = {saveRecommendations}>Go To Home Page</button></Link>}
                 </div>
             </div>
             </div>
