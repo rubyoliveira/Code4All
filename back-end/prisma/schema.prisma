@@ -31,6 +31,7 @@ model courses {
   likes Int @default(0)
   image String
   rating Float[] @default([])
+  avgRating Float @default(0)
   author String @default("anonymous")
   userId String[] @default([])
   user user @relation(fields: [author], references: [username])

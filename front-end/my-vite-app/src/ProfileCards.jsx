@@ -4,7 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 
 import './Profile.css'
 
-function ProfileCards({title, image, description, fetchProfile, user, author}) {
+function ProfileCards({title, image,fetchProfile, user, author}) {
 
     const deleteBoard = async () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${title}/delete`, {
@@ -35,8 +35,7 @@ function ProfileCards({title, image, description, fetchProfile, user, author}) {
             <Link to = {`/courses/${title}`}>
                 <img className ="pcards-img" src = {image}></img>
             </Link>
-            <p>{title}</p>
-            <p>{description}</p>
+            <h4>{title}</h4>
             { user === author && <button onClick = {deleteBoard}>delete</button>}
         </div>
         </>

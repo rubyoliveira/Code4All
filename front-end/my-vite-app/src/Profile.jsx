@@ -193,7 +193,6 @@ function Profile({handleSignOut}) {
                                <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}
@@ -205,7 +204,6 @@ function Profile({handleSignOut}) {
                                 <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}
@@ -217,7 +215,6 @@ function Profile({handleSignOut}) {
                                 <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}
@@ -229,7 +226,6 @@ function Profile({handleSignOut}) {
                                <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}

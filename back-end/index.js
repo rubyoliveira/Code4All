@@ -212,6 +212,7 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                     completedBy: { push: username } // Similarly, use push or set appropriately
                 }
             });
+
         }
         res.json({ message: "Module completion updated", updatedModule });
     } catch (error) {
