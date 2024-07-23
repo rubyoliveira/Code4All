@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 
-
-
 function Modules({title, id, fetchTopics, username}) {
     const [buttonStyle, setButtonStyle] = useState('light')
 

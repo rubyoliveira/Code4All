@@ -167,7 +167,6 @@ app.patch('/profile/:username/picture', async (req, res) => {
 app.patch('/modules/:moduleId/completed', async (req, res) => {
     const { moduleId } = req.params;
     const { username } = req.body;
-
     try {
         const module = await prisma.modules.findUnique({
             where: { id: parseInt(moduleId) },
@@ -179,43 +178,48 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                 }
             }
         });
-
         if (!module) {
             return res.status(404).send("Module not found");
         }
-
-        let updatedModule;
+        // Update the module as completed by the user if not already done
         if (!module.completedBy.includes(username)) {
-            updatedModule = await prisma.modules.update({
+            await prisma.modules.update({
                 where: { id: parseInt(moduleId) },
                 data: {
-                    completedBy: { set: [...module.completedBy, username] }
+                    completedBy: { push: username } // Use push if Prisma supports it, otherwise use set with spread as before
                 }
             });
         }
-
+        // Re-fetch module to ensure it includes the latest completion data
+        const updatedModule = await prisma.modules.findUnique({
+            where: { id: parseInt(moduleId) },
+            include: {
+                course: {
+                    include: {
+                        modules: true
+                    }
+                }
+            }
+        });
         // Check if all modules in the course are completed by the user
-        const allModulesCompleted = module.course.modules.every(m =>
+        const allModulesCompleted = updatedModule.course.modules.every(m =>
             m.completedBy.includes(username)
         );
-
-        if (allModulesCompleted) {
-            if (!module.course.completedBy.includes(username)) {
-                await prisma.courses.update({
-                    where: { title: module.courseId },
-                    data: {
-                        completedBy: { set: [...module.course.completedBy, username] }
-                    }
-                });
-            }
+        if (allModulesCompleted && !updatedModule.course.completedBy.includes(username)) {
+            await prisma.courses.update({
+                where: { title: updatedModule.course.title },
+                data: {
+                    completedBy: { push: username } // Similarly, use push or set appropriately
+                }
+            });
         }
-
-        res.json(updatedModule || { message: "User has already completed this module", module });
+        res.json({ message: "Module completion updated", updatedModule });
     } catch (error) {
         console.error("Error updating module completion:", error);
         res.status(500).send("Failed to update module completion");
     }
 });
+
 
 app.get('/courses/:title/completed-by/:username', async (req, res) => {
     const { title, username } = req.params;
