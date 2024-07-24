@@ -165,14 +165,10 @@ app.patch('/profile/:username/picture', async (req, res) => {
 const recommendations = async (courses, level, rating, currCourse, username) => {
     //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
     const filteredCourses = courses.filter(course => {
-        return course.difficulty === level && course.avgRating >= rating && course.title != currCourse;
+        return course.difficulty === level && course.avgRating >= rating && course.title != currCourse && !course.completedBy.includes(username);
     });
-    //further filtering out courses that the user has already completed
-    const userFilteredCourses = filteredCourses.filter(course => {
-        return !course.completedBy.includes[username];
-    })
     //sorting the courses to find the closest ratings to the users rating
-    const sortedCourses = userFilteredCourses.sort((a, b) => a.avgRating - b.avgRating);
+    const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
     //returning only the top 3 choices that are similar to the users input
     return (sortedCourses.slice(0, 3));
 };
