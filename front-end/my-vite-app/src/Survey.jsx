@@ -44,18 +44,17 @@ const Survey = ({username}) => {
             { step === 1 && <div className = "top-survey">
                 <h3>What Brings You to Code4All</h3>
                 <div className = "container-survey">
-                    <button onClick = {() => setInterest('Learning')}>Learning</button>
-                    <button onClick = {() => setInterest('Coding for Free')}>Coding for Free</button>
-                    <button onClick = {() => setInterest('For Fun')}>For Fun</button>
-                    <button onClick = {() => setInterest('Practicing Skills')}>Practicing Skills</button>
+                    {['Learning', 'Coding for Free','For Fun', 'Practicing Skills'].map((interest) => (
+                        <button onClick = {() => setInterest(interest)}>{interest}</button>
+                    ))}
                 </div>
             </div>}
             {step === 2 && <div className = "top-survey">
                 <h3>What is your Coding Level</h3>
                 <div className = "container-survey">
-                    <button onClick = {() => setLevel('Beginner')}>Beginner</button>
-                    <button onClick = {() => setLevel('Intermediate')}>Intermediate</button>
-                    <button onClick = {() => setLevel('Expert')}>Expert</button>
+                    {['Beginner', 'Intermediate','Expert'].map((level) => (
+                        <button onClick = {() => setLevel(level)}>{level}</button>
+                    ))}
                 </div>
             </div>}
             {step === 3 && <div className = "top-survey">
@@ -63,13 +62,7 @@ const Survey = ({username}) => {
                 <div className = "star-rating">
                     <div className = "star-content">
                         {[1,2,3,4,5].map(star =>(
-                            <p
-                                key={star}
-                                className ={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`}
-                                onClick = {() => setRating(star)}
-                                onMouseEnter = {()=> setHoverRating(star)}
-                                onMouseLeave = {() => setHoverRating(0)}
-                            >
+                            <p key={star} className ={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`} onClick = {() => setRating(star)} onMouseEnter = {()=> setHoverRating(star)} onMouseLeave = {() => setHoverRating(0)}>
                                 ★
                             </p>
                         ))}
@@ -79,11 +72,9 @@ const Survey = ({username}) => {
             {step === 4 && <div className = "top-survey">
                 <h3>What Languages are you Interested in</h3>
                 <div className = "container-survey">
-                    <button onClick = {() => handleLanguageSelection('Python')}>Python</button>
-                    <button onClick = {() => handleLanguageSelection('Java')}>Java</button>
-                    <button onClick = {() => handleLanguageSelection('JavaScript')}>JavaScript</button>
-                    <button onClick = {() => handleLanguageSelection('Ruby')}>Ruby</button>
-                    <button onClick = {() => handleLanguageSelection('C')}>C</button>
+                    {['Python', 'Java','JavaScript', 'Ruby', 'C'].map((language) => (
+                        <button onClick = {() => handleLanguageSelection(language)}>{language}</button>
+                    ))}
                 </div>
             </div>}
             {step === 5 && <div className = "top-survey">
