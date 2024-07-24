@@ -14,6 +14,28 @@ const Survey = ({username}) => {
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
 
+    handlePageChange(event){
+		if(event.key === 'ArrowRight' && step != 4 && step != 5){
+			nextStep();
+	    }
+		else if (event.key === 'ArrowLeft' && step != 1 && step != 5) {
+			prevStep();
+	    }
+        else if (event.key === "Enter" && (step === 4 || step === 5)) {
+            submitSurvey(level, rating, languages);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keydown', handlePageChange);
+        return () => {
+          document.removeEventListener('keydown', handlePageChange);
+        };
+      }, [handlePageChange]);
+    };
+
+
+
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
 
