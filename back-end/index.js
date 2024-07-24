@@ -166,19 +166,39 @@ app.patch('/profile/:username/picture', async (req, res) => {
 
 const recommendations = async (courses, level, rating, currCourse, username) => {
     filteredCourses = []
-    //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
+
     for(let i = 0; i < courses.length; i++){
-        let curr = courses[i]
-        for (let j = 0; j < curr.completedBy.length; i++){
-            if(curr.difficulty === level && curr.avgRating >= rating && curr.title != currCourse && curr.completedBy[j] != username){
-                filteredCourses.push(courses[i])
+        let course = courses[i]
+        //check if the course meets core requirements of difficulty and rating
+        if(course.difficulty === level && course.avgRating >= rating && course.title != currCourse){
+            //check if this user has completed the course
+            let userCompleted = false;
+            for (let j = 0; j < curr.completedBy.length; i++){
+                if(course.completedBy[j] === username){
+                    userCompleted = true;
+                    break;
+                }
+            }
+            //if they haven't put into the filtered courses
+            if(!userCompleted){
+                filteredCourses.push(course);
             }
         }
     }
-    //sorting the courses to find the closest ratings to the users rating
-    const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
-    //returning only the top 3 choices that are similar to the users input
-    return (sortedCourses.slice(0, 3));
+    //sorting the filtered courses based on the rating
+    for(let i = 0; i < filteredCourses.length; i++){
+        for (let j = i+1; j < filteredCourses.length; j++){
+            if(filteredCourses[i].avgRating > filteredCourses[j].avgRating){
+                let temp = filteredCourses[i];
+                filteredCourses[i] = filteredCourses[j];
+                filteredCourses[j] = temp
+            }
+        }
+    }
+
+    // const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
+    //return top 3 choices
+    return (filteredCourses.slice(0, 3));
 };
 
 app.patch('/modules/:moduleId/completed', async (req, res) => {
@@ -232,7 +252,7 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
             });
 
             const courses = await prisma.courses.findMany();
-            recommendationResults = await recommendations(courses, updatedModule.course.difficulty, updatedModule.course.avgRating, updatedModule.course.title );
+            recommendationResults = await recommendations(courses, updatedModule.course.difficulty, updatedModule.course.avgRating, updatedModule.course.title, username );
         }
         res.json({ message: "Module completion updated", updatedModule, recommendations: recommendationResults });
     } catch (error) {
