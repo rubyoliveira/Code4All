@@ -4,6 +4,7 @@ import TopicCards from './TopicCards.jsx';
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Modules from "./Modules.jsx"
+import { handleRecommendations } from "./recommendation";
 
 import "./Topics.css"
 
@@ -16,7 +17,10 @@ function Topics({username}) {
 
     useEffect(() => {
         fetchModules()
-    }, [courseId]);
+        if (recommendations.length > 0) {
+            handleRecommendations(username, recommendations);
+        }
+    }, [courseId, username, recommendations]);
 
     const fetchModules = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${courseId}`)
@@ -85,6 +89,7 @@ function Topics({username}) {
                                 description={topic.description}
                                 videoURL={topic.video}
                                 recommendations = {recommendations}
+                                username = {username}
                             />
                         ))
                     ) : (

@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react'
-import './TopicCards.css'
+import { useState, useEffect } from 'react';
+import './TopicCards.css';
 import ReactMarkdown from 'react-markdown';
-import ProfileCards from "./ProfileCards.jsx"
+import ProfileCards from "./ProfileCards.jsx";
 
-
-
-function TopicCards({title, description, videoURL, recommendations}) {
+function TopicCards({ title, description, videoURL, recommendations, username }) {
 
   return (
     <>

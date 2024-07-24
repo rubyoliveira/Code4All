@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import {handleRecommendations} from "./recommendation";
 
 function Modules({title, id, fetchTopics, username, setRecommendations}) {
     const [buttonStyle, setButtonStyle] = useState('light')
@@ -39,8 +38,7 @@ function Modules({title, id, fetchTopics, username, setRecommendations}) {
             const data = await response.json();
             setButtonStyle('dark');
             fetchTopics(id);
-            if (data.recommendations != []) {
-                handleRecommendations(username, data.recommendations)
+            if (data.recommendations) {
                 setRecommendations(data.recommendations); // Update recommendations state or handle it as needed
             }
         } catch (error) {
