@@ -64,16 +64,16 @@ const Survey = ({username}) => {
             { step === 1 && <div className = "top-survey">
                 <h3>What Brings You to Code4All</h3>
                 <div className = "container-survey">
-                    {['Learning', 'Coding for Free','For Fun', 'Practicing Skills'].map((interest) => (
-                        <button key = {interest} onClick = {() => setInterest(interest)}>{interest}</button>
+                    {['Learning', 'Coding for Free','For Fun', 'Practicing Skills'].map((interestOption) => (
+                        <button key = {interestOption} onClick = {() => setInterest(interestOption)} className ={interest === interestOption ? 'selected' : ''}>{interestOption}</button>
                     ))}
                 </div>
             </div>}
             {step === 2 && <div className = "top-survey">
                 <h3>What is your Coding Level</h3>
                 <div className = "container-survey">
-                    {['Beginner', 'Intermediate','Expert'].map((level) => (
-                        <button  key = {level} onClick = {() => setLevel(level)}>{level}</button>
+                    {['Beginner', 'Intermediate','Expert'].map((levelOption) => (
+                        <button  key = {levelOption} onClick = {() => setLevel(levelOption)} className ={level === levelOption ? 'selected' : ''}>{levelOption}</button>
                     ))}
                 </div>
             </div>}
@@ -93,7 +93,7 @@ const Survey = ({username}) => {
                 <h3>What Languages are you Interested in</h3>
                 <div className = "container-survey">
                     {['Python', 'Java','JavaScript', 'Ruby', 'C'].map((language) => (
-                        <button key = {language} onClick = {() => handleLanguageSelection(language)}>{language}</button>
+                        <button key = {language} onClick = {() => handleLanguageSelection(language)} className ={languages.includes(language) ? 'selected' : ''}>{language}</button>
                     ))}
                 </div>
             </div>}
