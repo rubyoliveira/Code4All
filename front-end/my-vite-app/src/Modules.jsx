@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 
-
-
-function Modules({title, id, fetchTopics, username}) {
+function Modules({title, id, fetchTopics, username, setRecommendations}) {
     const [buttonStyle, setButtonStyle] = useState('light')
 
     useEffect(()=> {
@@ -37,9 +35,12 @@ function Modules({title, id, fetchTopics, username}) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            await response.json();
+            const data = await response.json();
             setButtonStyle('dark');
             fetchTopics(id);
+            if (data.recommendations) {
+                setRecommendations(data.recommendations); // Update recommendations state or handle it as needed
+            }
         } catch (error) {
             console.error("Failed to mark module as completed:", error);
         }

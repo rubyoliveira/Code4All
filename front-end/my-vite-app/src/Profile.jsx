@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { Link, Navigate } from 'react-router-dom';
 import CourseCards from "./CourseCards.jsx"
 import ProfileCards from "./ProfileCards.jsx"
-import Survey from "./Survey.jsx"
 
 import Header from "./Header.jsx"
 import './Profile.css'
@@ -16,13 +15,9 @@ function Profile({handleSignOut}) {
     const [clickedCreate, setClickCreate] = useState(false)
     const [clickedSaved, setClickSaved] = useState(false)
     const [clickedComplete, setClickComplete] = useState(false)
+    const [clickedReco, setClickReco] = useState(false)
+    const [recommendations, setRecommendations] = useState([])
     const [completedCourses, setCompletedCourses] = useState([])
-    const [survey, setSurvey] = useState(false)
-
-    const closeModal = () => {
-        setSurvey(false)
-    }
-
 
 
     if (username == "undefined") {
@@ -53,6 +48,7 @@ function Profile({handleSignOut}) {
 
     const fetchSavedCourses = () => {
         setClickSaved(true)
+        setClickReco(false)
         setClickCreate(false)
         setClickComplete(false)
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/saved-courses`, {
@@ -74,6 +70,7 @@ function Profile({handleSignOut}) {
 
     const fetchUserCourses = () => {
         setClickCreate(true)
+        setClickReco(false)
         setClickSaved(false)
         setClickComplete(false)
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/created-courses`, {
@@ -94,6 +91,7 @@ function Profile({handleSignOut}) {
     };
 
     const fetchCompletedCourses = () => {
+        setClickReco(false)
         setClickCreate(false)
         setClickSaved(false)
         setClickComplete(true)
@@ -108,6 +106,28 @@ function Profile({handleSignOut}) {
         })
         .then(data => {
             setCompletedCourses(data);
+        })
+        .catch(error => {
+            console.error('Error fetching courses:', error);
+        });
+    };
+
+    const fetchRecommendations = () => {
+        setClickReco(true)
+        setClickCreate(false)
+        setClickSaved(false)
+        setClickComplete(false)
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/recommendations`, {
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setRecommendations(data);
         })
         .catch(error => {
             console.error('Error fetching courses:', error);
@@ -161,20 +181,18 @@ function Profile({handleSignOut}) {
                     <button onClick = {fetchDogs}>Fetch Dog Profile Picture</button>
                     <h3>Hi, {userData.name}!</h3>
                     <p>{userData.username}</p>
-                    <button onClick = {() => setSurvey(true)}>Survey</button>
-                    {survey && <Survey closeModal = {closeModal}></Survey>}
                     <p>{userData.email}</p>
                     <p>{userData.modules}</p>
                     <div>
                         <button onClick = {fetchUserCourses}>Your Courses</button>
                         <button onClick = {fetchSavedCourses}>Saved For Later</button>
                         <button onClick = {fetchCompletedCourses}>Completed Courses</button>
+                        <button onClick = {fetchRecommendations}>Recommendations</button>
                         {clickedCreate && <div className = "courses">
                             {userCourses.map(card => (
                                <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}
@@ -186,7 +204,6 @@ function Profile({handleSignOut}) {
                                 <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}
@@ -198,13 +215,23 @@ function Profile({handleSignOut}) {
                                 <ProfileCards
                                 key = {card.title}
                                 title ={card.title}
-                                description = {card.description}
                                 image = {card.image}
                                 fetchProfile = {fetchProfile}
                                 author = {card.author}
                                 user = {userData.username}/>
                             ))}
                         </div>}
+                        {clickedReco && <div className = "courses">
+                            {recommendations.map(card => (
+                               <ProfileCards
+                                key = {card.title}
+                                title ={card.title}
+                                image = {card.image}
+                                fetchProfile = {fetchProfile}
+                                author = {card.author}
+                                user = {userData.username}/>
+                            ))}
+                        </div> }
                     </div>
                     <Link to = "/">
                         <button onClick = {handleSignOut}> Log Out </button>

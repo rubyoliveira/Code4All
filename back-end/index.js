@@ -121,31 +121,29 @@ app.get('/profile/:username/recommendations', async (req, res) => {
 app.patch('/profile/:username/add-recommendation', async (req, res) => {
     const { username } = req.params;
     const { newRecommendations } = req.body;
-
     try {
         const user = await prisma.user.findUnique({
             where: { username: username },
             select: { recommendations: true }
         });
 
-        if (user) {
-            const updatedRecommendations = user.recommendations.concat(newRecommendations).slice(-3);
-
-            const updatedUser = await prisma.user.update({
-                where: { username: username },
-                data: {
-                    recommendations: updatedRecommendations,
-                },
-                select: { recommendations: true }
-            });
-
-            res.json(updatedUser.recommendations);
-        } else {
-            res.status(404).send('User not found');
+        if (!user) {
+            return res.status(404).send('User not found');
         }
+
+        const updatedRecommendations = user.recommendations.concat(newRecommendations).slice(-3);
+
+        const updatedUser = await prisma.user.update({
+            where: { username: username },
+            data: {
+                recommendations: updatedRecommendations,
+            },
+            select: { recommendations: true }
+        });
+        res.json(updatedUser.recommendations);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Server error');
+        res.status(500).send('Server error: ' + error.message);
     }
 });
 
@@ -166,10 +164,20 @@ app.patch('/profile/:username/picture', async (req, res) => {
     }
 });
 
+const recommendations = async (courses, level, rating) => {
+    //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
+    const filteredCourses = courses.filter(course => {
+        return course.difficulty === level && course.avgRating >= rating;
+    });
+    //sorting the courses to find the closest ratings to the users rating
+    const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
+    //returning only the top 3 choices that are similar to the users input
+    return (sortedCourses.slice(0, 3));
+};
+
 app.patch('/modules/:moduleId/completed', async (req, res) => {
     const { moduleId } = req.params;
     const { username } = req.body;
-
     try {
         const module = await prisma.modules.findUnique({
             where: { id: parseInt(moduleId) },
@@ -181,43 +189,52 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                 }
             }
         });
-
         if (!module) {
             return res.status(404).send("Module not found");
         }
-
-        let updatedModule;
+        // Update the module as completed by the user if not already done
         if (!module.completedBy.includes(username)) {
-            updatedModule = await prisma.modules.update({
+            await prisma.modules.update({
                 where: { id: parseInt(moduleId) },
                 data: {
-                    completedBy: { set: [...module.completedBy, username] }
+                    completedBy: { push: username } // Use push if Prisma supports it, otherwise use set with spread as before
                 }
             });
         }
-
+        // Re-fetch module to ensure it includes the latest completion data
+        const updatedModule = await prisma.modules.findUnique({
+            where: { id: parseInt(moduleId) },
+            include: {
+                course: {
+                    include: {
+                        modules: true
+                    }
+                }
+            }
+        });
         // Check if all modules in the course are completed by the user
-        const allModulesCompleted = module.course.modules.every(m =>
+        let recommendationResults = [];
+        const allModulesCompleted = updatedModule.course.modules.every(m =>
             m.completedBy.includes(username)
         );
+        if (allModulesCompleted && !updatedModule.course.completedBy.includes(username)) {
+            await prisma.courses.update({
+                where: { title: updatedModule.course.title },
+                data: {
+                    completedBy: { push: username } // Similarly, use push or set appropriately
+                }
+            });
 
-        if (allModulesCompleted) {
-            if (!module.course.completedBy.includes(username)) {
-                await prisma.courses.update({
-                    where: { title: module.courseId },
-                    data: {
-                        completedBy: { set: [...module.course.completedBy, username] }
-                    }
-                });
-            }
+            const courses = await prisma.courses.findMany();
+            recommendationResults = await recommendations(courses, updatedModule.course.difficulty, updatedModule.course.avgRating);
         }
-
-        res.json(updatedModule || { message: "User has already completed this module", module });
+        res.json({ message: "Module completion updated", updatedModule, recommendations: recommendationResults });
     } catch (error) {
         console.error("Error updating module completion:", error);
         res.status(500).send("Failed to update module completion");
     }
 });
+
 
 app.get('/courses/:title/completed-by/:username', async (req, res) => {
     const { title, username } = req.params;
@@ -240,44 +257,61 @@ app.get('/courses/:title/completed-by/:username', async (req, res) => {
 });
 
 app.post('/courses/:courseId/rate', async (req, res) => {
-    const {courseId} = req.params;
-    const {rating} = req.body;
+    const { courseId } = req.params;
+    const { rating } = req.body;
 
-    try{
-        const course = await prisma.courses.update({
-            where: {title: courseId},
-            data: {
-                rating: {
-                    push: parseFloat(rating),
-                }
-            },
-        });
-        res.json(course)
-    } catch(error){
-        console.error("Error submitting rating:", error)
-        res.status(500).send("Failed to submit rating");
-    }
-})
-
-app.get('/courses/:courseId/average-rating', async (req, res) => {
-    const {courseId} = req.params;
     try {
+        // Assuming 'ratings' is an array of numbers stored in the database
         const course = await prisma.courses.findUnique({
-            where: {title: courseId},
-            select: {rating: true},
+            where: { title: courseId },
         });
+
         if (!course) {
             return res.status(404).send("Course not found");
         }
 
-        const averageRating = course.rating.reduce((a, b) => a + b, 0) / course.rating.length;
-        res.json({averageRating});
+        const updatedRatings = [...course.rating, parseFloat(rating)];
+
+        const updatedCourse = await prisma.courses.update({
+            where: { title: courseId },
+            data: {
+                rating: updatedRatings,
+            },
+        });
+
+        const averageRating = updatedRatings.reduce((a, b) => a + b, 0) / updatedRatings.length;
+
+        await prisma.courses.update({
+            where: { title: courseId },
+            data: {
+                avgRating: averageRating,
+            },
+        });
+
+        res.json({ updatedCourse, averageRating });
+    } catch (error) {
+        console.error("Error submitting rating:", error);
+        res.status(500).send("Failed to submit rating");
+    }
+});
+
+app.get('/courses/:courseId/average-rating', async (req, res) => {
+    const {courseId} = req.params;
+
+    try {
+        const course = await prisma.courses.findUnique({
+            where: {title: courseId},
+            select: {avgRating: true},
+        });
+        if (!course) {
+            return res.status(404).send("Course not found");
+        }
+        res.json({averageRating: course.avgRating});
     } catch (error) {
         console.error("Error calculating average rating:", error);
         res.status(500).send("Failed to calculate average rating");
     }
 });
-
 
 app.get('/courses', async (req, res) => {
     const courses = await prisma.courses.findMany();
@@ -314,6 +348,8 @@ app.patch('/courses/:courseId/save', async (req, res) => {
         res.status(500).send('Error saving course');
     }
 });
+
+
 
 app.post('/modules/:moduleId/completion', async (req, res) => {
     const { moduleId } = req.params;

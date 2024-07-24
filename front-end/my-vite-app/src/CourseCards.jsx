@@ -4,14 +4,13 @@ import Header from "./Header.jsx";
 import StarRating from "./StarRating.jsx";
 import { Link } from 'react-router-dom';
 
-function CourseCards({title, description, level, img, likes, username}) {
+function CourseCards({title, description, level, img, likes, username, averageRating, fetchCards}) {
     const [vote, setVote] = useState(likes);
     const [openRating, setOpenRating] = useState(false);
-    const [averageRating, setAverageRating] = useState(0);
 
-    useEffect(() => {
-        fetchAverageRating(title);
-      }, [title]);
+    // useEffect(() => {
+    //     fetchAverageRating(title);
+    //   }, [title]);
 
     const displayRating = () => setOpenRating(true);
     const handleCloseRating = () => setOpenRating(false);
@@ -63,7 +62,7 @@ function CourseCards({title, description, level, img, likes, username}) {
                 throw new Error(`Failed to fetch average rating: ${response.status} ${response.statusText}`);
             }
             const data = await response.json();
-            setAverageRating(data.averageRating);
+            return(data)
         } catch (error) {
             console.error('Error fetching average rating:', error);
         }
@@ -79,14 +78,14 @@ function CourseCards({title, description, level, img, likes, username}) {
                 <p>{description}</p>
                 <div>
                 <p><strong>Level:</strong>  {level}</p>
-                <p><strong>Average Difficulty:</strong> {averageRating.toFixed(1)}&#11088;</p>
+                <p><strong>Average Difficulty:</strong>  {averageRating ? averageRating.toFixed(1) : 'N/A'}&#11088;</p>
                 </div>
                 <div className="course-buttons">
                     <button className="save-later" onClick={handleUpvote}>{vote}&#128151;</button>
                     <button className="save-later" onClick={handleSave}>Save for Later</button>
                     {!openRating && <button className="save-later" onClick={displayRating}>Leave a Difficulty Rating</button>}
                 </div>
-                {openRating && <StarRating closeModal={handleCloseRating} courseId={title} fetchCourseData={() => fetchAverageRating(title)}/>}
+                {openRating && <StarRating closeModal={handleCloseRating} courseId={title} fetchCards={fetchCards}/>}
             </div>
         </>
     )

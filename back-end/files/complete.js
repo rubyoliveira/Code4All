@@ -46,7 +46,6 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                 }
             });
         }
-
         // Check if all modules in the course are completed by the user
         const allModulesCompleted = module.course.modules.every(m =>
             m.completedBy.includes(username)
@@ -62,7 +61,6 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
                 });
             }
         }
-
         res.json(updatedModule || { message: "User has already completed this module", module });
     } catch (error) {
         console.error("Error updating module completion:", error);
@@ -89,4 +87,3 @@ app.get('/courses/:title/completed-by/:username', async (req, res) => {
         res.status(500).send('Failed to check course completion');
     }
 });
-

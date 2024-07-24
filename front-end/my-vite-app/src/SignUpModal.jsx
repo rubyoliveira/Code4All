@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import './SignUpModal.css';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './UserContext.js';
+import Survey from "./Survey.jsx"
 
 const SignUpModal = ({ closeModal }) => {
     const [username, setUsername] = useState("");
@@ -15,7 +16,6 @@ const SignUpModal = ({ closeModal }) => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log(complete);
       try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`, {
           method: 'POST',
@@ -25,16 +25,13 @@ const SignUpModal = ({ closeModal }) => {
           body: JSON.stringify({ username, password, email, name, complete}),
           credentials: 'include'
         });
-
         if (response.ok) {
           const data = await response.json();
-          const loggedInUser = data.user;
-          setEmail('')
-          setName('')
-          setUsername('');
-          setPassword('');
+          console.log("Received data from server:", data); 
+          const loggedInUser = { username: data.username };
+          localStorage.setItem('user', JSON.stringify(loggedInUser));
           updateUser(loggedInUser);
-          navigate('/courses');
+          navigate('/survey');
         } else if (response.status === 409) {
           const errorData = await response.json();
           alert(`Signup failed: ${errorData.message}`);
