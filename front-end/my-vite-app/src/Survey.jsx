@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { recommendations, fetchCards, handleRecommendations} from "./recommendation";
 import './Survey.css';
 import { useNavigate, Link} from 'react-router-dom';
@@ -14,37 +14,23 @@ const Survey = ({username}) => {
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
 
-    handlePageChange(event){
-		if(event.key === 'ArrowRight' && step != 4 && step != 5){
-			nextStep();
-	    }
-		else if (event.key === 'ArrowLeft' && step != 1 && step != 5) {
-			prevStep();
-	    }
-        else if (event.key === "Enter" && (step === 4 || step === 5)) {
-            submitSurvey(level, rating, languages);
-        }
-    }
-
     useEffect(() => {
-        handlePageChange = (event) => {
-            if(event.key === 'ArrowRight' && step != 4 && step != 5){
+        const handlePageChange = (event) => {
+            if(event.key === 'ArrowRight' && step !== 4 && step !== 5){
                 nextStep();
             }
-            else if (event.key === 'ArrowLeft' && step != 1 && step != 5) {
+            else if (event.key === 'ArrowLeft' && step !== 1 && step !== 5) {
                 prevStep();
             }
             else if (event.key === "Enter" && (step === 4 || step === 5)) {
                 submitSurvey(level, rating, languages);
             }
         }
-
         document.addEventListener('keydown', handlePageChange);
         return () => {
           document.removeEventListener('keydown', handlePageChange);
         };
-      }, [step, level, rating, languages]);
-    };
+    }, [step, level, rating, languages]);
 
 
 
