@@ -3,6 +3,7 @@ import { recommendations, fetchCards, handleRecommendations} from "./recommendat
 import './Survey.css';
 import { useNavigate, Link} from 'react-router-dom';
 import { UserContext } from './UserContext.js';
+import { surveyConfig } from './surveyConfig.js'
 
 const Survey = ({username}) => {
     const [step, setStep] = useState(1);
@@ -61,14 +62,24 @@ const Survey = ({username}) => {
       <>
         <div className="signup">
             <div className = "content">
-            { step === 1 && <div className = "top-survey">
+                {Object.keys(surveyConfig).map((stepKey) => {
+                    const currStep = surveyConfig[stepKey];
+                        <div key = {stepKey}>
+                            <h2>{currStep.heading}</h2>
+                            {currStep.options.map((option) => (
+                               {step === 1) && <button key = {option} onClick = {() => setInterest(option)} className ={interest === option ? 'selected' : ''}>{option}</button> }
+                               {step === 2 && <button  key = {levelOption} onClick = {() => setLevel(levelOption)} className ={level === levelOption ? 'selected' : ''}>{levelOption}</button>}
+                            ))}
+                        </div>
+                })}
+            {/* { step === 1 && <div className = "top-survey">
                 <h3>What Brings You to Code4All</h3>
                 <div className = "container-survey">
                     {['Learning', 'Coding for Free','For Fun', 'Practicing Skills'].map((interestOption) => (
                         <button key = {interestOption} onClick = {() => setInterest(interestOption)} className ={interest === interestOption ? 'selected' : ''}>{interestOption}</button>
                     ))}
                 </div>
-            </div>}
+            </div>} */}
             {step === 2 && <div className = "top-survey">
                 <h3>What is your Coding Level</h3>
                 <div className = "container-survey">
