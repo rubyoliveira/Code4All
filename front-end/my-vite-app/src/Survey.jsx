@@ -45,7 +45,7 @@ const Survey = ({username}) => {
                 <h3>What Brings You to Code4All</h3>
                 <div className = "container-survey">
                     {['Learning', 'Coding for Free','For Fun', 'Practicing Skills'].map((interest) => (
-                        <button onClick = {() => setInterest(interest)}>{interest}</button>
+                        <button key = {interest} onClick = {() => setInterest(interest)}>{interest}</button>
                     ))}
                 </div>
             </div>}
@@ -53,7 +53,7 @@ const Survey = ({username}) => {
                 <h3>What is your Coding Level</h3>
                 <div className = "container-survey">
                     {['Beginner', 'Intermediate','Expert'].map((level) => (
-                        <button onClick = {() => setLevel(level)}>{level}</button>
+                        <button  key = {level} onClick = {() => setLevel(level)}>{level}</button>
                     ))}
                 </div>
             </div>}
@@ -73,7 +73,7 @@ const Survey = ({username}) => {
                 <h3>What Languages are you Interested in</h3>
                 <div className = "container-survey">
                     {['Python', 'Java','JavaScript', 'Ruby', 'C'].map((language) => (
-                        <button onClick = {() => handleLanguageSelection(language)}>{language}</button>
+                        <button key = {language} onClick = {() => handleLanguageSelection(language)}>{language}</button>
                     ))}
                 </div>
             </div>}

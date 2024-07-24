@@ -131,12 +131,10 @@ app.patch('/profile/:username/add-recommendation', async (req, res) => {
             return res.status(404).send('User not found');
         }
 
-        const updatedRecommendations = user.recommendations.concat(newRecommendations).slice(-3);
-
         const updatedUser = await prisma.user.update({
             where: { username: username },
             data: {
-                recommendations: updatedRecommendations,
+                recommendations: newRecommendations.slice(0,3),
             },
             select: { recommendations: true }
         });
@@ -167,7 +165,7 @@ app.patch('/profile/:username/picture', async (req, res) => {
 const recommendations = async (courses, level, rating, currCourse, username) => {
     //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
     const filteredCourses = courses.filter(course => {
-        return course.difficulty === level && course.avgRating >= rating && course != currCourse;
+        return course.difficulty === level && course.avgRating >= rating && course.title != currCourse;
     });
     //further filtering out courses that the user has already completed
     const userFilteredCourses = filteredCourses.filter(course => {
