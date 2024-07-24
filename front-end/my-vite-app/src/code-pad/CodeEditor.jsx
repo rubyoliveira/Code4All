@@ -2,14 +2,14 @@ import {Editor} from "@monaco-editor/react";
 import {useState, useRef, useEffect} from "react";
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
-import { STARTER_CODE, THEME } from "../constants";
+import { THEME } from "../constants";
 import Copilot from "./Copilot"
 import "./CodePad.css"
 
 
 const CodeEditor = ({username}) => {
     const editorRef = useRef()
-    const [value, setValue] = useState(STARTER_CODE['javascript'])
+    const [value, setValue] = useState('//write code')
     const [language, setLanguage] = useState('javascript')
     const [version, setVersion] = useState('18.15.0')
     const [languages, setLanguages] = useState([])
@@ -48,7 +48,6 @@ const CodeEditor = ({username}) => {
         const selectedLangObj = languages.find(lang => lang.language === language)
         setLanguage(language)
         setVersion(selectedLangObj.version)
-        setValue(STARTER_CODE[language])
     }
 
     if (username == "undefined") {
