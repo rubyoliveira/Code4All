@@ -133,25 +133,23 @@
   }
 
 
-.star-rating {
+
+.container-survey {
     display: flex;
     justify-content: center;
 }
 
-.star-rating .star-content{
-    display: flex;
-    justify-content: center;
-}
-
-.star-rating .star-content .star {
+.container-survey .star-content .star {
+  
     cursor: pointer;
     border: none;
     background-color: transparent;
     color: grey;
 }
 
-.star-rating .star-content .star.filled,
-.star-rating .star-content .star.hover{
+
+.container-survey .star-content .star.filled,
+.container-survey .star-content .star.hover{
     color: gold;
 }
 
@@ -182,7 +180,7 @@
     left: 0px;
   }
   .container-survey button.selected::after{
-    color: white;
+    color: rgb(0, 0, 0);
   }
 
 
