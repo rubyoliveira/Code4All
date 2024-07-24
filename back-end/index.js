@@ -164,11 +164,17 @@ app.patch('/profile/:username/picture', async (req, res) => {
     }
 });
 
-const recommendations = async (courses, level, rating) => {
+const recommendations = async (courses, level, rating, currCourse, username) => {
+    filteredCourses = []
     //filtering out the courses that don't have the same difficulty and courses thats rating is below what the user rates themselves
-    const filteredCourses = courses.filter(course => {
-        return course.difficulty === level && course.avgRating >= rating;
-    });
+    for(let i = 0; i < courses.length; i++){
+        let curr = courses[i]
+        for (let j = 0; j < curr.completedBy.length; i++){
+            if(curr.difficulty === level && curr.avgRating >= rating && curr.title != currCourse && curr.completedBy[j] != username){
+                filteredCourses.push(courses[i])
+            }
+        }
+    }
     //sorting the courses to find the closest ratings to the users rating
     const sortedCourses = filteredCourses.sort((a, b) => a.avgRating - b.avgRating);
     //returning only the top 3 choices that are similar to the users input
@@ -226,7 +232,7 @@ app.patch('/modules/:moduleId/completed', async (req, res) => {
             });
 
             const courses = await prisma.courses.findMany();
-            recommendationResults = await recommendations(courses, updatedModule.course.difficulty, updatedModule.course.avgRating);
+            recommendationResults = await recommendations(courses, updatedModule.course.difficulty, updatedModule.course.avgRating, updatedModule.course.title );
         }
         res.json({ message: "Module completion updated", updatedModule, recommendations: recommendationResults });
     } catch (error) {
