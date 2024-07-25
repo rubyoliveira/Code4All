@@ -55,7 +55,7 @@ function App() {
           <Route path="/courses/create" element={<CreateCourse username={user?.username} />} />
           <Route path="/courses/:courseId" element={<Topics username={user?.username} />} />
           <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
-          <Route path= "/code-pad" element = {<CodeEditor username = {user?.username} />}/>
+          <Route path= "/code-pad/:idHash" element = {<CodeEditor username = {user?.username} />}/>
           <Route path = "/survey" element = {<Survey username = {user?.username}/>}/>
         </Routes>
       </BrowserRouter>

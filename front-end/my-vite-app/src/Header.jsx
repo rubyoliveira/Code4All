@@ -26,7 +26,7 @@ function Header({username}) {
             const data = await response.json();
             // setHash(data);
             const {idHash} = data;
-            window.open(`${window.location.origin}/cope-pad/${idHash}`, '_blank');
+            window.open(`${window.location.origin}/code-pad/${idHash}`, '_blank');
         } catch (error) {
             console.error("Failed to create an IDE session", error);
         }
