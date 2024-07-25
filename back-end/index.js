@@ -524,7 +524,7 @@ app.post ('/create-ide', async (req, res) => {
     }
 })
 
-app.get('/ide/:idHash', async (req, res) => {
+app.get('/code-pad/:idHash', async (req, res) => {
     const {idHash} = req.params
 
     try{
@@ -539,6 +539,21 @@ app.get('/ide/:idHash', async (req, res) => {
         res.status(200).json(ideSession)
     } catch(error) {
         res.status(500).json({error: "Failed to retrieve IDE session"})
+    }
+})
+
+app.put('/code-pad/:idHash/save', async (req, res) => {
+    const {idHash} = req.params;
+    const {code} = req.body;
+    try {
+        const saved = await prisma.interactiveIDE.update({
+            where: { idHash },
+            data: { code }
+        });
+        res.json(saved);
+    } catch (error) {
+        console.error("Error saving code:", error);
+        res.status(500).send("Failed to save code");
     }
 })
 

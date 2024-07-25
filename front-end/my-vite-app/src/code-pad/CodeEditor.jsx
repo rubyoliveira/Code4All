@@ -1,5 +1,6 @@
 import {Editor} from "@monaco-editor/react";
 import {useState, useRef, useEffect} from "react";
+import { useParams } from 'react-router-dom';
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { THEME } from "../constants";
@@ -8,7 +9,9 @@ import "./CodePad.css"
 
 
 const CodeEditor = ({username}) => {
+    const {idHash} = useParams()
     const editorRef = useRef()
+    const [interactive, setInteractive] = useState([])
     const [value, setValue] = useState('//pick a language')
     const [language, setLanguage] = useState('')
     const [version, setVersion] = useState('')
@@ -17,6 +20,7 @@ const CodeEditor = ({username}) => {
 
     useEffect(() => {
         fetchLanguages();
+        fetchInteractive();
       }, []);
 
     const fetchLanguages = () => {
@@ -29,6 +33,22 @@ const CodeEditor = ({username}) => {
             })
             .then(data => {
                 setLanguages(data);
+            })
+            .catch(error => {
+                console.error('Error fetching cards:', error);
+            });
+    }
+
+    const fetchInteractive = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/code-pad/${idHash}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setInteractive(data);
             })
             .catch(error => {
                 console.error('Error fetching cards:', error);
