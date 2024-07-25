@@ -27,7 +27,7 @@ const Survey = ({username}) => {
             else if (event.key === "Enter" && (step === 4 || step === 5)) {
                 if(step === 4){submitSurvey(level, rating, languages);}
                 else if (step === 5){
-                    handleRecommendations();
+                    saveRecommendations();
                     navigate('/courses');
                 }
             }

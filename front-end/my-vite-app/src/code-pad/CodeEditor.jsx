@@ -9,9 +9,9 @@ import "./CodePad.css"
 
 const CodeEditor = ({username}) => {
     const editorRef = useRef()
-    const [value, setValue] = useState('//write code')
-    const [language, setLanguage] = useState('javascript')
-    const [version, setVersion] = useState('18.15.0')
+    const [value, setValue] = useState('//pick a language')
+    const [language, setLanguage] = useState('')
+    const [version, setVersion] = useState('')
     const [languages, setLanguages] = useState([])
     const [chat, setChat] = useState('')
 
@@ -48,6 +48,7 @@ const CodeEditor = ({username}) => {
         const selectedLangObj = languages.find(lang => lang.language === language)
         setLanguage(language)
         setVersion(selectedLangObj.version)
+        setValue(selectedLangObj.starterCode)
     }
 
     if (username == "undefined") {

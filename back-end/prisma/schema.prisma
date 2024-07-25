@@ -61,7 +61,6 @@ model ide {
   id Int @id @default(autoincrement())
   language String
   version String
-  starterCode String
 }
 
 model interactiveIDE {
