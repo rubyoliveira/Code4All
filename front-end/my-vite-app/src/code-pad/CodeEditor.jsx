@@ -22,11 +22,14 @@ const CodeEditor = ({username}) => {
     useEffect(() => {
         fetchLanguages();
         fetchInteractive();
+    }, []);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             saveCode(value)
         }, 10000);
         return () => clearInterval(interval);
-    }, []);
+    }, [value])
 
     const fetchLanguages = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/code-pad`)
@@ -52,7 +55,6 @@ const CodeEditor = ({username}) => {
             body: JSON.stringify({ code: newCode }),
         })
         .then(response => response.json())
-        .then(data => alert(`Code saved successfully: ${JSON.stringify(data)}`))
         .catch(error => console.error('Error saving code:', error));
     };
 
