@@ -17,6 +17,7 @@ const CodeEditor = ({username}) => {
     const [version, setVersion] = useState('');
     const [languages, setLanguages] = useState([]);
     const [chat, setChat] = useState('');
+    const saveTimeout = useRef(null)
     const prevValueRef = useRef('')
 
 
@@ -27,11 +28,18 @@ const CodeEditor = ({username}) => {
 
     useEffect(() => {
         if(value !== prevValueRef.current){
-            const interval = setInterval(() => {
+            if(saveTimeout.current){
+                clearTimeout(saveTimeout.current)
+            }
+            saveTimeout.current = setTimeout(() => {
                 saveCode(value);
                 prevValueRef.current = value;
             }, 5000);
-            return () => clearInterval(interval);
+            return () => {
+                if(saveTimeout.current){
+                    clearTimeout(saveTimeout.current)
+                }
+            }
         }
     }, [value])
 
@@ -59,7 +67,6 @@ const CodeEditor = ({username}) => {
             body: JSON.stringify({ code: newCode }),
         })
         .then(response => response.json())
-        .then(data => alert(data))
         .catch(error => console.error('Error saving code:', error));
     };
 
@@ -93,16 +100,16 @@ const CodeEditor = ({username}) => {
             </div>
             <div className="ide">
                 <LanguageSelector language={language} onSelect={onSelect} languages={languages} />
-                        <Editor
-                            height="80vh"
-                            theme="myCustomTheme"
-                            language={language}
-                            defaultValue={IDE.code}
-                            beforeMount={handleEditorWillMount}
-                            onMount={onMount}
-                            value={value}
-                            onChange={(newValue) => setValue(newValue)}
-                        />
+                <Editor
+                    height="80vh"
+                    theme="myCustomTheme"
+                    language={language}
+                    defaultValue={IDE.code}
+                    beforeMount={handleEditorWillMount}
+                    onMount={onMount}
+                    value={value}
+                    onChange={(newValue) => setValue(newValue)}
+                />
                 <button onClick={handleClick}>Save</button>
                 <Output editorRef={editorRef} language={language} version={version}/>
             </div>
