@@ -5,6 +5,7 @@ import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Modules from "./Modules.jsx"
 import { handleRecommendations } from "./recommendation";
+import ProfileCards from "./ProfileCards.jsx";
 
 import "./Topics.css"
 
@@ -88,12 +89,26 @@ function Topics({username}) {
                                 title={topic.title}
                                 description={topic.description}
                                 videoURL={topic.video}
-                                recommendations = {recommendations}
-                                username = {username}
                             />
                         ))
                     ) : (
                         <p>No topics available</p>
+                    )}
+                    {recommendations.length > 0 && (
+                        <div className = "recommendations-topic">
+                            <div>
+                            <h3>Congrats! You've finished a course, what's next?</h3>
+                            </div>
+                            <div className= "recommendations">
+                                {recommendations.map (rec => (
+                                    <ProfileCards
+                                        key = {rec.title}
+                                        title = {rec.title}
+                                        image = {rec.image}
+                                    ></ProfileCards>
+                                ))}
+                        </div>
+                    </div>
                     )}
                 </div>
             </div>
