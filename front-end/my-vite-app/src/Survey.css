@@ -133,29 +133,27 @@
   }
 
 
-.star-rating {
+
+.container-survey {
     display: flex;
     justify-content: center;
 }
 
-.star-rating .star-content{
-    display: flex;
-    justify-content: center;
-}
-
-.star-rating .star-content .star {
+.container-survey .star-content .star {
+  
     cursor: pointer;
     border: none;
     background-color: transparent;
     color: grey;
 }
 
-.star-rating .star-content .star.filled,
-.star-rating .star-content .star.hover{
+
+.container-survey .star-content .star.filled,
+.container-survey .star-content .star.hover{
     color: gold;
 }
 
-.container-survey button:active{
+.container-survey button.selected{
     color: white;
     background: linear-gradient(124deg, #ff2200c7, #e81d1dc7, #e8b71dc7, #e3e81dc7, #1de840c7, #1ddde8c7, #2b1de8c7, #dd00f3c7, #dd00f3c7);
     background-size: 1800% 1800%;
@@ -165,7 +163,7 @@
     animation: rainbow 18s ease infinite;
 }
 
-.container-survey button:focus{
+.container-survey button.selected{
     background: linear-gradient(124deg, #ff2200c7, #e81d1dc7, #e8b71dc7, #e3e81dc7, #1de840c7, #1ddde8c7, #2b1de8c7, #dd00f3c7, #dd00f3c7);
     background-size: 1800% 1800%;
     -webkit-animation: rainbow 18s ease infinite;
@@ -174,15 +172,15 @@
     animation: rainbow 18s ease infinite;
 }
 
-.container-survey button:focus::before {
+.container-survey button.selected::before {
     opacity: 50%;
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
   }
-  .container-survey button:focus::after{
-    color: white;
+  .container-survey button.selected::after{
+    color: rgb(0, 0, 0);
   }
 
 

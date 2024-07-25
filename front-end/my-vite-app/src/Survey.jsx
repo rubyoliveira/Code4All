@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { recommendations, fetchCards, handleRecommendations} from "./recommendation";
 import './Survey.css';
 import { useNavigate, Link} from 'react-router-dom';
 import { UserContext } from './UserContext.js';
+import { surveyConfig } from './survey-config.js'
 
 const Survey = ({username}) => {
     const [step, setStep] = useState(1);
@@ -13,6 +14,26 @@ const Survey = ({username}) => {
     const [languages, setLanguages] = useState([]);
     const [courses, setCourses] = useState([]);
     const [recommendedCourses,  setRecommendedCourses] = useState([]);
+
+    useEffect(() => {
+        const handlePageChange = (event) => {
+            if(event.key === 'ArrowRight' && step !== 4 && step !== 5){
+                nextStep();
+            }
+            else if (event.key === 'ArrowLeft' && step !== 1 && step !== 5) {
+                prevStep();
+            }
+            else if (event.key === "Enter" && (step === 4 || step === 5)) {
+                submitSurvey(level, rating, languages);
+            }
+        }
+        document.addEventListener('keydown', handlePageChange);
+        return () => {
+          document.removeEventListener('keydown', handlePageChange);
+        };
+    }, [step, level, rating, languages]);
+
+
 
     const nextStep = () => setStep(step + 1);
     const prevStep = () => setStep(step - 1);
@@ -41,51 +62,28 @@ const Survey = ({username}) => {
       <>
         <div className="signup">
             <div className = "content">
-            { step === 1 && <div className = "top-survey">
-                <h3>What Brings You to Code4All</h3>
-                <div className = "container-survey">
-                    <button onClick = {() => setInterest('Learning')}>Learning</button>
-                    <button onClick = {() => setInterest('Coding for Free')}>Coding for Free</button>
-                    <button onClick = {() => setInterest('For Fun')}>For Fun</button>
-                    <button onClick = {() => setInterest('Practicing Skills')}>Practicing Skills</button>
-                </div>
-            </div>}
-            {step === 2 && <div className = "top-survey">
-                <h3>What is your Coding Level</h3>
-                <div className = "container-survey">
-                    <button onClick = {() => setLevel('Beginner')}>Beginner</button>
-                    <button onClick = {() => setLevel('Intermediate')}>Intermediate</button>
-                    <button onClick = {() => setLevel('Expert')}>Expert</button>
-                </div>
-            </div>}
-            {step === 3 && <div className = "top-survey">
-                <h3>What Would you Rate yourself at this Level</h3>
-                <div className = "star-rating">
-                    <div className = "star-content">
-                        {[1,2,3,4,5].map(star =>(
-                            <p
-                                key={star}
-                                className ={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`}
-                                onClick = {() => setRating(star)}
-                                onMouseEnter = {()=> setHoverRating(star)}
-                                onMouseLeave = {() => setHoverRating(0)}
-                            >
-                                ★
-                            </p>
+            {Object.keys(surveyConfig).map((stepKey) => {
+                // Extract the numeric part from stepKey (e.g., "survey_step_1" becomes 1)
+                const stepNumber = parseInt(stepKey.replace(/[^\d]/g, ''), 10);
+                const currStep = surveyConfig[stepKey];
+                return (
+                    <div key={stepKey} style={{ display: step === stepNumber ? 'block' : 'none' }}>
+                        <h2>{currStep.heading}</h2>
+                        <div className = "container-survey">
+                        {currStep.options.map((option, index) => (
+                            <React.Fragment key={index}>
+                                {step === 1 && <button onClick={() => setInterest(option)} className={interest === option ? 'selected' : ''}>{option}</button>}
+                                {step === 2 && <button onClick={() => setLevel(option)} className={level === option ? 'selected' : ''}>{option}</button>}
+                                <div className = "star-content">
+                                    {step === 3 && <p className={`star ${option <= (hoverRating || rating) ? 'filled' : ''}`} onClick={() => setRating(option)} onMouseEnter={() => setHoverRating(option)} onMouseLeave={() => setHoverRating(0)}>★</p>}
+                                </div>
+                                {step === 4 && <button onClick={() => handleLanguageSelection(option)} className={languages.includes(option) ? 'selected' : ''}>{option}</button>}
+                            </React.Fragment>
                         ))}
+                        </div>
                     </div>
-                </div>
-            </div>}
-            {step === 4 && <div className = "top-survey">
-                <h3>What Languages are you Interested in</h3>
-                <div className = "container-survey">
-                    <button onClick = {() => handleLanguageSelection('Python')}>Python</button>
-                    <button onClick = {() => handleLanguageSelection('Java')}>Java</button>
-                    <button onClick = {() => handleLanguageSelection('JavaScript')}>JavaScript</button>
-                    <button onClick = {() => handleLanguageSelection('Ruby')}>Ruby</button>
-                    <button onClick = {() => handleLanguageSelection('C')}>C</button>
-                </div>
-            </div>}
+                );
+            })}
             {step === 5 && <div className = "top-survey">
                 <h3>Recommended Courses</h3>
                     {recommendedCourses.map((card, index) => (
@@ -95,12 +93,12 @@ const Survey = ({username}) => {
                     ))}
             </div>}
             <div className = "bottom-survey">
-            <div className = "progress-bar">
-                {[1,2,3,4,5].map(dot => (
-                    <div key = {dot} className = {`dot ${step >= dot ? 'active' : ''}`}></div>
-                ))}
-            </div>
-                 <div className = "survey-buttons">
+                <div className = "progress-bar">
+                    {[1,2,3,4,5].map(dot => (
+                        <div key = {dot} className = {`dot ${step >= dot ? 'active' : ''}`}></div>
+                    ))}
+                </div>
+                <div className = "survey-buttons">
                     {step != 1 && step != 5 && <button onClick = {prevStep}>Prev</button>}
                     {step != 4 && step != 5 && <button onClick = {nextStep}>Next</button>}
                     {step === 4 && <button onClick = {() => submitSurvey(level, rating, languages)}>Submit</button>}
