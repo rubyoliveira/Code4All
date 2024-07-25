@@ -536,7 +536,7 @@ app.get('/code-pad/:idHash', async (req, res) => {
             return res.status(404).json({error: "IDE Session not found"})
         }
 
-        res.status(200).json(ideSession)
+        res.json(ideSession)
     } catch(error) {
         res.status(500).json({error: "Failed to retrieve IDE session"})
     }
