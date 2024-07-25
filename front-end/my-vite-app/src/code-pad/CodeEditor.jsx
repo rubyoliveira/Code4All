@@ -1,7 +1,7 @@
 import React from "react";
 import {Editor} from "@monaco-editor/react";
 import {useState, useRef, useEffect} from "react";
-import { useParams, Navigate } from 'react-router-dom'; // Ensure Navigate is imported
+import { useParams, Navigate } from 'react-router-dom';
 import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 import { THEME } from "../constants";
@@ -17,6 +17,7 @@ const CodeEditor = ({username}) => {
     const [version, setVersion] = useState('');
     const [languages, setLanguages] = useState([]);
     const [chat, setChat] = useState('');
+    const prevValueRef = useRef('')
 
 
     useEffect(() => {
@@ -25,10 +26,13 @@ const CodeEditor = ({username}) => {
     }, []);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            saveCode(value)
-        }, 10000);
-        return () => clearInterval(interval);
+        if(value !== prevValueRef.current){
+            const interval = setInterval(() => {
+                saveCode(value);
+                prevValueRef.current = value;
+            }, 5000);
+            return () => clearInterval(interval);
+        }
     }, [value])
 
     const fetchLanguages = () => {
@@ -55,6 +59,7 @@ const CodeEditor = ({username}) => {
             body: JSON.stringify({ code: newCode }),
         })
         .then(response => response.json())
+        .then(data => alert(data))
         .catch(error => console.error('Error saving code:', error));
     };
 
