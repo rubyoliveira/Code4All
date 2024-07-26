@@ -11,6 +11,7 @@ import CodeEditor from "./code-pad/CodeEditor"
 import Survey from "./Survey.jsx"
 
 function App() {
+  const [hash, setHash] = useState('')
   const [user, setUser] = useState(() => {
     try {
       const storedUser = localStorage.getItem('user');
@@ -24,7 +25,6 @@ function App() {
       return null;
     }
   });
-
 
   const updateUser = (newUser) => {
     setUser(newUser);
@@ -43,6 +43,8 @@ function App() {
     localStorage.removeItem('user');
   };
 
+  const codeURL = `/code-pad/${hash}`
+
 
   return (
     <UserContext.Provider value={{ user, updateUser }}>
@@ -50,10 +52,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<CoursePage username={user?.username} />} />
-          <Route path="/courses/create" element={<CreateCourse username={user?.username}  />} />
-          <Route path="/courses/:courseId" element={<Topics username={user?.username}  />} />
+          <Route path="/courses/create" element={<CreateCourse username={user?.username} />} />
+          <Route path="/courses/:courseId" element={<Topics username={user?.username} />} />
           <Route path="/profile/:username" element={<Profile handleSignOut = {handleSignOut} />} />
-          <Route path= "/code-pad" element = {<CodeEditor username = {user?.username} />}/>
+          <Route path= "/code-pad/:idHash" element = {<CodeEditor username = {user?.username} />}/>
           <Route path = "/survey" element = {<Survey username = {user?.username}/>}/>
         </Routes>
       </BrowserRouter>

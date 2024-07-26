@@ -19,29 +19,28 @@ function Profile({handleSignOut}) {
     const [recommendations, setRecommendations] = useState([])
     const [completedCourses, setCompletedCourses] = useState([])
 
-
     if (username == "undefined") {
         return <Navigate to="/" />;
     }
 
+    const fetchProfile = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}`, {
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setUserData(data);
+        })
+        .catch(error => {
+            console.error('Error fetching profile:', error);
+        });
+    };
 
-        const fetchProfile = () => {
-            fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}`, {
-                credentials: 'include'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                setUserData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching profile:', error);
-            });
-        };
     useEffect(() => {
         fetchProfile();
     }, [username]);
@@ -171,10 +170,9 @@ function Profile({handleSignOut}) {
     };
 
 
-
     return (
         <>
-        <Header/>
+        <Header username = {username}/>
             {userData ? (
                 <div className="profile">
                     <img className = "profile-pic" src = {userData.image} alt = "n/a"></img>

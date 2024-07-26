@@ -61,14 +61,11 @@ model ide {
   id Int @id @default(autoincrement())
   language String
   version String
-  starterCode String
 }
 
 model interactiveIDE {
   idHash String @id
-  language String
-  version String
-  code String
-  users String[]
+  code String @default("//comment")
+  users String[] @default([])
   creator String
 }

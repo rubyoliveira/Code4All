@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useState, useRef} from "react";
 import "./CodePad.css"
 
-const Output = ({ language, editorRef, version }) => {
+const Output = ({ language, editorRef, version}) => {
     const [output, setOutput] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
