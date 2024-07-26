@@ -5,7 +5,7 @@ import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import Modules from "./Modules.jsx"
 import { handleRecommendations } from "./recommendation";
-import ProfileCards from "./ProfileCards.jsx";
+import RecommendationCards from "./RecommendationCards.jsx";
 
 import "./Topics.css"
 
@@ -13,7 +13,6 @@ function Topics({username}) {
     const { courseId } = useParams();
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
-    const [courseCompleted, setCourseCompleted] = useState(false)
     const [recommendations, setRecommendations] = useState([])
 
     useEffect(() => {
@@ -55,16 +54,6 @@ function Topics({username}) {
             });
     };
 
-    // const checkCourseCompletion = async () => {
-    //     try{
-    //         const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/modules/${courseId}/completed-by/${username}`);
-    //         const data = await response.json();
-    //         setCourseCompleted(data.completed)
-    //     } catch (error){
-    //         console.error("Error checking course completion", error)
-    //     }
-    // }
-
     if (username === "undefined") {
         return <Navigate to="/" />;
     }
@@ -101,11 +90,11 @@ function Topics({username}) {
                             </div>
                             <div className= "recommendations">
                                 {recommendations.map (rec => (
-                                    <ProfileCards
+                                    <RecommendationCards
                                         key = {rec.title}
                                         title = {rec.title}
                                         image = {rec.image}
-                                    ></ProfileCards>
+                                    ></RecommendationCards>
                                 ))}
                         </div>
                     </div>
