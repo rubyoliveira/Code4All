@@ -11,8 +11,9 @@ import "./CodePad.css";
 const CodeEditor = ({username}) => {
     const {idHash} = useParams();
     const editorRef = useRef();
-    const [IDE, setIDE] = useState({ code: '//pick a language' })
-    const [value, setValue] = useState(IDE);
+    const [IDE, setIDE] = useState({code: '//language'})
+    const [code, setCode] = useState('')
+    const [value, setValue] = useState('');
     const [language, setLanguage] = useState('');
     const [version, setVersion] = useState('');
     const [languages, setLanguages] = useState([]);
@@ -33,8 +34,9 @@ const CodeEditor = ({username}) => {
             }
             saveTimeout.current = setTimeout(() => {
                 saveCode(value);
+                fetchInteractive();
                 prevValueRef.current = value;
-            }, 5000);
+            }, 1000);
             return () => {
                 if(saveTimeout.current){
                     clearTimeout(saveTimeout.current)
@@ -54,13 +56,19 @@ const CodeEditor = ({username}) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/code-pad/${idHash}`)
             .then(response => response.json())
             .then(data => {
-                const serverCodeLines = data.code.split('\n');
-                const localCodeLines = value.split('\n');
-                const mergedCode = mergeChanges(serverCodeLines, localCodeLines);
-                const mergedCodeLines = mergedCode.join('\n');
-                setIDE(data);
-                setValue(mergedCodeLines);
-                prevValueRef.current = mergedCode
+                console.log("Received data:", data);
+                if (data && data.code ) {
+                    const serverCodeLines = data.code.split('\n');
+                    const localCodeLines = value.split('\n');
+                    const mergedCodeLines = mergeChanges(serverCodeLines, localCodeLines);
+                    const mergedCode = mergedCodeLines.join('\n');
+                    setIDE(data);
+                    setCode(data.code)
+
+                    prevValueRef.current = mergedCode;
+                } else {
+                    console.error('No code data available');
+                }
             })
             .catch(error => console.error('Error fetching IDE:', error));
       };
@@ -73,6 +81,7 @@ const CodeEditor = ({username}) => {
         })
         .then(response => response.json())
         .catch(error => console.error('Error saving code:', error));
+        fetchInteractive();
     };
 
 
@@ -91,6 +100,8 @@ const CodeEditor = ({username}) => {
         }
         return mergedCodeLines;
     };
+
+
     const handleClick = () => {
         saveCode(value);
     };
