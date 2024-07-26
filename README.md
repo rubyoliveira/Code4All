@@ -39,21 +39,22 @@ Scope: **The content will be centered on learning different coding languages and
 - [x] Users can like courses
 - [x] User can see course they've created
 - [x] Only the Author can delete the course
-### User Stories
-The user will start on the homepage and either log in or sign up, then you can see the course page which will be able to click on the course and open the module layout which on the click of each module opens a modal with the topics inside of it and then on the click of these topics you can go to the learning page!
+      
 ### Data Model/Server Endpoints
-I am going to be linking a course page to its information within a database that will hold all the modules which hold all the topics and data for the course to be taught. I also want to use an api to use Facebook or Github to sign in and additionally I want cute dog pictures to be badges as you progress through courses and be held in your profile so I want to use a dog api.
+The user will start on a landing page when logging in they will be on their course page which upon clicking a courses image they can enter the course and clicking on modules will open the topics. Additionally the user can create a course on the creation page, open a code sandbox, and look at profile information with personal data on courses saved, completed, created, and recommended to that user.
 
 For wireframes and data models go here: [document](https://docs.google.com/document/d/1ywcPyNcS8KWvNCQ4_xO7haq1eXU1e7XIXHo-tRQTjJI/edit?usp=sharing)
 
 ### Technical Challenge #1 - Code Sandbox
 - [x] User can play with a code sandbox embed and pick languages to code in to further advance their skills
+- [x] Make codepad instantiatable and shareable
+- [x] Auto save code at timed intervals
+- [x] Optimize autosaving when user doesn't edit
 
 
-### Technical Challenge #2 - Chat Bot
-- [ ] Using gemini API on the side of the code sandbox the user will have a chat bot that can help them with their code
-
-### Nice to Have Features
-- [ ] Showing a quiz at the end of each course
-- [ ] Progress Bar
-- [ ] Authors can edit Courses
+### Technical Challenge #2 - Recommendation Algorithm
+- [x] New user survey that recommends courses based on their responses
+- [x] keyboard bindings: when you press right and left arrow keys it will direct through survey and to submit it will use enter button
+- [x] Additionally, the user is able to go back and forth and edit their survey responses
+- [x] On completion of course at the bottom of the topic it will give recommendations
+- [x] Recommendations save to profile page so the user can go back and directly do their recommended courses
