@@ -1,4 +1,7 @@
 import React from "react";
+import * as Y from 'yjs'
+import { WebsocketProvider } from 'y-websocket'
+import { MonacoBinding } from "y-monaco"
 import {Editor} from "@monaco-editor/react";
 import {useState, useRef, useEffect} from "react";
 import { useParams, Navigate } from 'react-router-dom';
@@ -10,21 +13,23 @@ import "./CodePad.css";
 
 const CodeEditor = ({username}) => {
     const {idHash} = useParams();
-    const editorRef = useRef();
+    const editorRef = useRef(null);
     const [IDE, setIDE] = useState({code: '//language'})
-    const [code, setCode] = useState('')
     const [value, setValue] = useState('');
     const [language, setLanguage] = useState('');
     const [version, setVersion] = useState('');
     const [languages, setLanguages] = useState([]);
     const [chat, setChat] = useState('');
     const saveTimeout = useRef(null)
+    const ydocRef = useRef(null)
     const prevValueRef = useRef('')
 
 
     useEffect(() => {
         fetchLanguages();
         fetchInteractive();
+        const intervalId = setInterval(fetchInteractive, 5000);
+        return () => clearInterval(intervalId)
     }, []);
 
     useEffect(() => {
@@ -34,7 +39,7 @@ const CodeEditor = ({username}) => {
             }
             saveTimeout.current = setTimeout(() => {
                 saveCode(value);
-                fetchInteractive();
+                // fetchInteractive();
                 prevValueRef.current = value;
             }, 1000);
             return () => {
@@ -58,14 +63,12 @@ const CodeEditor = ({username}) => {
             .then(data => {
                 console.log("Received data:", data);
                 if (data && data.code ) {
-                    const serverCodeLines = data.code.split('\n');
-                    const localCodeLines = value.split('\n');
-                    const mergedCodeLines = mergeChanges(serverCodeLines, localCodeLines);
-                    const mergedCode = mergedCodeLines.join('\n');
+                    const serverCode = data.code
                     setIDE(data);
-                    setCode(data.code)
-
-                    prevValueRef.current = mergedCode;
+                    setValue(serverCode)
+                    if (prevValueRef.current) {
+                        prevValueRef.current.setValue(serverCode)
+                    }
                 } else {
                     console.error('No code data available');
                 }
@@ -82,23 +85,6 @@ const CodeEditor = ({username}) => {
         .then(response => response.json())
         .catch(error => console.error('Error saving code:', error));
         fetchInteractive();
-    };
-
-
-    const mergeChanges = (serverCodeLines, localCodeLines) => {
-        const maxLength = Math.max(serverCodeLines.length, localCodeLines.length);
-        const mergedCodeLines = [];
-
-        for (let i = 0; i < maxLength; i++) {
-            const serverLine = serverCodeLines[i] || '';
-            const localLine = localCodeLines[i] || '';
-            if (serverLine !== localLine) {
-                mergedCodeLines.push(localLine);
-            } else {
-                mergedCodeLines.push(serverLine);
-            }
-        }
-        return mergedCodeLines;
     };
 
 
