@@ -12,7 +12,7 @@ const CodeEditor = ({username}) => {
     const {idHash} = useParams();
     const editorRef = useRef();
     const [IDE, setIDE] = useState({ code: '//pick a language' })
-    const [value, setValue] = useState('//pick a language');
+    const [value, setValue] = useState(IDE);
     const [language, setLanguage] = useState('');
     const [version, setVersion] = useState('');
     const [languages, setLanguages] = useState([]);
@@ -54,8 +54,13 @@ const CodeEditor = ({username}) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/code-pad/${idHash}`)
             .then(response => response.json())
             .then(data => {
+                const serverCodeLines = data.code.split('\n');
+                const localCodeLines = value.split('\n');
+                const mergedCode = mergeChanges(serverCodeLines, localCodeLines);
+                const mergedCodeLines = mergedCode.join('\n');
                 setIDE(data);
-                setValue(data.code);
+                setValue(mergedCodeLines);
+                prevValueRef.current = mergedCode
             })
             .catch(error => console.error('Error fetching IDE:', error));
       };
@@ -70,6 +75,22 @@ const CodeEditor = ({username}) => {
         .catch(error => console.error('Error saving code:', error));
     };
 
+
+    const mergeChanges = (serverCodeLines, localCodeLines) => {
+        const maxLength = Math.max(serverCodeLines.length, localCodeLines.length);
+        const mergedCodeLines = [];
+
+        for (let i = 0; i < maxLength; i++) {
+            const serverLine = serverCodeLines[i] || '';
+            const localLine = localCodeLines[i] || '';
+            if (serverLine !== localLine) {
+                mergedCodeLines.push(localLine);
+            } else {
+                mergedCodeLines.push(serverLine);
+            }
+        }
+        return mergedCodeLines;
+    };
     const handleClick = () => {
         saveCode(value);
     };
