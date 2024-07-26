@@ -47,6 +47,7 @@ For wireframes and data models go here: [document](https://docs.google.com/docum
 
 ### Technical Challenge #1 - Code Sandbox
 - [x] User can play with a code sandbox embed and pick languages to code in to further advance their skills
+- [x] Chat with code assistant
 - [x] Make codepad instantiatable and shareable
 - [x] Auto save code at timed intervals
 - [x] Optimize autosaving when user doesn't edit
