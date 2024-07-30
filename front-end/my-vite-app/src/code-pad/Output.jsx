@@ -24,7 +24,7 @@ const Output = ({ language, editorRef, version}) => {
         }
     }
     return (
-      <div>
+      <div className = "output">
         <button disabled={isLoading} onClick={run} className = "run-code">
           {isLoading ? 'Loading...' : 'Run Code'}
         </button>

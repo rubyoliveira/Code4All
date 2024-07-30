@@ -5,50 +5,72 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
+    color: #d8d4d6;
+    background-color: #0f1b26;
 }
 
 .ide{
-    width: 70%;
-    background-color: #011627;
+    width: 75%;
+    background-color: rgb(23 23 23 / var(--un-bg-opacity));
     color: white;
     padding: 10px;
+    border-radius: 8px;
 }
+
+.code-box{
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.output{
+  height: 20vh;
+}
+
 
 .dropdown-languages{
     display: flex;
 }
 
 .language-dropdown{
-    background-color: #011627;
+    background-color: rgb(23 23 23 / var(--un-bg-opacity));
     color: white;
     border: none;
 }
 
 .run-code{
-    background-color: #c792ea;
-    color: white;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    color: #0f1b26;
     border: none;
     border-radius: 8px;
     padding: 5px;
 }
 
 .run-code:hover{
-    background-color: #c792ea;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.255);
     transform: scale(1.1);
 }
-
-  .code-copilot{
-    width: 27%;
+  .copilot{
+    margin: 0;
+    padding: 0;
+    width: 24%;
+    background-color: rgb(23 23 23 / var(--un-bg-opacity));
+    position: fixed;
     height: 100%;
-    padding-left: 10px;
+    overflow: auto;
+    border: 10px black;
+    padding: 3px;
   }
 
   .greet h3{
-    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    -webkit-background-clip: text;
     background-size: 1800% 1800%;
     text-align: center;
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: rainbow 18s ease infinite;
     -z-animation: rainbow 18s ease infinite;
@@ -81,24 +103,21 @@
   .copilot-bottom{
     position: absolute;
     bottom: 0;
-    width: 26%;
+    width: 99%;
     margin-bottom: 30px;
   }
 
   .copilot-search{
     display: flex;
     align-items: center;
+    color: #d8d4d6;
     justify-content: space-between;
-    border-radius: 8px;
-    background: linear-gradient(124deg, #ff22005b, #e81d1d5b, #e8b71d5b, #e3e81d5b, #1de8405b, #1ddde85b, #2b1de85b, #dd00f35b, #dd00f35b);
-    background-size: 1800% 1800%;
-    -webkit-animation: rainbow 18s ease infinite;
-    -z-animation: rainbow 18s ease infinite;
-    -o-animation: rainbow 18s ease infinite;
-    animation: rainbow 18s ease infinite;
+    border-radius: 5px;
+    border: 1px solid #d8d4d6
   }
 
   .copilot-input{
+    color: #d8d4d6;
     padding: 8px;
     border: none;
     width: 90%;
@@ -109,12 +128,14 @@
   .copilot-run{
     background: transparent;
     border: none;
+    padding: 5px;
+    color: #d8d4d6;
   }
 
   .chat-log{
-    height: 80vh;
     overflow-y: auto;
     width: 100%;
+    height: 89%;
     display: flex;
     flex-direction: column;
   }
@@ -126,10 +147,13 @@
     flex-wrap: wrap;
     align-self:flex-start;
     text-align: left;
-    padding: 3px;
+    text-wrap: wrap;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: black;
     border-radius: 8px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    background: linear-gradient(124deg, #ff22002c, #e81d1d2c, #e8b71d2c, #e3e81d2c, #1de8402c, #1ddde82c, #2b1de82c, #dd00f32c, #dd00f32c);
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
     background-size: 1800% 1800%;
     -webkit-animation: rainbow 18s ease infinite;
     -z-animation: rainbow 18s ease infinite;
@@ -139,13 +163,16 @@
 
   .prompt{
     align-self:flex-end;
-    text-align: right;
+    text-align: left;
     width: 60%;
     margin-left: 35%;
-    background-color: #f6f6f6;
+    border-radius: 5px;
+    border: 1px solid #d8d4d6;
     display:flex;
-    flex-wrap: wrap;
-    padding: 3px;
+    text-wrap: wrap;
+    color: white;
+    padding-left: 2px;
+    padding-right: 2px;
     border-radius: 8px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   }

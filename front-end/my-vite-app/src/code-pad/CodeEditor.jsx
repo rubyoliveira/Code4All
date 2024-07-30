@@ -17,6 +17,7 @@ const CodeEditor = ({username}) => {
     const [version, setVersion] = useState('');
     const [languages, setLanguages] = useState([]);
     const [chat, setChat] = useState('');
+    const [openAI, setOpenAI] = useState(false)
     const saveTimeout = useRef(null)
     const prevValueRef = useRef('')
 
@@ -93,16 +94,23 @@ const CodeEditor = ({username}) => {
         return <Navigate to="/" />;
     }
 
+    const getAI = () => {setOpenAI(true)}
+    const closeAI = () => {setOpenAI(false)}
+
+
     return (
         <div className="code-pad">
-            <div className="code-copilot">
-                <Copilot setDescription={setChat} username={username}/>
-            </div>
+            {<div className="code-copilot">
+                <Copilot setDescription={setChat} username={username} closeAI = {closeAI}/>
+            </div>}
             <div className="ide">
+            {/* <button onClick={handleClick}>Save Code</button> */}
                 <LanguageSelector language={language} onSelect={onSelect} languages={languages} />
+                <div className = 'code-box'>
                 <Editor
-                    height="80vh"
+                    height="75vh"
                     theme="myCustomTheme"
+                    className = "code-box"
                     language={language}
                     defaultValue={IDE.code}
                     beforeMount={handleEditorWillMount}
@@ -110,7 +118,7 @@ const CodeEditor = ({username}) => {
                     value={value}
                     onChange={(newValue) => setValue(newValue)}
                 />
-                <button onClick={handleClick}>Save</button>
+                </div>
                 <Output editorRef={editorRef} language={language} version={version}/>
             </div>
         </div>
