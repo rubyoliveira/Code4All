@@ -1,0 +1,178 @@
+.code-pad{
+    display: flex;
+    width: 100%;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #d8d4d6;
+    background-color: #0f1b26;
+}
+
+.ide{
+    width: 75%;
+    background-color: rgb(23 23 23 / var(--un-bg-opacity));
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.code-box{
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.output{
+  height: 20vh;
+}
+
+
+.dropdown-languages{
+    display: flex;
+}
+
+.language-dropdown{
+    background-color: rgb(23 23 23 / var(--un-bg-opacity));
+    color: white;
+    border: none;
+}
+
+.run-code{
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    color: #0f1b26;
+    border: none;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.run-code:hover{
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.255);
+    transform: scale(1.1);
+}
+  .copilot{
+    margin: 0;
+    padding: 0;
+    width: 24%;
+    background-color: rgb(23 23 23 / var(--un-bg-opacity));
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    border: 10px black;
+    padding: 3px;
+  }
+
+  .greet h3{
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    -webkit-background-clip: text;
+    background-size: 1800% 1800%;
+    text-align: center;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+
+  }
+
+  @-webkit-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-moz-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @-o-keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+  @keyframes rainbow {
+      0%{background-position:0% 82%}
+      50%{background-position:100% 19%}
+      100%{background-position:0% 82%}
+  }
+
+  .copilot-bottom{
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+    margin-bottom: 30px;
+  }
+
+  .copilot-search{
+    display: flex;
+    align-items: center;
+    color: #d8d4d6;
+    justify-content: space-between;
+    border-radius: 5px;
+    border: 1px solid #d8d4d6
+  }
+
+  .copilot-input{
+    color: #d8d4d6;
+    padding: 8px;
+    border: none;
+    width: 90%;
+    border-radius: 8px;
+    background: transparent;
+  }
+
+  .copilot-run{
+    background: transparent;
+    border: none;
+    padding: 5px;
+    color: #d8d4d6;
+  }
+
+  .chat-log{
+    overflow-y: auto;
+    width: 100%;
+    height: 89%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-response{
+    margin-left: 4px;
+    width: 95%;
+    display:flex;
+    flex-wrap: wrap;
+    align-self:flex-start;
+    text-align: left;
+    text-wrap: wrap;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: black;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+  }
+
+  .prompt{
+    align-self:flex-end;
+    text-align: left;
+    width: 60%;
+    margin-left: 35%;
+    border-radius: 5px;
+    border: 1px solid #d8d4d6;
+    display:flex;
+    text-wrap: wrap;
+    color: white;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  }

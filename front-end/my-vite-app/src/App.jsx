@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { UserContext } from './UserContext';
+import { UserContext } from './components/UserContext.js';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
-import Home from './Home.jsx';
-import CoursePage from './CoursePage.jsx';
-import Topics from './Topics.jsx';
-import CreateCourse from './CreateCourse.jsx';
-import Profile from "./Profile.jsx";
-import CodeEditor from "./code-pad/CodeEditor"
-import Survey from "./Survey.jsx"
+import Home from './screens/home-page/Home.jsx';
+import CoursePage from './screens/course-page/CoursePage.jsx';
+import Topics from './screens/module-page/topics/Topics.jsx';
+import CreateCourse from './screens/create-page/CreateCourse.jsx';
+import Profile from "./screens/profile-page/Profile.jsx";
+import CodeEditor from "./screens/code-pad/CodeEditor.jsx"
+import Survey from "./screens/survey/Survey.jsx"
 
 function App() {
   const [hash, setHash] = useState('')

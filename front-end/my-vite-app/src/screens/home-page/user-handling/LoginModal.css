@@ -1,0 +1,104 @@
+.modal-login{
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 0.687) 0%, rgba(168,222,258,0.687) 21.9%, rgba(189,250,205,0.687) 35.6%, rgba(243,250,189,0.687) 53.9%, rgba(250,227,189,0.687) 66.8%, rgba(248,172,171,0.687) 95%, rgba(254,170,212,0.687) 99.9% );
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    font-weight: bold;
+}
+
+  .modal-content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.688);
+    -webkit-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    -moz-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    left: 50%;
+    max-width: 400px;
+    padding: 30px;
+    position: fixed;
+    align-items: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+
+  .close-modal{
+    background: none;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+  }
+
+  .close-modal:hover{
+    background-color: transparent;
+  }
+
+  .user-login:hover{
+    background: linear-gradient(124deg, #ff22005b, #e81d1d5b, #e8b71d5b, #e3e81d5b, #1de8405b, #1ddde85b, #2b1de85b, #dd00f35b, #dd00f35b);
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.649);
+    transform: scale(1.05);
+  }
+
+  .user-login{
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.417);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+  }
+
+  .input-login{
+    margin: 20px;
+  }
+
+  .login-button{
+    border-radius: 8px;
+    border: 1px solid transparent;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.417);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+  }
+
+  .login-button:hover{
+    background: linear-gradient(124deg, #ff22005b, #e81d1d5b, #e8b71d5b, #e3e81d5b, #1de8405b, #1ddde85b, #2b1de85b, #dd00f35b, #dd00f35b);
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    color: rgb(0, 0, 0);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.649);
+    transform: scale(1.05);
+
+  }

@@ -1,0 +1,91 @@
+.create-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.photo-search{
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+}
+
+.photo-results{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+.video-search{
+    margin: 20px;
+    width: 250px;
+}
+
+.video-results{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 15%;
+    margin-left: 15%;
+    justify-content: center;
+}
+
+.description-input{
+    height: 90px;
+}
+
+.create-input{
+    height: 40px;
+    display: block;
+    width: 100%;
+    background: 0 0;
+    font-size: 18px;
+    color: #555;
+    line-height: 1.2;
+    padding-right: 15px;
+
+}
+
+.create-div{
+    position: relative;
+    border: 1px solid #e6e6e6;
+    border-radius: 13px;
+    padding: 10px 30px 9px 22px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    outline: none;
+    border: none;
+}
+
+.create-span{
+    font-size: 10px;
+    color: #393939;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+
+.create-dropdown{
+    outline: none;
+    border: none;
+}
+
+.description-input{
+    outline: none;
+    border: none;
+    display: block;
+    width: 100%;
+    background: 0 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 18px;
+    color: #555;
+    line-height: 1.2;
+    padding-right: 15px;
+}
