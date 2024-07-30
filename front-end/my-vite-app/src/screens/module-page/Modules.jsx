@@ -8,7 +8,7 @@ function Modules({title, id, fetchTopics, username, setRecommendations}) {
     }, []);
 
     const checkModuleCompletion = async () => {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/modules/${id}/completion`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/completion/modules/${id}/completion`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ function Modules({title, id, fetchTopics, username, setRecommendations}) {
 
     const handleModuleClick = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/modules/${id}/completed`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/completion/modules/${id}/completed`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

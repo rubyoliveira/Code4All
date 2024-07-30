@@ -51,19 +51,6 @@ function CourseCards({title, description, level, img, likes, username, averageRa
         });
     };
 
-    const fetchAverageRating = async (courseId) => {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${courseId}/average-rating`);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch average rating: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            return(data)
-        } catch (error) {
-            console.error('Error fetching average rating:', error);
-        }
-    }
-
     return (
         <>
             <div className="course">

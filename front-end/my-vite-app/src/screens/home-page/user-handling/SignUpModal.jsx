@@ -17,7 +17,7 @@ const SignUpModal = ({ closeModal }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/auth/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

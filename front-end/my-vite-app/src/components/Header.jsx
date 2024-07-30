@@ -12,7 +12,7 @@ function Header({username}) {
         const users = [];
         const creator = username;
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/create-ide`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/code-pad/create-ide`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

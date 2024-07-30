@@ -1,45 +1,32 @@
-app.get('/courses', async (req, res) => {
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+//get courses
+const courses = async (req, res) => {
     const courses = await prisma.courses.findMany();
     res.json(courses);
+};
 
-});
-
-app.get('/courses/:courseId', async (req, res) => {
+//modules
+const modules = async (req, res) => {
     const {courseId} = req.params;
     const modules = await prisma.modules.findMany({
         where: { courseId: courseId }
     });
     res.json(modules);
-});
+};
 
-app.patch('/courses/:title', async (req, res) => {
-    const { title } = req.params;
-    try {
-        const updatedLike = await prisma.courses.update({
-            where: { title: title },
-            data: {
-                likes: {
-                    increment: 1
-                }
-            }
-        });
-        res.json(updatedLike);
-    } catch (error) {
-        console.error("Error updating like votes:", error);
-        res.status(500).send("Failed to update like");
-    }
-});
-
-
-app.get('/courses/:courseId/:moduleId', async (req, res) => {
+//topics
+const topics = async (req, res) => {
     const {moduleId} = req.params;
     const topics = await prisma.topics.findMany({
         where: { moduleId: parseInt(moduleId) }
     });
     res.json(topics);
-});
+};
 
-app.post('/courses/create', async (req, res) => {
+//create and delete courses
+const create = async (req, res) => {
     const { title, description, difficulty, image, author, userId, modules } = req.body;
 
     if (!title || !description || !difficulty || !image || !author || !userId || !modules || modules.length === 0) {
@@ -90,9 +77,9 @@ app.post('/courses/create', async (req, res) => {
         console.error('Error creating course:', error);
         res.status(500).send('Error creating course: ' + error.message);
     }
-});
+};
 
-app.delete('/courses/:id/delete', async (req, res) => {
+const deleteCourse = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -117,4 +104,7 @@ app.delete('/courses/:id/delete', async (req, res) => {
         console.error("Error deleting card and its threads:", error);
         res.status(500).json({ message: "Error deleting card and its threads" });
     }
-});
+};
+
+
+module.exports =  { courses, modules, topics, create, deleteCourse };
