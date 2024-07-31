@@ -6,12 +6,12 @@
     flex-direction: row;
     justify-content: space-between;
     color: #d8d4d6;
-    background-color: #0f1b26;
+    background-color: #1e1e1e;
 }
 
 .ide{
     width: 75%;
-    background-color: rgb(23 23 23 / var(--un-bg-opacity));
+    /* background-color: #282c34; */
     color: white;
     padding: 10px;
     border-radius: 8px;
@@ -20,15 +20,20 @@
 .code-box{
   border-radius: 15px;
   overflow: hidden;
+  background-color: #000000;
+  box-shadow: rgba(0, 0, 0, 0.887) 0px 1px 3px 0px, rgba(0, 0, 0, 0.835) 0px 1px 2px 0px;
 }
 
 .output{
+  padding-top: 15px;
   height: 20vh;
+  padding-left: 10px;
 }
 
 
 .dropdown-languages{
     display: flex;
+    padding-left: 10px;
 }
 
 .language-dropdown{
@@ -46,6 +51,7 @@
     animation: rainbow 18s ease infinite;
     color: #0f1b26;
     border: none;
+    box-shadow: rgba(0, 0, 0, 0.708) 0px 1px 4px;
     border-radius: 8px;
     padding: 5px;
 }
@@ -175,4 +181,19 @@
     padding-right: 2px;
     border-radius: 8px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  }
+
+  .code-pad-buttons{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .terminate-session{
+    border-radius: 8px;
+    border: none;
+    color: rgb(255, 228, 228);
+    background-color: rgba(255, 33, 33, 0.852);
+    box-shadow: rgba(0, 0, 0, 0.708) 0px 1px 4px;
+    padding: 5px;
+    margin-left: 10px;
   }

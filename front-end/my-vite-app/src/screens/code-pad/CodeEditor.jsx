@@ -11,6 +11,7 @@ import "./CodePad.css";
 const CodeEditor = ({username}) => {
     const {idHash} = useParams();
     const editorRef = useRef();
+    const [terminate, setTerminate] = useState(false);
     const [IDE, setIDE] = useState({ code: '//pick a language' })
     const [value, setValue] = useState('//pick a language');
     const [language, setLanguage] = useState('');
@@ -99,27 +100,31 @@ const CodeEditor = ({username}) => {
 
 
     return (
-        <div className="code-pad">
-            {<div className="code-copilot">
-                <Copilot setDescription={setChat} username={username} closeAI = {closeAI}/>
+        <div className = "code">
+            {terminate && <div>
+                <p>course sucessfully deleted, return to course page</p>
             </div>}
-            <div className="ide">
-            {/* <button onClick={handleClick}>Save Code</button> */}
-                <LanguageSelector language={language} onSelect={onSelect} languages={languages} />
-                <div className = 'code-box'>
-                <Editor
-                    height="75vh"
-                    theme="myCustomTheme"
-                    className = "code-box"
-                    language={language}
-                    defaultValue={IDE.code}
-                    beforeMount={handleEditorWillMount}
-                    onMount={onMount}
-                    value={value}
-                    onChange={(newValue) => setValue(newValue)}
-                />
+            <div className="code-pad">
+                <div className="code-copilot">
+                    <Copilot setDescription={setChat} username={username} closeAI = {closeAI}/>
                 </div>
-                <Output editorRef={editorRef} language={language} version={version}/>
+                <div className="ide">
+                    <LanguageSelector language={language} onSelect={onSelect} languages={languages} />
+                    <div className = 'code-box'>
+                    <Editor
+                        height="75vh"
+                        theme="myCustomTheme"
+                        className = "code-box"
+                        language={language}
+                        defaultValue={IDE.code}
+                        beforeMount={handleEditorWillMount}
+                        onMount={onMount}
+                        value={value}
+                        onChange={(newValue) => setValue(newValue)}
+                    />
+                    </div>
+                    <Output editorRef={editorRef} language={language} version={version} idHash= {idHash} setTerminate = {setTerminate}/>
+                </div>
             </div>
         </div>
     );

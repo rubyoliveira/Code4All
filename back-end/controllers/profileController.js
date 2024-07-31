@@ -101,5 +101,13 @@ const dogPic = async (req, res) => {
     }
 };
 
+const coding = async (req, res) => {
+    const { username } = req.params;
+    const coding = await prisma.interactiveIDE.findMany({
+        where: { creator: username}
+    });
+    res.json(coding)
+};
 
-module.exports =  {profile, completed, created, saved, dogPic, addRecommendation, recommendations};
+
+module.exports =  {profile, completed, created, saved, dogPic, addRecommendation, recommendations, coding};

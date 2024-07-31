@@ -1,23 +1,96 @@
 .profile-pic{
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
     border-radius: 50%;
     margin-bottom: 20px;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.profile-pic:hover{
+    cursor: pointer;
+}
+
+.profile p {
+    margin: 0px;
 }
 
 .profile{
+    height: 120vh;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px;
+}
+
+.profile-details{
+    height: 110vh;
+    justify-content: space-evenly;
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+    text-align: center;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    display: flex;
+    border-radius: 10px;
     flex-direction: column;
     align-items: center;
-    margin: 20px
+    width: 25%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+.created-courses{
+    background-color: #fdfdfd;
+    padding: 15px;
+    width: 300px;
+    height: 50vh;
+    padding: 15px;
+    width: 300px;
+    height: 350px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    margin: 20px;
+    overflow-y: scroll;
+}
+
+.created-author{
+    background-color: white;
+    padding: 15px;
+    width: 300px;
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    justify-content: space-between;
+    padding: 3px;
+    /* border: 1px solid black; */
+    border-radius: 8px;
+    margin: 5px;
+}
+
+.createda-img{
+    width: 10vh;
+    height: 10vh;
+    margin: 2px;
+    border-radius: 8px;
 }
 
 .profile-cards{
     background-color: #ffffff;
     padding: 15px;
-    width: 215px;
-    /* height: 300px; */
-    box-shadow: 0 0 40px -10px rgba(0, 0, 0, .3), 0 0 25px -15px rgba(0, 0, 0, .2);
+    width: 150px;
+    height: 175px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -28,7 +101,122 @@
     margin: 20px;
 }
 
+.right-profile{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-around;
+}
+
+.middle-profile{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.completed-courses{
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+    text-align: center;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    padding: 15px;
+    width: 100%;
+    height: 49vh;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    margin: 20px;
+    overflow-y: scroll;
+}
+
+.row-scroll{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    overflow-y: scroll;
+}
+
+.recommended-courses{
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+    text-align: center;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    padding: 15px;
+    width: 100%;
+    height: 49vh;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    margin: 20px;
+    overflow-y: scroll;
+}
+
+
+.farthest-profile{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.saved-courses{
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+    text-align: center;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    padding: 15px;
+    width: 100%;
+    height: 60vh;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    margin: 20px;
+    overflow-y: scroll;
+}
+
+.coding-sessions{
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+    text-align: center;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    padding: 15px;
+    width: 100%;
+    height: 38vh;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    justify-content: space-evenly;
+    margin: 20px;
+    overflow-y: scroll;
+}
+
 .pcards-img{
-    width: 200px;
-    height: 200px;
+    width: 125px;
+    height: 125px;
 }

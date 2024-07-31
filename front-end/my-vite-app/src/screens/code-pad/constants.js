@@ -3,7 +3,7 @@ export const THEME = {
   "inherit": true,
   "rules": [
     {
-      "background": "011627",
+      "background": "000000",
       "token": ""
     },
     {
@@ -669,7 +669,7 @@ export const THEME = {
   ],
   "colors": {
     "editor.foreground": "#d6deeb",
-    "editor.background": "#011627",
+    "editor.background": "#000000",
     "editor.selectionBackground": "#5f7e9779",
     "editor.lineHighlightBackground": "#010E17",
     "editorCursor.foreground": "#80a4c2",

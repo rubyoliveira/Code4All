@@ -76,9 +76,22 @@ const saveCode = async (req, res) => {
     }
 }
 
+const terminate = async (req, res) => {
+    const {idHash} = req.params
+    try{
+        const result = await prisma.interactiveIDE.deleteMany({
+            where: {idHash}
+        })
+        res.json(result);
+    } catch (error) {
+        console.error("Error terminating session:", error);
+        res.status(500).send("Failed to terminate session");
+    }
+}
+
 const IDE = async (req, res) => {
     const coding = await prisma.ide.findMany();
     res.json(coding);
 }
 
-module.exports =  {createIDE, codePad, saveCode, IDE};
+module.exports =  {createIDE, codePad, saveCode, IDE, terminate};
