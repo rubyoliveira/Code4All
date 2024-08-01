@@ -496,7 +496,8 @@
   }
 
   .footer-dark {
-    background-color: #f5f7fa;
+    background-color: #ffffff;
+    border-top: 1px #e4ebf35b solid;
     border-bottom: 1px solid #e4ebf3;
     padding: 50px 30px 15px;
     position: relative;

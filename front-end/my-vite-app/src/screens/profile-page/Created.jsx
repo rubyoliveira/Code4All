@@ -28,7 +28,6 @@ function Created({title, image,fetchProfile, user, author}) {
         });
     }
 
-
     return (
         <>
         <div className = "created-author">

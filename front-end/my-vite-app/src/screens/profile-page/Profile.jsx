@@ -3,14 +3,14 @@ import { useParams } from 'react-router-dom';
 import { Link, Navigate } from 'react-router-dom';
 import ProfileCards from "./ProfileCards.jsx"
 import Created from "./Created.jsx"
-
+import Saved from "./Saved.jsx"
+import CompletedCourses from './CompletedCourses.jsx';
 import Header from "../../components/Header.jsx"
 import './Profile.css'
 
 function Profile({handleSignOut}) {
     const { username } = useParams();
     const [userCourses, setUserCourses] = useState([])
-    const [saved, setSaved] = useState([])
     const [userData, setUserData] = useState('');
     const [codingSessions, setCodingSessions] = useState([])
     const [recommendations, setRecommendations] = useState([])
@@ -42,28 +42,9 @@ function Profile({handleSignOut}) {
         fetchProfile();
         fetchUserCourses();
         fetchRecommendations();
-        fetchSavedCourses();
         fetchCompletedCourses();
         fetchCodingSessions();
     }, [username]);
-
-    const fetchSavedCourses = () => {
-        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/saved-courses`, {
-            credentials: 'include'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            setSaved(data);
-        })
-        .catch(error => {
-            console.error('Error fetching profile:', error);
-        });
-    };
 
     const fetchUserCourses = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/profile/${username}/created-courses`, {
@@ -206,50 +187,24 @@ function Profile({handleSignOut}) {
                         <Link to = "/">
                         <button className = 'logout' onClick = {handleSignOut}> Log Out </button>
                         </Link>
-                        {/* <p>{userData.modules}</p> */}
                     </div>
                     <div className = "right-profile">
                         <div className = "middle-profile">
-                            <div className = "completed-courses">
-                                <h3>Completed Courses:</h3>
-                                <div className = "row-scroll">
-                                {completedCourses.map(card => (
+                            <CompletedCourses completedCourses = {completedCourses}/>
+                            <div className = "recommended-courses">
+                                <h3>Recommended Courses:</h3>
+                                <div className = 'row'>
+                                {recommendations.map(card => (
                                     <ProfileCards
-                                    key = {card.title}
-                                    title ={card.title}
-                                    image = {card.image}
-                                    fetchProfile = {fetchProfile}
-                                    author = {card.author}
-                                    user = {userData.username}/>
+                                        key = {card.title}
+                                        title ={card.title}
+                                        image = {card.image}/>
                                 ))}
                                 </div>
                             </div>
-                            <div className = "recommended-courses">
-                                <h3>Recommended Courses:</h3>
-                                {recommendations.map(card => (
-                                <ProfileCards
-                                    key = {card.title}
-                                    title ={card.title}
-                                    image = {card.image}
-                                    fetchProfile = {fetchProfile}
-                                    author = {card.author}
-                                    user = {userData.username}/>
-                                ))}
-                            </div>
                         </div>
                         <div className = "farthest-profile">
-                            <div className = "saved-courses">
-                                <h3>Saved for Later:</h3>
-                                {saved.map(card => (
-                                    <ProfileCards
-                                    key = {card.title}
-                                    title ={card.title}
-                                    image = {card.image}
-                                    fetchProfile = {fetchProfile}
-                                    author = {card.author}
-                                    user = {userData.username}/>
-                                ))}
-                            </div>
+                            <Saved username = {username}/>
                             <div className = "coding-sessions">
                                 <h3>Coding Sessions:</h3>
                                 {codingSessions.map(code => (

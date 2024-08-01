@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: -50px;
 }
 
 .courses{
@@ -45,10 +46,11 @@
 .course-description{
     width: 100%;
     height: 100%;
+    z-index: 2;
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.723);
+    background: rgba(0, 0, 0, 0.593);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,8 +58,8 @@
     transition: opacity 0.3s ease;
 }
 
-.course-description:hover:not(button){
-    opacity: 1; /* Show the description on hover */
+.course-description.show{
+    opacity: 1;
 }
 
 .course-description h4{
@@ -114,7 +116,10 @@
     background-color: transparent;
     color: grey;
 }
-
+.course-buttons {
+    position: relative;
+    z-index: 2; /* Higher than the description overlay */
+}
 
 .star-rating .star-content .star:hover{
     color: gold;

@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
 function Footer() {
+  const openInNewTab = async (url) => {
+    window.open(url, '_blank');
+  }
 
   return (
     <>
@@ -11,9 +14,8 @@ function Footer() {
             <div id="w-node-ba39d60b-38e8-ad20-6a84-90703745e087-a3b1394d" className="footer-block">
                 <div className="title-small">Connect</div>
                 <div className="footer-social-block">
-                <a href="#" className="footer-social-link w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124ac15112aad5_twitter%20small.svg" loading="lazy" alt=""></img></a>
-                <a href="#" className="footer-social-link w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a389912aad8_linkedin%20small.svg" loading="lazy" alt=""></img></a>
-                <a href="#" className="footer-social-link w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a51bf12aae9_facebook%20small.svg" loading="lazy" alt=""></img></a>
+                <a onClick = {() => openInNewTab("https://www.linkedin.com/in/ruby-oliveira/")}className="footer-social-link w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a389912aad8_linkedin%20small.svg" loading="lazy" alt=""></img></a>
+                <a onClick = {() => openInNewTab("https://www.facebook.com/profile.php?id=100078275122689")} className="footer-social-link w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a51bf12aae9_facebook%20small.svg" loading="lazy" alt=""></img></a>
                 </div>
             </div>
             </div>
