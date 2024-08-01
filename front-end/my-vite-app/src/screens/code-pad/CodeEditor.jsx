@@ -101,8 +101,10 @@ const CodeEditor = ({username}) => {
 
     return (
         <div className = "code">
-            {terminate && <div>
+            {terminate && <div className = "deleted-alert">
+                <div className = "terminate-modal">
                 <p>course sucessfully deleted, return to course page</p>
+                </div>
             </div>}
             <div className="code-pad">
                 <div className="code-copilot">

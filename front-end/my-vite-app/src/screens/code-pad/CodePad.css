@@ -197,3 +197,37 @@
     padding: 5px;
     margin-left: 10px;
   }
+
+  .deleted-alert {
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 0.687) 0%, rgba(168,222,258,0.687) 21.9%, rgba(189,250,205,0.687) 35.6%, rgba(243,250,189,0.687) 53.9%, rgba(250,227,189,0.687) 66.8%, rgba(248,172,171,0.687) 95%, rgba(254,170,212,0.687) 99.9% );
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    font-weight: bold;
+}
+
+  .terminate-modal{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.688);
+    -webkit-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    -moz-box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    box-shadow: 3px 3.5px 16px 6.5px #4646465e;
+    left: 50%;
+    max-width: 400px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }

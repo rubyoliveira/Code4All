@@ -58,7 +58,9 @@ function CourseCards({title, description, level, img, likes, username, averageRa
                     <img className="course-img" src={img} alt="Course"></img>
                 </Link>
                 <h3>{title}</h3>
-                <p>{description}</p>
+                <div className = 'course-description'>
+                    <h4>{description}</h4>
+                </div>
                 <div>
                 <p><strong>Level:</strong>  {level}</p>
                 <p><strong>Average Difficulty:</strong>  {averageRating ? averageRating.toFixed(1) : 'N/A'}&#11088;</p>

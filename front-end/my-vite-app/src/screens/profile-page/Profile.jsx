@@ -211,7 +211,7 @@ function Profile({handleSignOut}) {
                     <div className = "right-profile">
                         <div className = "middle-profile">
                             <div className = "completed-courses">
-                                <h4>Completed Courses:</h4>
+                                <h3>Completed Courses:</h3>
                                 <div className = "row-scroll">
                                 {completedCourses.map(card => (
                                     <ProfileCards
@@ -225,7 +225,7 @@ function Profile({handleSignOut}) {
                                 </div>
                             </div>
                             <div className = "recommended-courses">
-                                <h4>Recommended Courses:</h4>
+                                <h3>Recommended Courses:</h3>
                                 {recommendations.map(card => (
                                 <ProfileCards
                                     key = {card.title}
@@ -239,7 +239,7 @@ function Profile({handleSignOut}) {
                         </div>
                         <div className = "farthest-profile">
                             <div className = "saved-courses">
-                                <h4>Saved for Later:</h4>
+                                <h3>Saved for Later:</h3>
                                 {saved.map(card => (
                                     <ProfileCards
                                     key = {card.title}
@@ -251,7 +251,7 @@ function Profile({handleSignOut}) {
                                 ))}
                             </div>
                             <div className = "coding-sessions">
-                                <h3>Coding:</h3>
+                                <h3>Coding Sessions:</h3>
                                 {codingSessions.map(code => (
                                     <div key = {code}>
                                         <a onClick={() => openInNewTab(code)}>{code}</a>

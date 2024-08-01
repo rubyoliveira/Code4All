@@ -173,8 +173,8 @@
 }
 
 .saved-courses{
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
-    text-align: center;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
     -webkit-animation: rainbow 18s ease infinite;
     -z-animation: rainbow 18s ease infinite;
     -o-animation: rainbow 18s ease infinite;

@@ -17,10 +17,12 @@
 .course:hover{
     transform: scale(1.02);
     box-shadow: 0 0 40px -10px rgba(0,0,0,.5), 0 0 25px -15px rgba(0,0,0,.4);
-    background: linear-gradient(
-    to right,
-    #6b11cb37,#2574fc35
-  );
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
 }
 
 .course{
@@ -29,13 +31,39 @@
     background-color:#ffffff;
     padding: 15px;
     box-shadow:0 0 40px -10px rgba(0,0,0,.3), 0 0 25px -15px rgba(0,0,0,.2);
-    height: 78vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: flex-start;
     border-radius:20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-description{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.723);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.course-description:hover:not(button){
+    opacity: 1; /* Show the description on hover */
+}
+
+.course-description h4{
+    font-size: 20px;
+    padding: 20px;
+    color: white;
 }
 
 .course-img{
@@ -52,22 +80,21 @@
 .save-later{
     background-color:#f5f7fa;
     border: none;
-    box-shadow: 0 0 40px -10px rgba(0,0,0,.5), 0 0 25px -15px rgba(0,0,0,.5);
-    border-radius:20px;
+    margin: 3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 10px;
     padding: 5px;
-    background: linear-gradient(
-    to right,
-    #6b11cb66,#2574fc6a
-  );
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.428) 0%, rgba(168,222,258,0.428) 21.9%, rgba(189,250,205,0.428) 35.6%, rgba(243,250,189,0.428) 53.9%, rgba(250,227,189,0.428) 66.8%, rgba(248,172,171,0.428) 95%, rgba(254,170,212,0.428) 99.9% );
 }
 
 .save-later:hover{
-    background: linear-gradient(
-    to right,
-    #6b11cb91,#2574fc96
-  );
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
     transform: scale(1.05);
-
 }
 
 .star-rating {
