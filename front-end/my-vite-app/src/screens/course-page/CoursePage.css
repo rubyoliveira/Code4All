@@ -50,12 +50,14 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.593);
+    background: rgba(22, 22, 22, 0.689);
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
 }
 
 .course-description.show{
@@ -65,7 +67,13 @@
 .course-description h4{
     font-size: 20px;
     padding: 20px;
-    color: white;
+    word-spacing: 2px;
+    line-height: 1.2;
+    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    text-shadow: 0 0 1px  rgb(255, 255, 255);
+    text-align: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .course-img{
@@ -99,28 +107,25 @@
     transform: scale(1.05);
 }
 
-.star-rating {
-    display: flex;
-    justify-content: center;
-}
-
-.star-rating .star-content{
+.star-rating{
     display: flex;
     justify-content: center;
 }
 
 .star-rating .star-content .star {
-    font-size: 1rem;
     cursor: pointer;
     border: none;
     background-color: transparent;
     color: grey;
 }
+
+
+.star-rating .star-content .star.filled,
+.star-rating .star-content .star.hover{
+    color: gold;
+}
+
 .course-buttons {
     position: relative;
     z-index: 2; /* Higher than the description overlay */
-}
-
-.star-rating .star-content .star:hover{
-    color: gold;
 }

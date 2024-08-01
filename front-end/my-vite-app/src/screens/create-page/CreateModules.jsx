@@ -5,10 +5,13 @@ function CreateModules ({modules, setModules}) {
     const [moduleTitle, setModuleTitle] = useState('')
     const [topicTitle, setTopicTitle] = useState('')
     const [topicDescription, setTopicDescription] = useState('')
+
     //video
     const [searchVideo, setSearchVideo]= useState([])
     const [video, setVideo] = useState('')
     const [videoURL, setVideoURL] = useState('')
+
+   
 
     const addModule = () => {
         const newModule = {

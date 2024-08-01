@@ -31,12 +31,12 @@ function StarRating({courseId, fetchCards, closeModal }) {
                 {[1,2,3,4,5].map(star =>(
                     <button
                     key={star}
-                    className ={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`}
+                    className={`star ${star <= (hoverRating || rating) ? 'filled' : ''}`}
                     onClick = {() => handleRating(star)}
                     onMouseEnter = {()=> setHoverRating(star)}
                     onMouseLeave = {() => setHoverRating(0)}
                     >
-                        ★
+                    ★
                     </button>
                 ))}
             </div>

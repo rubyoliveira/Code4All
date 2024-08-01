@@ -14,6 +14,7 @@ function CreateCourse({username}) {
     const [courseTitle, setCourseTitle] = useState('')
     const [description, setDescription] = useState('')
     const [modules, setModules] = useState([])
+    const [currentStep, setCurrentStep] = useState(1)
 
     //photo
     const [photoURL, setPhotoURL] = useState('')
@@ -102,6 +103,7 @@ function CreateCourse({username}) {
   return (
     <>
       <Header username = {username} />
+      {currentStep === 1 && (
       <form onSubmit = {handleCreateCourse}>
             <div className= "create-page" >
                 <h2>Create a New Course</h2>
@@ -141,13 +143,18 @@ function CreateCourse({username}) {
                         <span className = "create-span">Course Description</span>
                         <CodeBot setDescription = {setDescription}></CodeBot>
                     </div>
+                    </div>
                 </div>
-                <CreateModules modules = {modules} setModules ={setModules}></CreateModules>
-            <div>
-                <button type="submit" className="create-course">Create Course</button>
-            </div>
-            </div>
-        </form>
+                </form>
+                )}
+                {currentStep === 2 && (
+                    <CreateModules modules = {modules} setModules ={setModules}></CreateModules>
+                )}
+              {currentStep === 2 && (
+                <div>
+                    <button type="submit" className="create-course">Create Course</button>
+                </div>
+              )}
       <Footer/>
     </>
   )

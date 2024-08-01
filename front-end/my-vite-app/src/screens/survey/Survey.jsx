@@ -68,7 +68,7 @@ const Survey = ({username}) => {
         <div className="signup">
             <div className = "content">
             {Object.keys(surveyConfig).map((stepKey) => {
-                // Extract the numeric part from stepKey (e.g., "survey_step_1" becomes 1)
+                // Extract the numeric part from stepKey 
                 const stepNumber = parseInt(stepKey.replace(/[^\d]/g, ''), 10);
                 const currStep = surveyConfig[stepKey];
                 return (
