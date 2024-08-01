@@ -1,26 +1,24 @@
-import { useState, useEffect } from 'react'
-import Footer from "../../components/Footer.jsx"
-import Header from "../../components/Header.jsx"
-import "./CreateCourse.css"
-import CodeBot from "../../components/CodeBot.jsx"
-import CreateModules from "./CreateModules.jsx"
-import { Navigate} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Footer from "../../components/Footer.jsx";
+import Header from "../../components/Header.jsx";
+import "./CreateCourse.css";
+import CodeBot from "../../components/CodeBot.jsx";
+import CreateModules from "./CreateModules.jsx";
+import { Navigate } from 'react-router-dom';
 
-
-
-function CreateCourse({username}) {
+function CreateCourse({ username }) {
     //course info
     const [selectedOption, setSelectedOption] = useState('');
-    const [courseTitle, setCourseTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [modules, setModules] = useState([])
-    const [currentStep, setCurrentStep] = useState(1)
+    const [courseTitle, setCourseTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [modules, setModules] = useState([]);
+    const [currentStep, setCurrentStep] = useState(1);
 
     //photo
-    const [photoURL, setPhotoURL] = useState('')
-    const [photo, setPhoto] = useState('')
-    const [searchPhoto, setSearchPhoto] = useState([])
-    const [image, setImage] = useState('')
+    const [photoURL, setPhotoURL] = useState('');
+    const [photo, setPhoto] = useState('');
+    const [searchPhoto, setSearchPhoto] = useState([]);
+    const [image, setImage] = useState('');
 
     //post method and associated functions of making the course
     const handleSelectChange = (event) => {
@@ -28,7 +26,7 @@ function CreateCourse({username}) {
     };
 
     const handleCreateCourse = (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
         const courseData = {
             title: courseTitle,
@@ -37,7 +35,7 @@ function CreateCourse({username}) {
             image: image,
             author: username,
             userId: [],
-            modules: modules
+            modules: modules,
         };
 
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/create`, {
@@ -45,119 +43,121 @@ function CreateCourse({username}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(courseData),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            setCourseTitle('')
-            setDescription('')
-            setSelectedOption('')
-            setModules([])
-            setImage('')
-            setPhotoURL('')
-            setPhoto('')
-            return response.json();
-        })
-        .then(data => {
-            alert("Course created successfully", data);
-        })
-        .catch(error => {
-            console.error('Error creating course:', error);
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                setCourseTitle('');
+                setDescription('');
+                setSelectedOption('');
+                setModules([]);
+                setImage('');
+                setPhotoURL('');
+                setPhoto('');
+                return response.json();
+            })
+            .then((data) => {
+                alert("Course created successfully", data);
+            })
+            .catch((error) => {
+                console.error('Error creating course:', error);
+            });
     };
 
     const fetchPhoto = () => {
         const url = `https://api.unsplash.com/search/photos?query=${photo}&page=1&per_page=6&client_id=${import.meta.env.VITE_PHOTO_API_KEY}`;
         fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                const urls = data.results.map(photo => photo.urls.small);
+            .then((response) => response.json())
+            .then((data) => {
+                const urls = data.results.map((photo) => photo.urls.small);
                 setSearchPhoto(urls);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.error('Error fetching photos:', error);
             });
     };
 
-
     const handleSearchPhoto = (e) => {
         e.preventDefault();
-        setPhoto(e.target.value)
-      }
-      const goSearchPhoto = (e) => {
+        setPhoto(e.target.value);
+    };
+
+    const goSearchPhoto = (e) => {
         e.preventDefault();
         fetchPhoto();
-    }
+    };
 
     const selectPhoto = (e, selectedURL) => {
         e.preventDefault();
-        setPhotoURL(selectedURL)
-        setImage(selectedURL)
+        setPhotoURL(selectedURL);
+        setImage(selectedURL);
         setSearchPhoto([]);
-    }
+    };
 
     if (username == "undefined") {
         return <Navigate to="/" />;
     }
 
-  return (
-    <>
-      <Header username = {username} />
-      {currentStep === 1 && (
-      <form onSubmit = {handleCreateCourse}>
-            <div className= "create-page" >
-                <h2>Create a New Course</h2>
-                <div className = "create-course">
-                    <h4>Course</h4>
-                    <div className = "create-div">
-                        <span className = "create-span">Course Title</span>
-                        <input className = "create-input" placeholder='title..' onChange = {(event) => setCourseTitle(event.target.value)}></input>
-                    </div>
-                    <div className = "create-div">
-                        <span className = "create-span">Cover Image Search</span>
-                        <input className = "create-input" placeholder='search for image..' onChange = {handleSearchPhoto}></input>
-                    </div>
-                    <button onClick = {e => goSearchPhoto(e)}>Search Photos</button>
-                    <div className = "photo-results">
-                        {searchPhoto.map((url, index) => (
-                            <img key={index} className="photo-search" alt="photo" src={url} onClick = {(e) => selectPhoto(e, url)} />
-                        ))}
-                    </div>
-                    <div className="pickedUrl">
-                        <h4>Selected Photo URL: </h4>
-                        <p>{photoURL}</p>
-                        <img type="hidden" src={photoURL} alt="Selected Photo" />
-                    </div>
-                    <div className = "create-div">
-                        <span className = "create-span">Course Difficulty</span>
-                        <div className = "dropdown">
-                            <select className="create-dropdown" value={selectedOption} onChange={handleSelectChange} >
-                                <option value = "">select a difficulty</option>
-                                <option value ="Beginner" >Beginner</option>
-                                <option value ="Intermediate" >Intermediate</option>
-                                <option value ="Expert" >Expert</option>
-                            </select>
+    return (
+        <>
+            <Header username={username} />
+            {currentStep === 1 && (
+                <form onSubmit={(e) => { e.preventDefault(); setCurrentStep(2); }}>
+                    <div className="create-page">
+                        <h2>Create a New Course</h2>
+                        <div className="create-course">
+                            <h4>Course</h4>
+                            <div className="create-div">
+                                <span className="create-span">Course Title</span>
+                                <input className="create-input" placeholder='title..' onChange={(event) => setCourseTitle(event.target.value)}></input>
+                            </div>
+                            <div className="create-div">
+                                <span className="create-span">Cover Image Search</span>
+                                <input className="create-input" placeholder='search for image..' onChange={handleSearchPhoto}></input>
+                            </div>
+                            <button onClick={(e) => goSearchPhoto(e)}>Search Photos</button>
+                            <div className="photo-results">
+                                {searchPhoto.map((url, index) => (
+                                    <img key={index} className="photo-search" alt="photo" src={url} onClick={(e) => selectPhoto(e, url)} />
+                                ))}
+                            </div>
+                            <div className="pickedUrl">
+                                <h4>Selected Photo URL: </h4>
+                                <p>{photoURL}</p>
+                                <img type="hidden" src={photoURL} alt="Selected Photo" />
+                            </div>
+                            <div className="create-div">
+                                <span className="create-span">Course Difficulty</span>
+                                <div className="dropdown">
+                                    <select className="create-dropdown" value={selectedOption} onChange={handleSelectChange} >
+                                        <option value="">select a difficulty</option>
+                                        <option value="Beginner">Beginner</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Expert">Expert</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="create-div">
+                                <span className="create-span">Course Description</span>
+                                <CodeBot setDescription={setDescription}></CodeBot>
+                            </div>
                         </div>
+                        <button type="submit" className="create-course">Next: Add Modules</button>
                     </div>
-                    <div className = "create-div">
-                        <span className = "create-span">Course Description</span>
-                        <CodeBot setDescription = {setDescription}></CodeBot>
-                    </div>
-                    </div>
-                </div>
                 </form>
-                )}
-                {currentStep === 2 && (
-                    <CreateModules modules = {modules} setModules ={setModules}></CreateModules>
-                )}
-              {currentStep === 2 && (
-                <div>
-                    <button type="submit" className="create-course">Create Course</button>
+            )}
+            {currentStep === 2 && (
+                <CreateModules modules={modules} setModules={setModules} setCurrentStep={setCurrentStep} />
+            )}
+            {currentStep === 3 && (
+                <div className="create-page">
+                    <h2>Review and Submit Your Course</h2>
+                    <button onClick={handleCreateCourse} className="create-course">Submit Course</button>
                 </div>
-              )}
-      <Footer/>
-    </>
-  )
+            )}
+            <Footer />
+        </>
+    );
 }
 
-export default CreateCourse
+export default CreateCourse;
