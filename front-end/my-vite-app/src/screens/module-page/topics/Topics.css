@@ -50,10 +50,15 @@
     border-radius: 50px;
     margin-right: 20px;
     border: none;
-    background-color: rgba(0, 0, 0, 0.324);
-    -webkit-box-shadow: inset 1px -9px 15.5px -3px #00000056;
-    -moz-box-shadow: inset 1px -9px 15.5px -3px #00000056;
-    box-shadow: inset 1px -9px 15.5px -3px #00000056;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%, rgba(223, 168, 248, 1) 0%, rgba(168,222,258,1) 21.9%, rgba(189,250,205,1) 35.6%, rgba(243,250,189,1) 53.9%, rgba(250,227,189,1) 66.8%, rgba(248,172,171,1) 95%, rgba(254,170,212,1) 99.9% );
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    -webkit-box-shadow: inset 1px -9px 15.5px -3px #00000028;
+    -moz-box-shadow: inset 1px -9px 15.5px -3px #00000028;
+    box-shadow: inset 1px -9px 15.5px -3px #00000028;
 }
 
 .topic-button:hover{

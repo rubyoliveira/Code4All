@@ -10,7 +10,7 @@ import RecommendationCards from "../RecommendationCards.jsx";
 import "./Topics.css"
 
 function Topics({username}) {
-    const { courseId } = useParams();
+    const { courseId, courses } = useParams();
     const [topics, setTopics] = useState([]);
     const [modules, setModules] = useState([]);
     const [recommendations, setRecommendations] = useState([])
@@ -57,9 +57,11 @@ function Topics({username}) {
     if (username === "undefined") {
         return <Navigate to="/" />;
     }
+
     return (
         <>
             <Header username={username} />
+           {username && <button>edit course</button>}
             <div className="course-module">
                 <div className="sidebar">
                     {Array.isArray(modules) ? (

@@ -106,5 +106,20 @@ const deleteCourse = async (req, res) => {
     }
 };
 
+const editDescriptions = async (req, res) => {
+    const { id } = req.params;
+    const { description } = req.body;
+    try {
+        const update = await prisma.topics.update({
+            where: { id },
+            data: { description }
+        });
+        res.json(update);
+    } catch (error) {
+        console.error("Error editing description:", error);
+        res.status(500).send("Failed to editing description");
+    }
+}
 
-module.exports =  { courses, modules, topics, create, deleteCourse };
+
+module.exports =  { courses, modules, topics, create, deleteCourse, editDescriptions };
