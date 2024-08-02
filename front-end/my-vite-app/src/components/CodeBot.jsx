@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from 'react-markdown';
+import "../screens/create-page/CreateCourse.css"
 
 function CodeBot({ setDescription }) {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
@@ -36,9 +37,10 @@ function CodeBot({ setDescription }) {
                     placeholder='Create Description of Course'
                     value={search}
                     onChange={handleChangeSearch}
+                    className = "gemini-input"
                 />
-                <button type="button" style={{ marginLeft: '20px' }} onClick={handleClick}>
-                    Search
+                <button className= "gemini-search" type="button" style={{ marginLeft: '20px' }} onClick={handleClick}>
+                    Generate
                 </button>
             </div>
             {loading ? (

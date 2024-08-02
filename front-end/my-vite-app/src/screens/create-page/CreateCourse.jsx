@@ -4,7 +4,8 @@ import Header from "../../components/Header.jsx";
 import "./CreateCourse.css";
 import CodeBot from "../../components/CodeBot.jsx";
 import CreateModules from "./CreateModules.jsx";
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
+import ReviewCourse from "./ReviewCourse"
 
 function CreateCourse({ username }) {
     //course info
@@ -104,9 +105,9 @@ function CreateCourse({ username }) {
             {currentStep === 1 && (
                 <form onSubmit={(e) => { e.preventDefault(); setCurrentStep(2); }}>
                     <div className="create-page">
+                        <div className = "create-box">
                         <h2>Create a New Course</h2>
                         <div className="create-course">
-                            <h4>Course</h4>
                             <div className="create-div">
                                 <span className="create-span">Course Title</span>
                                 <input className="create-input" placeholder='title..' onChange={(event) => setCourseTitle(event.target.value)}></input>
@@ -115,15 +116,14 @@ function CreateCourse({ username }) {
                                 <span className="create-span">Cover Image Search</span>
                                 <input className="create-input" placeholder='search for image..' onChange={handleSearchPhoto}></input>
                             </div>
-                            <button onClick={(e) => goSearchPhoto(e)}>Search Photos</button>
+                            <button onClick={(e) => goSearchPhoto(e)} className = "search-unsplash">Search Photos</button>
                             <div className="photo-results">
                                 {searchPhoto.map((url, index) => (
                                     <img key={index} className="photo-search" alt="photo" src={url} onClick={(e) => selectPhoto(e, url)} />
                                 ))}
                             </div>
                             <div className="pickedUrl">
-                                <h4>Selected Photo URL: </h4>
-                                <p>{photoURL}</p>
+                                <h4>Selected Photo: </h4>
                                 <img type="hidden" src={photoURL} alt="Selected Photo" />
                             </div>
                             <div className="create-div">
@@ -142,7 +142,8 @@ function CreateCourse({ username }) {
                                 <CodeBot setDescription={setDescription}></CodeBot>
                             </div>
                         </div>
-                        <button type="submit" className="create-course">Next: Add Modules</button>
+                        <button type="submit" className="profile-page-button">Next: Add Modules</button>
+                        </div>
                     </div>
                 </form>
             )}
@@ -151,9 +152,20 @@ function CreateCourse({ username }) {
             )}
             {currentStep === 3 && (
                 <div className="create-page">
-                    <h2>Review and Submit Your Course</h2>
-                    <button onClick={handleCreateCourse} className="create-course">Submit Course</button>
-                </div>
+                    <div className="review-page">
+                        <h2>Review and Submit Your Course</h2>
+                        <ReviewCourse
+                            courseTitle={courseTitle}
+                            description={description}
+                            difficulty={selectedOption}
+                            image={image}
+                            modules={modules}
+                        />
+                        <Link to= "/courses">
+                            <button onClick={handleCreateCourse} className="create-button">Submit Course</button>
+                        </Link>
+                        </div>
+                    </div>
             )}
             <Footer />
         </>

@@ -7,7 +7,6 @@ function CompletedCourses({ completedCourses }) {
     const cardWidth = 200; // Adjust based on your card width including margins
     const cardsPerPage = Math.floor(containerWidth / cardWidth);
     const [visibleStart, setVisibleStart] = useState(0);
-
     function useContainerWidth(ref) {
         const [width, setWidth] = useState(0);
         useEffect(() => {
@@ -24,13 +23,18 @@ function CompletedCourses({ completedCourses }) {
         }, [ref]);
         return width;
     }
-
     const next = () => {
-        setVisibleStart((prev) => Math.min(prev + cardsPerPage, completedCourses.length - cardsPerPage));
+        setVisibleStart(prev => {
+            const maxStartIndex = completedCourses.length - cardsPerPage;
+            const potentialStart = prev + cardsPerPage;
+            if (potentialStart >= completedCourses.length) {
+                return Math.max(maxStartIndex, 0);
+            }
+            return potentialStart;
+        });
     };
-
     const prev = () => {
-        setVisibleStart((prev) => Math.max(prev - cardsPerPage, 0));
+        setVisibleStart(prev => Math.max(prev - cardsPerPage, 0));
     };
 
     return (

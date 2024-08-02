@@ -101,7 +101,6 @@ function Topics({username}) {
                     )}
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

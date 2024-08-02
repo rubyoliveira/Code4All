@@ -52,7 +52,7 @@ function Modules({title, id, fetchTopics, username, setRecommendations}) {
             <button className={buttonStyle} onClick={handleModuleClick}>
                 <img src="https://uploads-ssl.webflow.com/66889847ca0b8f284d54b9ab/66889847ca0b8f284d54b9f2_File%20Icon.svg" alt="Module Icon" />
             </button>
-            <h3>{title}</h3>
+            <h3 className = "module-title-click">{title}</h3>
         </div>
     </>
   )
