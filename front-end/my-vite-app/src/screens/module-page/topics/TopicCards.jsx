@@ -2,29 +2,32 @@ import { useEffect, useState } from 'react';
 import './Topics.css';
 import ReactMarkdown from 'react-markdown';
 
-function TopicCards({ title, description, videoURL }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editDescription, setEditDescription] = useState(description);
+function TopicCards({ topicId, title, description, videoURL, canEdit }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editDescription, setEditDescription] = useState(description);
 
     const handleEditClick = () => {
         setIsEditing(true);
     };
 
     const handleSaveClick = () => {
-        // Make API call to save edited description
-        fetch(`/api/topics/${topicId}/edit`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ description: editDescription })
-        })
-            .then(response => response.json())
-            .then(data => {
-                setIsEditing(false);
-                setEditDescription(data.description);
-            })
-            .catch(error => {
-                console.error('Error saving description:', error);
-            });
+      fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/editTopics/${topicId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ description: editDescription }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        setIsEditing(false);
+        return response.json();
+      })
+      .catch(error => {
+        console.error('Error saving code:', error);
+        console.error('Response status:', error.response?.status);
+        console.error('Response body:', error.response?.data);
+      });
     };
 
     useEffect(() => {
@@ -71,16 +74,16 @@ function TopicCards({ title, description, videoURL }) {
                 <div className="topic-text">
                     <h3>{title}</h3>
                     {isEditing ? (
-                        <textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
+                       <textarea className = "editing-box" value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
                     ) : (
-                        <ReactMarkdown>{description}</ReactMarkdown>
+                        <ReactMarkdown>{editDescription}</ReactMarkdown>
                     )}
                     {canEdit && (
-                        isEditing ? (
-                            <button onClick={handleSaveClick}>Save</button>
-                        ) : (
-                            <button onClick={handleEditClick}>Edit</button>
-                        )
+                      isEditing ? (
+                        <button className = "editing-button"  onClick={handleSaveClick}>Save</button>
+                      ) : (
+                        <button className = "editing-button" onClick={handleEditClick}>Edit</button>
+                      )
                     )}
                 </div>
                 <iframe id="player" className="topic-video" title="topic-video" src={videoURL} allowFullScreen></iframe>

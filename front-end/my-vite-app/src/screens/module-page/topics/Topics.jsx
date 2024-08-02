@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import TopicCards from './TopicCards.jsx';
-import Footer from "../../../components/Footer.jsx";
 import Header from "../../../components/Header.jsx";
 import Modules from "../Modules.jsx";
 import { handleRecommendations } from "../../survey/recommendation.js";
@@ -17,6 +16,7 @@ function Topics({ username }) {
 
     useEffect(() => {
         fetchModules();
+        fetchCards();
         if (recommendations.length > 0) {
             handleRecommendations(username, recommendations);
         }
@@ -24,20 +24,40 @@ function Topics({ username }) {
 
     const fetchModules = () => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${courseId}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                setModules(data.modules);
-                setAuthor(data.author); // Save the author information
-            })
-            .catch(error => {
-                console.error('Error fetching modules:', error);
-            });
-    };
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            setModules(data);
+          })
+          .catch(error => {
+            console.error('Error fetching modules:', error);
+          });
+      };
+
+      const fetchCards = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            const course = data.find(course => course.title === courseId);
+            if (course) {
+              setAuthor(course.author); // Set the author username
+            } else {
+              console.error(`Course not found with ID ${courseId}`);
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching cards:', error);
+          });
+      };
 
     const fetchTopics = (moduleId) => {
         fetch(`${import.meta.env.VITE_BACKEND_ADDRESS}/courses/${courseId}/${moduleId}`)
@@ -62,7 +82,6 @@ function Topics({ username }) {
     return (
         <>
             <Header username={username} />
-            {username && username === author && <button>Edit Course</button>}
             <div className="course-module">
                 <div className="sidebar">
                     {Array.isArray(modules) ? (
@@ -78,6 +97,7 @@ function Topics({ username }) {
                         topics.map((topic) => (
                             <TopicCards
                                 key={topic.id}
+                                topicId = {topic.id}
                                 title={topic.title}
                                 description={topic.description}
                                 videoURL={topic.video}

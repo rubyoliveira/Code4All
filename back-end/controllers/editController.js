@@ -82,4 +82,20 @@ const like = async (req, res) => {
     }
 };
 
-module.exports =  {save, like, rating};
+const editDescriptions = async (req, res) => {
+    const { id } = req.params;
+    const { description } = req.body;
+
+    try {
+        const updatedTopic = await prisma.topics.update({
+            where: { id: parseInt(id) },
+            data: { description },
+        });
+        res.json(updatedTopic);
+    } catch (error) {
+        console.error('Error updating topic:', error);
+        res.status(500).send('Failed to update topic');
+    }
+};
+
+module.exports =  {save, like, rating, editDescriptions};
