@@ -46,9 +46,9 @@ function CourseCards({title, description, level, img, likes, username, averageRa
             }
             return response.json();
         })
-        .then(data => {
-            alert('Course saved successfully:', data);
-        })
+        // .then(data => {
+        //     alert('Course saved successfully:', data);
+        // })
         .catch(error => {
             console.error('Error saving:', error);
         });

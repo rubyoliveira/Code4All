@@ -98,12 +98,18 @@ const CodeEditor = ({username}) => {
     const getAI = () => {setOpenAI(true)}
     const closeAI = () => {setOpenAI(false)}
 
+    const closeTab = () => {
+        window.opener = null;
+        window.open("", "_self");
+        window.close();
+      };
+
 
     return (
         <div className = "code">
             {terminate && <div className = "deleted-alert">
                 <div className = "terminate-modal">
-                <p>course sucessfully deleted, return to course page</p>
+                <p>course sucessfully deleted, <a onClick = {closeTab}>close this tab</a></p>
                 </div>
             </div>}
             <div className="code-pad">

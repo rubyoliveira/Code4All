@@ -4,7 +4,7 @@ import Header from "../../components/Header.jsx";
 import "./CreateCourse.css";
 import CodeBot from "../../components/CodeBot.jsx";
 import CreateModules from "./CreateModules.jsx";
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import ReviewCourse from "./ReviewCourse"
 
 function CreateCourse({ username }) {
@@ -25,6 +25,7 @@ function CreateCourse({ username }) {
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
     };
+    const navigate = useNavigate();
 
     const handleCreateCourse = (event) => {
         event.preventDefault();
@@ -55,11 +56,12 @@ function CreateCourse({ username }) {
                 setImage('');
                 setPhotoURL('');
                 setPhoto('');
+                navigate('/courses');
                 return response.json();
             })
-            .then((data) => {
-                alert("Course created successfully", data);
-            })
+            // .then((data) => {
+            //     alert("Course created successfully", data);
+            // })
             .catch((error) => {
                 console.error('Error creating course:', error);
             });

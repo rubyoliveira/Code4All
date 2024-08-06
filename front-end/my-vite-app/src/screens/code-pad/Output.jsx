@@ -7,6 +7,7 @@ const Output = ({ language, editorRef, version, idHash, setTerminate}) => {
     const [output, setOutput] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [userData, setUserData] = useState([])
 
     const run = async () => {
         const sourceCode = editorRef.current.getValue();
@@ -42,6 +43,7 @@ const Output = ({ language, editorRef, version, idHash, setTerminate}) => {
           alert(error.message || 'Error terminating session');
       });
     }
+
 
     return (
       <div className = "output">

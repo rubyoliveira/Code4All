@@ -25,9 +25,9 @@ const handleRecommendations = (username, recommendations) => {
         }
         return response.json();
     })
-    .then(data => {
-        alert(`Recommendations saved successfully: ${JSON.stringify(data)}`);
-    })
+    // .then(data => {
+    //     alert(`Recommendations saved successfully: ${JSON.stringify(data)}`);
+    // })
     .catch(error => {
         console.error('Error saving recommendations:', error);
     });

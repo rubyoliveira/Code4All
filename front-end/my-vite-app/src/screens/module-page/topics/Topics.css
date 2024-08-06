@@ -100,8 +100,9 @@
 }
 
 .topic-video{
-    width: 35%;
-    height: 28vh;
+    display: flex;
+    /* width: 35%;
+    height: 28vh; */
     border: none;
     border-radius: 8px;
     margin: 20px;
@@ -117,11 +118,11 @@
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
-    padding: 50px 10px;
+    padding: 50px;
 }
 
 .topic-text{
-    padding-right: 5vh;
+    padding: 5vh;
     width: 90%;
 }
 
