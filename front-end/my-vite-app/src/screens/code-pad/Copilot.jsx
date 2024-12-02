@@ -16,7 +16,7 @@ function Copilot({ setDescription, username}) {
         setShowGreet(false);
         setLoading(true);
         setResponse('');
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const chat = model.startChat({
             history: [],
         });

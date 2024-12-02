@@ -109,7 +109,7 @@ const CodeEditor = ({username}) => {
         <div className = "code">
             {terminate && <div className = "deleted-alert">
                 <div className = "terminate-modal">
-                <p>course sucessfully deleted, <a onClick = {closeTab}>close this tab</a></p>
+                <p>CodePad sucessfully deleted, <a onClick = {closeTab}>close this tab</a></p>
                 </div>
             </div>}
             <div className="code-pad">

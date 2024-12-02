@@ -29,6 +29,7 @@ const topics = async (req, res) => {
 const create = async (req, res) => {
     const { title, description, difficulty, image, author, userId, modules } = req.body;
 
+    // Validate required fields
     if (!title || !description || !difficulty || !image || !author || !userId || !modules || modules.length === 0) {
         return res.status(400).send('Missing required fields.');
     }

@@ -151,9 +151,6 @@ function Profile({handleSignOut}) {
             }
             return response.json();
         })
-        .then(data => {
-            alert("changed succesfully to", data)
-        })
         .catch(error => {
             console.error('Error upvoting:', error);
         });
@@ -179,7 +176,7 @@ function Profile({handleSignOut}) {
                                     key = {card.title}
                                     title ={card.title}
                                     image = {card.image}
-                                    fetchProfile = {fetchProfile}
+                                    fetchProfile = {fetchUserCourses}
                                     author = {card.author}
                                     user = {userData.username}/>
                                 ))}
