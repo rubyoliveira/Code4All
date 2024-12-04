@@ -167,8 +167,8 @@ function Profile({handleSignOut}) {
                         <img className = "profile-pic" src = {userData.image} onClick = {fetchDogs} alt = "n/a"></img>
                         <p className = "p-image">click photo for new dog pic</p>
                         <h3 className = "hi-user">Hi, {userData.name}!</h3>
-                        <p>{userData.username}</p>
-                        <p>{userData.email}</p>
+                        {/* <p>{userData.username}</p> */}
+                        {/* <p>{userData.email}</p> */}
                         <div className = "created-courses">
                             <h4>Courses created by you</h4>
                             {userCourses.map(card => (

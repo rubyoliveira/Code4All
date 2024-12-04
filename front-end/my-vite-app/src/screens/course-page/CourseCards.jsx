@@ -54,6 +54,19 @@ function CourseCards({title, description, level, img, likes, username, averageRa
         });
     };
 
+    //function to check completion/progress of course
+    // const checkCourseCompletion = async () => {
+        //fetch request to check if course is completed first
+        //if not then fetch request to modules all in course
+        //check if username is in the completed list of each module
+        //add up all the modules completed and divide by total modules
+        //return the percentage of completion
+
+    //visual completed bar
+    //if course is completed, display color over course
+    //if course not completed show progress bar
+    //if course not started show nothing
+
     const handleMouseEnter = (e) => {
         // Check if the related target exists and is a DOM element with the closest method
         if (e.relatedTarget && typeof e.relatedTarget.closest === 'function') {

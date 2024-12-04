@@ -1,13 +1,13 @@
-.profile-pic{
-    height: 250px;
-    width: 250px;
+.profile-pic {
+    height: 30vh;
+    width: 80%;
     border-radius: 50%;
     margin-bottom: 20px;
     margin-top: 20px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.profile-pic:hover{
+.profile-pic:hover {
     cursor: pointer;
 }
 
@@ -15,7 +15,7 @@
     margin: 0px;
 }
 
-.profile{
+.profile {
     height: 120vh;
     display: flex;
     flex-direction: row;
@@ -24,10 +24,10 @@
     margin: 20px;
 }
 
-.profile-details{
+.profile-details {
     height: 110vh;
     justify-content: space-evenly;
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168, 222, 258, 0.289) 21.9%, rgba(189, 250, 205, 0.289) 35.6%, rgba(243, 250, 189, 0.289) 53.9%, rgba(250, 227, 189, 0.289) 66.8%, rgba(248, 172, 171, 0.289) 95%, rgba(254, 170, 212, 0.289) 99.9%);
     display: flex;
     border-radius: 20px;
     flex-direction: column;
@@ -36,12 +36,10 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 
-.created-courses{
+.created-courses {
     background-color: #fdfdfd;
     padding: 15px;
-    width: 300px;
-    padding: 15px;
-    width: 35vh;
+    width: 80%;
     height: 40vh;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     display: flex;
@@ -51,11 +49,10 @@
     text-align: center;
     border-radius: 20px;
     justify-content: space-evenly;
-    margin: 20px;
     overflow-y: scroll;
 }
 
-.created-author{
+.created-author {
     background-color: white;
     padding: 15px;
     width: 35vh;
@@ -66,19 +63,18 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     justify-content: space-between;
     padding: 3px;
-    /* border: 1px solid black; */
     border-radius: 8px;
     margin: 5px;
 }
 
-.createda-img{
+.createda-img {
     width: 10vh;
     height: 10vh;
     margin: 2px;
     border-radius: 8px;
 }
 
-.profile-cards{
+.profile-cards {
     background-color: #ffffff;
     padding: 15px;
     width: 150px;
@@ -94,21 +90,21 @@
     margin: 20px;
 }
 
-.right-profile{
+.right-profile {
     display: flex;
     flex-direction: row;
     width: 80%;
     justify-content: space-around;
 }
 
-.middle-profile{
+.middle-profile {
     display: flex;
     flex-direction: column;
     width: 50%;
 }
 
-.completed-courses{
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+.completed-courses {
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168, 222, 258, 0.289) 21.9%, rgba(189, 250, 205, 0.289) 35.6%, rgba(243, 250, 189, 0.289) 53.9%, rgba(250, 227, 189, 0.289) 66.8%, rgba(248, 172, 171, 0.289) 95%, rgba(254, 170, 212, 0.289) 99.9%);
     padding: 15px;
     width: 100%;
     height: 49vh;
@@ -124,7 +120,7 @@
     overflow-y: scroll;
 }
 
-.row-scroll{
+.row-scroll {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -132,15 +128,15 @@
     white-space: nowrap;
 }
 
-.row{
+.row {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     overflow-y: scroll;
 }
 
-.recommended-courses{
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+.recommended-courses {
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168, 222, 258, 0.289) 21.9%, rgba(189, 250, 205, 0.289) 35.6%, rgba(243, 250, 189, 0.289) 53.9%, rgba(250, 227, 189, 0.289) 66.8%, rgba(248, 172, 171, 0.289) 95%, rgba(254, 170, 212, 0.289) 99.9%);
     padding: 15px;
     width: 100%;
     height: 49vh;
@@ -156,15 +152,14 @@
     overflow-y: scroll;
 }
 
-
-.farthest-profile{
+.farthest-profile {
     display: flex;
     flex-direction: column;
     width: 35%;
 }
 
-.saved-courses{
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+.saved-courses {
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168, 222, 258, 0.289) 21.9%, rgba(189, 250, 205, 0.289) 35.6%, rgba(243, 250, 189, 0.289) 53.9%, rgba(250, 227, 189, 0.289) 66.8%, rgba(248, 172, 171, 0.289) 95%, rgba(254, 170, 212, 0.289) 99.9%);
     padding: 15px;
     width: 100%;
     height: 60vh;
@@ -180,8 +175,8 @@
     overflow-y: scroll;
 }
 
-.coding-sessions{
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168,222,258,0.289) 21.9%, rgba(189,250,205,0.289) 35.6%, rgba(243,250,189,0.289) 53.9%, rgba(250,227,189,0.289) 66.8%, rgba(248,172,171,0.289) 95%, rgba(254,170,212,0.289) 99.9% );
+.coding-sessions {
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.289) 0%, rgba(168, 222, 258, 0.289) 21.9%, rgba(189, 250, 205, 0.289) 35.6%, rgba(243, 250, 189, 0.289) 53.9%, rgba(250, 227, 189, 0.289) 66.8%, rgba(248, 172, 171, 0.289) 95%, rgba(254, 170, 212, 0.289) 99.9%);
     padding: 15px;
     width: 100%;
     height: 38vh;
@@ -197,13 +192,13 @@
     overflow-y: scroll;
 }
 
-.pcards-img{
+.pcards-img {
     width: 125px;
     height: 125px;
 }
 
-.profile button{
-    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.4) 0%, rgba(168,222,258,0.4) 21.9%, rgba(189,250,205,0.4) 35.6%, rgba(243,250,189,0.4) 53.9%, rgba(250,227,189,0.4) 66.8%, rgba(248,172,171,0.4) 95%, rgba(254,170,212,0.4) 99.9% );
+.profile button {
+    background-image: radial-gradient(farthest-corner at 10% 20%, rgba(223, 168, 248, 0.4) 0%, rgba(168, 222, 258, 0.4) 21.9%, rgba(189, 250, 205, 0.4) 35.6%, rgba(243, 250, 189, 0.4) 53.9%, rgba(250, 227, 189, 0.4) 66.8%, rgba(248, 172, 171, 0.4) 95%, rgba(254, 170, 212, 0.4) 99.9%);
     background-size: 1800% 1800%;
     text-align: center;
     -webkit-animation: rainbow 18s ease infinite;
@@ -217,7 +212,7 @@
     border-radius: 8px;
 }
 
-.saved-cards{
+.saved-cards {
     display: flex;
     width: 70%;
     background-color: white;
@@ -232,13 +227,66 @@
     margin: 5px;
 }
 
-.saved-img{
+.saved-img {
     width: 120px;
     height: 120px;
     border-radius: 8px;
-    margin: 10px
+    margin: 10px;
 }
 
-.saved-title{
+.saved-title {
     padding-right: 10px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .profile {
+        flex-direction: column;
+    }
+
+    .profile-details {
+        width: 100%;
+    }
+
+    .right-profile,
+    .middle-profile,
+    .farthest-profile {
+        width: 100%;
+    }
+
+    .profile-cards,
+    .completed-courses,
+    .recommended-courses,
+    .saved-courses,
+    .coding-sessions {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-pic {
+        height: 20vh;
+    }
+
+    .profile {
+        margin: 10px;
+    }
+
+    .profile-details {
+        width: 100%;
+    }
+
+    .right-profile,
+    .middle-profile,
+    .farthest-profile {
+        width: 100%;
+    }
+
+    .profile-cards,
+    .completed-courses,
+    .recommended-courses,
+    .saved-courses,
+    .coding-sessions {
+        width: 100%;
+    }
 }

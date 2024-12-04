@@ -64,8 +64,10 @@ model ide {
 }
 
 model interactiveIDE {
-  idHash String @id
-  code String @default("//comment")
-  users String[] @default([])
-  creator String
+  idHash    String   @id
+  code      String   @default("//comment")
+  users     String[] @default([])
+  creator   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

@@ -1,9 +1,8 @@
 import { executeCode } from "./API";
-import axios from 'axios';
 import {useState, useRef} from "react";
 import "./CodePad.css"
 
-const Output = ({ language, editorRef, version, idHash, setTerminate}) => {
+const Output = ({ language, editorRef, version, idHash, setTerminate, activeUsers}) => {
     const [output, setOutput] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -52,6 +51,8 @@ const Output = ({ language, editorRef, version, idHash, setTerminate}) => {
             {isLoading ? 'Loading...' : 'Run Code'}
           </button>
           <button className = "terminate-session" onClick = {deleteSession}>terminate session</button>
+          {/* Display Active Users */}
+          <ActiveUsers users={activeUsers} />
         </div>
         <div style={{ margin: '30px 0' }} color={isError ? "red" : "black"}>
           {output ? output.map((line, i) => <p key={i}>{line}</p>) : 'Click "Run Code" to see the output here'}
@@ -60,4 +61,19 @@ const Output = ({ language, editorRef, version, idHash, setTerminate}) => {
     );
   };
 
+  const ActiveUsers = ({ users }) => {
+    return (
+        <div className="active-users">
+            {users.map((user, index) => (
+                <div key={index} className="user">
+                    <span 
+                        className="user-color" 
+                        style={{ backgroundColor: user.color }}
+                    ></span>
+                    <span>{user.name}</span>
+                </div>
+            ))}
+        </div>
+    );
+};
   export default Output
