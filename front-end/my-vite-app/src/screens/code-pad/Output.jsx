@@ -2,7 +2,7 @@ import { executeCode } from "./API";
 import {useState, useRef} from "react";
 import "./CodePad.css"
 
-const Output = ({ language, editorRef, version, idHash, setTerminate, activeUsers}) => {
+const Output = ({ language, editorRef, version, idHash, setTerminate, activeUsers, saveCode}) => {
     const [output, setOutput] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -50,8 +50,8 @@ const Output = ({ language, editorRef, version, idHash, setTerminate, activeUser
           <button disabled={isLoading} onClick={run} className = "run-code">
             {isLoading ? 'Loading...' : 'Run Code'}
           </button>
+          {/* <button className = "run-code" onClick = {saveCode}>save</button> */}
           <button className = "terminate-session" onClick = {deleteSession}>terminate session</button>
-          {/* Display Active Users */}
           <ActiveUsers users={activeUsers} />
         </div>
         <div style={{ margin: '30px 0' }} color={isError ? "red" : "black"}>

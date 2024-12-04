@@ -58,7 +58,7 @@ const IdeModal = ({closeModal, username}) => {
         <div className = "pop-up">
             <div className="modal">
                 <div className = "new-session">
-                    <button className="create-new-button" onClick={() => { openInNewTab(); setDropdownOpen(false); }}>
+                    <button className="create-new-button" onClick={() => { openInNewTab(); closeModal()}}>
                         Create New Coding Session
                     </button>
                 </div>

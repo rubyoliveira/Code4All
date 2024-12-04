@@ -71,14 +71,14 @@ function Copilot({ setDescription, username}) {
             <div className="copilot-bottom">
                 <div style={{ display: 'flex' }} className="copilot-search">
                     <input
-                        placeholder='Create Description of Course'
+                        placeholder='ask gemini'
                         value={search}
                         className="copilot-input"
                         onChange={handleChangeSearch}
                     />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"  style={{ marginLeft: '20px' }} onClick={handleClick} className="copilot-run">
-                        <path fillRule="evenodd" d="M15.328 1.294a.798.798 0 0 0-.034-.174c-.006-.02-.013-.046-.026-.066A.65.65 0 0 0 15.14.86a.648.648 0 0 0-.267-.153.567.567 0 0 0-.146-.027.338.338 0 0 0-.087-.013.478.478 0 0 0-.193.04h-.007c-.013.007-.02.007-.033.013L1.114 5.374a.66.66 0 0 0-.446.6.658.658 0 0 0 .393.633l5.78 2.567 2.56 5.766c.107.247.36.407.633.394a.668.668 0 0 0 .6-.447l4.667-13.333a.743.743 0 0 0 .033-.207c0-.02-.006-.04-.006-.053ZM12.12 2.94 7.188 7.874l-4.047-1.8 8.98-3.134Zm-2.187 9.927L8.128 8.814l4.96-4.96-3.154 9.013Z"/>
-                    </svg>
+                    <button className="copilot-search-button" type="button" onClick={handleClick}>
+                        Generate
+                    </button>
                 </div>
             </div>
         </div>
